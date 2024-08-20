@@ -1,0 +1,92 @@
+.navbar-container {
+  width: 100%;
+  background-color: var(--color-primary);
+}
+.navbar {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin: 0 auto;
+}
+
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #242424;
+  text-decoration: none;
+}
+
+.navLinks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navLinks li {
+  margin: 0 20px;
+  list-style: none;
+}
+
+.navLinks li:last-child {
+  margin-right: 0;
+}
+
+.link {
+  text-decoration: none;
+  color: #242424;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 4px;
+  background-color: #fff;
+  position: relative;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  width: 350px;
+  padding: 5px;
+  font-size: 1.1rem;
+  color: #242424;
+}
+
+.search-input::placeholder {
+  color: #ccc;
+}
+
+.search-button {
+}
+
+.search-button:hover {
+}
+
+.search-history {
+  width: 100%;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.history-item {
+  margin: 0;
+  padding: 10px;
+}
+
+.history-item:first-child {
+  margin-top: 5px;
+}
+
+.history-item:hover {
+  background-color: #f9f9f9;
+}

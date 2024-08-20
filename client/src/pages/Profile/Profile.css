@@ -1,0 +1,185 @@
+.container {
+  height: 100%;
+}
+
+.content {
+  padding: 20px;
+  max-width: 70%;
+  margin: 0 auto;
+  background-color: #f8f9fa;
+}
+
+.content-flex {
+  display: flex;
+  flex: 1;
+}
+
+.profile-section {
+  flex: 0 0 70%;
+  background-color: #f0f0f0; /* Optional: Background color for clarity */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.options {
+  flex: 0 0 30%; /* 30% width */
+  background-color: #e0e0e0; /* Optional: Background color for clarity */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.profile-header {
+  border-bottom: 1px solid #ccc;
+}
+
+.profile-header h2 {
+  margin: 0;
+}
+
+.profile-header p {
+  margin: 0;
+}
+
+.profile-body {
+  padding: 20px 0;
+}
+
+.form-container {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-items {
+  margin-bottom: 20px;
+}
+
+.form-items label {
+  display: inline-block;
+  width: 150px;
+  font-weight: bold;
+}
+
+.form-items span {
+  font-size: 16px;
+  color: #333;
+  margin-left: 10px;
+}
+
+.radio-group {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.radio-group label {
+  margin-left: 5px;
+  font-weight: normal;
+}
+
+input[type="radio"] {
+  margin-top: -2px;
+  vertical-align: middle;
+}
+
+@media (max-width: 600px) {
+  .content {
+    max-width: 100%;
+  }
+  .form-container {
+    padding: 10px;
+  }
+
+  .form-items label {
+    width: auto;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  .form-items span {
+    display: block;
+    margin-left: 0;
+  }
+}
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.address-header h2 {
+  margin: 0;
+}
+
+.address-header p {
+  margin: 0;
+}
+
+.address-body {
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-padding {
+  padding-bottom: 10px;
+}
+
+.button-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding-top: 20px;
+}
+
+.address-left {
+}
+
+.address-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+.address-item {
+}
+
+.items-left {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.items-right {
+  padding-left: 30px;
+}
+
+.items-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-set-default {
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
