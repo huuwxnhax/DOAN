@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const BrandSection = () => {
   return (
-    <>
+    <div className="brand-section">
       <div className="title-header">
         <h3 className="h3-title">Top Brands</h3>
       </div>
@@ -29,7 +29,7 @@ const BrandSection = () => {
           <img src={brand5} alt="Brand 5" />
         </Link>
       </div>
-    </>
+    </div>
   );
 };
 

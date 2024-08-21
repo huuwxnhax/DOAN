@@ -11,6 +11,7 @@
   -moz-osx-font-smoothing: grayscale;
   --color-primary: #99b545;
   --color-secondary: #ff5722;
+  --color-primary-dark: #9aa185;
 }
 
 body {

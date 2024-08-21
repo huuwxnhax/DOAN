@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CategorySection = () => {
   return (
-    <>
+    <div className="category-section">
       <div className="">
         <h3 className="h3-title">Categories</h3>
       </div>
@@ -57,7 +57,7 @@ const CategorySection = () => {
           <p>Category 2</p>
         </Link>
       </div>
-    </>
+    </div>
   );
 };
 
