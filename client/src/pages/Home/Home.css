@@ -237,7 +237,7 @@
 
 .btn-view-more {
   padding: 10px 40px;
-  background-color: #ff5722;
+  background-color: var(--color-tertiary);
   cursor: pointer;
   transition: background-color 0.3s ease;
   border-radius: 4px;
@@ -272,5 +272,5 @@
 }
 
 .link-item:hover {
-  color: #ff5722;
+  color: var(--color-tertiary);
 }

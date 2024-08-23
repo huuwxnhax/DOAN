@@ -60,10 +60,6 @@ const Cart = () => {
     );
   };
 
-  const handleRemoveItem = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  };
-
   const handleOpenModal = (id) => {
     setItemToDelete(id);
     setShowModal(true);

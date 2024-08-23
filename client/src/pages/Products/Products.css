@@ -33,7 +33,7 @@
 }
 
 .sort-btn.active {
-  background-color: #8bc34a; /* Change background color for the active filter */
+  background-color: var(--color-tertiary);
   color: white;
 }
 
@@ -61,5 +61,17 @@
 }
 
 .category__filter-link:hover {
-  color: #8bc34a; /* Hover state */
+  color: var(--color-); /* Hover state */
+}
+
+.footer-prod {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.page-selection {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
 }

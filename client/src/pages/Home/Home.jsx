@@ -33,7 +33,7 @@ const Home = () => {
         </section>
 
         <section className="products">
-          <ProductSection />
+          <ProductSection isHomepage={true} />
         </section>
 
         <section className="footer">

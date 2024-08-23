@@ -11,9 +11,19 @@ const Category = () => {
   ];
 
   const [selectedSort, setSelectedSort] = useState(sortOptions[0].value);
+  const [showMoreCate, setShowMoreCate] = useState(false);
+  const [showMoreBrand, setShowMoreBrand] = useState(false);
 
   const handleSortClick = (option) => {
     setSelectedSort(option.value);
+  };
+
+  const handleShowMoreCate = () => {
+    setShowMoreCate(!showMoreCate);
+  };
+
+  const handleShowMoreBrand = () => {
+    setShowMoreBrand(!showMoreBrand);
   };
 
   return (
@@ -47,6 +57,41 @@ const Category = () => {
                 Phụ kiện
               </a>
             </li>
+            {handleShowMoreCate && (
+              <div
+                className="additional-categories"
+                style={{
+                  maxHeight: showMoreCate ? "100px" : "0",
+                  overflow: "hidden",
+                  transition: "max-height 0.3s ease-in-out",
+                }}
+              >
+                <li className="category__filter-item">
+                  <a href="#category" className="category__filter-link">
+                    Tai nghe
+                  </a>
+                </li>
+                <li className="category__filter-item">
+                  <a href="#category" className="category__filter-link">
+                    Đồng hồ
+                  </a>
+                </li>
+                <li className="category__filter-item">
+                  <a href="#category" className="category__filter-link">
+                    Máy tính bảng
+                  </a>
+                </li>
+              </div>
+            )}
+            <li className="category__filter-item">
+              <p
+                className="category__filter-link"
+                onClick={handleShowMoreCate}
+                style={{ cursor: "pointer" }}
+              >
+                {showMoreCate ? "Thu gọn" : "Xem thêm"}
+              </p>
+            </li>
           </ul>
         </div>
         <div className="category__filter">
@@ -76,6 +121,41 @@ const Category = () => {
               <a href="#brand" className="category__filter-link">
                 Canon
               </a>
+            </li>
+            {handleShowMoreBrand && (
+              <div
+                className="additional-brands"
+                style={{
+                  maxHeight: showMoreBrand ? "100px" : "0",
+                  overflow: "hidden",
+                  transition: "max-height 0.3s ease-in-out",
+                }}
+              >
+                <li className="category__filter-item">
+                  <a href="#brand" className="category__filter-link">
+                    Xiaomi
+                  </a>
+                </li>
+                <li className="category__filter-item">
+                  <a href="#brand" className="category__filter-link">
+                    Dell
+                  </a>
+                </li>
+                <li className="category__filter-item">
+                  <a href="#brand" className="category__filter-link">
+                    Lenovo
+                  </a>
+                </li>
+              </div>
+            )}
+            <li className="category__filter-item">
+              <p
+                onClick={handleShowMoreBrand}
+                className="category__filter-link"
+                style={{ cursor: "pointer" }}
+              >
+                {showMoreBrand ? "Thu gọn" : "Xem thêm"}
+              </p>
             </li>
           </ul>
         </div>

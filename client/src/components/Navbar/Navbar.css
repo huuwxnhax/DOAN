@@ -211,7 +211,7 @@
 .view-cart-button {
   display: block;
   text-align: center;
-  background-color: var(--color-primary);
+  background-color: var(--color-tertiary);
   color: white;
   padding: 10px 0;
   border-radius: 8px;
