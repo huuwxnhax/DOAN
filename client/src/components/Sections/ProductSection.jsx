@@ -11,9 +11,7 @@ const ProductSection = ({ isHomepage }) => {
 
   return (
     <>
-      <div className="">
-        <h3 className="h3-title">Products</h3>
-      </div>
+      <div className="">{/* <h3 className="h3-title"></h3> */}</div>
       <div className="product-container">
         <a className="product-link" href="">
           <div className="product-item">

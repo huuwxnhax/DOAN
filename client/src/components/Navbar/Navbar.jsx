@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import Avatar from "@mui/material/Avatar";
 import Popover from "@mui/material/Popover";
@@ -9,9 +9,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import { IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import prod1 from "../../assets/images/prod1.webp";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../features/authSlice";
 
 const Navbar = () => {
-  const user = true;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
+
   const history = ["Shoes", "T-shirts", "Smartphones", "Laptops"];
   const [searchTerm, setSearchTerm] = useState("");
   const [searchHistory, setSearchHistory] = useState(history);
@@ -27,6 +32,11 @@ const Navbar = () => {
   const handleClickHistory = (term) => {
     setSearchTerm(term);
     setShowHistory(false);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/signin");
   };
 
   return (
@@ -144,14 +154,16 @@ const Navbar = () => {
             <div className="dropdown">
               <Avatar
                 alt="User"
-                src="https://via.placeholder.com/150"
+                src={user.avatar || "https://via.placeholder.com/150"}
                 style={{ cursor: "pointer" }}
               />
 
               <div className="dropdown-content dropdown-profile">
                 <a href="/profile">My profile</a>
                 <a href="/settings">Settings</a>
-                <a href="/logout">Sign Out</a>
+                <a href="" onClick={handleLogout}>
+                  Sign Out
+                </a>
               </div>
             </div>
           ) : (
