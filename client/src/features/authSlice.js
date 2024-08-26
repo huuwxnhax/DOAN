@@ -23,7 +23,12 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
+        if (action.payload.code !== 201) {
+          state.user = action.payload;
+          localStorage.setItem("user", JSON.stringify(action.payload));
+        } else {
+          state.error = action.payload;
+        }
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
@@ -36,7 +41,9 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
+        if (action.payload.code === 200) {
+          localStorage.setItem("user", JSON.stringify(action.payload));
+        }
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;

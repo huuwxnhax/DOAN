@@ -26,6 +26,7 @@ const defaultTheme = createTheme();
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
@@ -51,8 +52,17 @@ function SignIn() {
   };
 
   useEffect(() => {
+    if (user && user.status) {
+      setErrorMsg(user.status);
+    } else {
+      setErrorMsg("");
+    }
+  }, [user]);
+
+  useEffect(() => {
     if (user && user.userName) {
-      navigate("/");
+      setSuccessMsg(true);
+      navigate("/", { state: { successMessage: "Đăng Nhập Thành Công!" } });
     }
   }, [user, navigate]);
 

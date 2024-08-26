@@ -17,6 +17,7 @@ import { register } from "../../actions/authAction";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Notification from "../../components/Notification/Notification";
 
 const defaultTheme = createTheme();
 
@@ -24,6 +25,8 @@ function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [errorMsg, setErrorMsg] = useState("");
+  const [showNotification, setShowNotification] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
   const { user, loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = (event) => {
@@ -42,14 +45,32 @@ function SignUp() {
   };
 
   useEffect(() => {
-    // Navigate to the sign-in page on successful registration
+    if (error && error.status) {
+      setErrorMsg(error.status);
+    } else {
+      setErrorMsg("");
+    }
+  }, [error]);
+
+  useEffect(() => {
+    // Navigate to the home page on successful registration
     if (user && user.userName) {
-      navigate("/");
+      setSuccessMsg("Đăng Ký Thành Công! Đang chuyển hướng đến trang chủ...");
+      setShowNotification(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     }
   }, [user, navigate]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      {showNotification && (
+        <Notification
+          message={successMsg}
+          onClose={() => setShowNotification(false)}
+        />
+      )}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

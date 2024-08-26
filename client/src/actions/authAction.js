@@ -20,7 +20,6 @@ export const login = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const { data } = await loginAPI(formData);
-      localStorage.setItem("user", JSON.stringify(data));
       console.log("Response:", data);
       return data;
     } catch (error) {
