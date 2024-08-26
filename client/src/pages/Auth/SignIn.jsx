@@ -16,22 +16,55 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { IconButton, InputAdornment } from "@mui/material";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../actions/authAction";
 
 const defaultTheme = createTheme();
 
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
+    const formData = {
+      userName: data.get("email"),
       password: data.get("password"),
+    };
+    dispatch(login(formData));
+
+    console.log({
+      userName: data.get("email"),
+      password: data.get("password"),
+      error,
+      user,
     });
   };
+
+  useEffect(() => {
+    if (user && user.status) {
+      setErrorMsg(user.status);
+    } else {
+      setErrorMsg("");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user && user.userName) {
+      setSuccessMsg(true);
+      navigate("/", { state: { successMessage: "Đăng Nhập Thành Công!" } });
+    }
+  }, [user, navigate]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -94,17 +127,24 @@ function SignIn() {
                 ),
               }}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
+
+            {errorMsg && (
+              <Typography variant="body2" color="error">
+                {errorMsg}
+              </Typography>
+            )}
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              {loading ? "Loading..." : "Sign In"}
             </Button>
             <Grid container>
               <Grid item xs>

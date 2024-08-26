@@ -7,10 +7,26 @@ import BrandSection from "../../components/Sections/BrandSection";
 import CategorySection from "../../components/Sections/CategorySection";
 import ProductSection from "../../components/Sections/ProductSection";
 import FooterSection from "../../components/Sections/FooterSection";
+import { useLocation } from "react-router-dom";
+import { Alert } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import { useState } from "react";
+import { useEffect } from "react";
+import Notification from "../../components/Notification/Notification";
 
 const Home = () => {
+  const locate = useLocation();
+  const successMessage = locate.state ? locate.state.successMessage : "";
+  const [showNotification, setShowNotification] = useState(!!successMessage);
+
   return (
     <div className="container">
+      {showNotification && (
+        <Notification
+          message={successMessage}
+          onClose={() => setShowNotification(false)}
+        />
+      )}
       <Navbar />
       <div className="homepage-content">
         <div className="bg-color-1">
