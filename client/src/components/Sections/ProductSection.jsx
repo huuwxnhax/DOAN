@@ -13,7 +13,7 @@ const ProductSection = ({ isHomepage }) => {
     <>
       <div className="">{/* <h3 className="h3-title"></h3> */}</div>
       <div className="product-container">
-        <a className="product-link" href="">
+        <a className="product-link" href="/product/id">
           <div className="product-item">
             <img src={prod1} alt="Product 1" />
             <div className="product-detail">
