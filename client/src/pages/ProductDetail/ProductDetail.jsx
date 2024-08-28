@@ -23,6 +23,15 @@ const ProductDetail = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
   const sizes = ["Túi 100g", "Túi 200g", "Túi 300g"];
+  // const product = {
+  //   name: "Khô gà lá chanh Cobi Food hộp 300g xé giòn, đậm vị, cay vừa, đồ ăn vặt không chứa phẩm màu",
+  //   price: 45000,
+  //   promotionalPrice: 50000,
+  //   brand: "Cobi Food",
+  //   rating: 4,
+  //   sold: 350,
+  //   images: [product1, product2, product3, product4],
+  // };
   const productDetails = [
     { key: "Kho", value: "500" },
     { key: "Thương hiệu", value: "FURJKO HOME" },
@@ -134,7 +143,7 @@ const ProductDetail = ({ product }) => {
               <span>Loại: </span>
               <span>Thức ăn vặt</span>
             </div>
-            <div className="product-rating">
+            <div className="product-rating" style={{ marginLeft: "50%" }}>
               <Rating name="read-only" size="small" value={rating} readOnly />
               <Typography variant="body2" color="text.secondary">
                 4.0 (23 đánh giá)
