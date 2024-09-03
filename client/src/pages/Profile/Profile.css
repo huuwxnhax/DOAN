@@ -1,5 +1,6 @@
 .container {
   height: 100%;
+  margin: 0 auto;
 }
 
 .content {
@@ -15,17 +16,15 @@
 }
 
 .profile-section {
-  flex: 0 0 70%;
-  background-color: #f0f0f0; /* Optional: Background color for clarity */
+  flex: 1;
+  margin-right: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  box-sizing: border-box;
 }
 
 .options {
-  flex: 0 0 30%; /* 30% width */
-  background-color: #e0e0e0; /* Optional: Background color for clarity */
-  padding: 20px;
-  box-sizing: border-box;
 }
 
 .profile-header {
@@ -54,6 +53,7 @@
 }
 
 .form-items {
+  display: flex;
   margin-bottom: 20px;
 }
 
@@ -70,7 +70,7 @@
 }
 
 .radio-group {
-  display: inline-block;
+  display: flex;
   margin-right: 10px;
 }
 
@@ -177,6 +177,22 @@ input[type="radio"] {
 }
 
 .btn-set-default {
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dropzone {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.update-btn {
+  background-color: #007bff;
   color: #fff;
   border: none;
   padding: 5px 10px;

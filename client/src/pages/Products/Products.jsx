@@ -8,7 +8,9 @@ const Products = () => {
   return (
     <div className="container">
       <Navbar />
-      <Category />
+      <div style={{ boxShadow: "none" }}>
+        <Category />
+      </div>
       <div className="footer-prod">
         <FooterSection />
       </div>

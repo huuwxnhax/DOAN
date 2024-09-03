@@ -14,24 +14,19 @@ import FooterSection from "../../components/Sections/FooterSection";
 import ProductSection from "../../components/Sections/ProductSection";
 import DetailList from "../../components/DetailList/DetailList";
 import PurchaseModal from "../../components/PurchaseModal/PurchaseModal";
+import { useLocation, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectAllCategories } from "../../features/cateSlice";
 
-const ProductDetail = ({ product }) => {
+const ProductDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(product1);
   const [startIndex, setStartIndex] = useState(0);
   const [rating, setRating] = useState(4);
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("");
-  const sizes = ["Túi 100g", "Túi 200g", "Túi 300g"];
-  // const product = {
-  //   name: "Khô gà lá chanh Cobi Food hộp 300g xé giòn, đậm vị, cay vừa, đồ ăn vặt không chứa phẩm màu",
-  //   price: 45000,
-  //   promotionalPrice: 50000,
-  //   brand: "Cobi Food",
-  //   rating: 4,
-  //   sold: 350,
-  //   images: [product1, product2, product3, product4],
-  // };
+  const [selectedOptions, setSelectedOptions] = useState({});
+
   const productDetails = [
     { key: "Kho", value: "500" },
     { key: "Thương hiệu", value: "FURJKO HOME" },
@@ -54,9 +49,58 @@ const ProductDetail = ({ product }) => {
     { key: "Tên tổ chức chịu trách nhiệm sản xuất", value: "CT TNHH ZAVINA" },
   ];
 
-  const handleSelect = (size) => {
-    setSelectedSize(size);
+  const { id } = useParams();
+  const location = useLocation();
+  const product = location.state?.product;
+
+  // get all categories from redux store
+  const categories = useSelector((state) => selectAllCategories(state));
+
+  // find category name by category id
+  const findCategoryName = (categoryId) => {
+    return categories.find((cate) => cate._id === categoryId)?.categoriesName;
   };
+
+  // get the highest price of all classifies
+  const getPrice = (classifies) => {
+    if (classifies.length === 0) return 0;
+    return Math.max(...classifies.map((classify) => classify.price));
+  };
+
+  // group classifies by key
+  const groupClassifies = product?.classifies.reduce((groups, classify) => {
+    if (!groups[classify.key]) {
+      groups[classify.key] = [];
+    }
+    groups[classify.key].push(classify);
+    return groups;
+  }, {});
+
+  // handle option change
+  const handleOptionChange = (key, value) => {
+    setSelectedOptions((prevOptions) => ({
+      ...prevOptions,
+      [key]: value,
+    }));
+  };
+
+  // Tính toán tổng giá trị dựa trên các tùy chọn đã chọn
+  const calculateTotalPrice = () => {
+    const selectedClassifies = Object.entries(selectedOptions).map(
+      ([key, value]) => groupClassifies[key].find((cls) => cls.value === value)
+    );
+
+    const basePrice = selectedClassifies.reduce((total, classify) => {
+      return total + classify.price * quantity;
+    }, 0);
+
+    return basePrice;
+  };
+
+  // scroll to top when component mounted
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleBuyNowClick = () => {
     setIsModalOpen(true);
@@ -88,6 +132,10 @@ const ProductDetail = ({ product }) => {
   const handleQuantityChange = (delta) => {
     setQuantity((prevQuantity) => Math.max(1, prevQuantity + delta));
   };
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="product-detail-page">
@@ -127,11 +175,7 @@ const ProductDetail = ({ product }) => {
         </div>
         <div className="product-detail-info">
           <div className="detail-name">
-            <h3>
-              Khô gà lá chanh Cobi Food hộp 300g xé giòn, đậm vị, cay vừa, đồ ăn
-              vặt không chứa phẩm màu vặt không chứa phẩm màu vặt không chứa
-              phẩm màu vặt không chứa phẩm màu
-            </h3>
+            <h3>{product.productName}</h3>
           </div>
           <div className="detail-address">
             <span>Địa chỉ: </span>
@@ -140,10 +184,10 @@ const ProductDetail = ({ product }) => {
 
           <div className="detail-inline">
             <div className="product-type">
-              <span>Loại: </span>
-              <span>Thức ăn vặt</span>
+              <span>Danh mục: </span>
+              <span>{findCategoryName(product.cate)}</span>
             </div>
-            <div className="product-rating" style={{ marginLeft: "50%" }}>
+            <div className="product-rating" style={{ marginLeft: "30%" }}>
               <Rating name="read-only" size="small" value={rating} readOnly />
               <Typography variant="body2" color="text.secondary">
                 4.0 (23 đánh giá)
@@ -152,14 +196,25 @@ const ProductDetail = ({ product }) => {
           </div>
           <div className="detail-brand">
             <span>Thương hiệu: </span>
-            <a href="#">Cobi Food</a>
+            <a href="#">{product.brand}</a>
           </div>
           <div className="detail-price">
             <div className="product-price">
-              <span className="text-secondary price-promotional">45.000đ</span>
-              <span className="text-primary price-original">50.000đ</span>
+              <span className="text-secondary price-promotional">
+                {calculateTotalPrice() === 0
+                  ? getPrice(product.classifies)
+                  : calculateTotalPrice()}
+                đ
+              </span>
+              <span className="text-primary price-original">
+                {getPrice(product.classifies)}đ
+              </span>
             </div>
-            <span>Đã bán 350</span>
+            <div>
+              <span>Đã bán: </span>
+              <span className="text-secondary">{product.selled}</span>
+              <span> sản phẩm</span>
+            </div>
           </div>
           {/* <div className="detail-color">
             <span>Màu sắc: </span>
@@ -172,21 +227,24 @@ const ProductDetail = ({ product }) => {
             <img src={product1} alt="Product" />
             <img src={product1} alt="Product" />
           </div> */}
-          <div className="detail-size">
-            <span>Kích thước: </span>
-            {sizes.map((size) => (
-              <button
-                key={size}
-                className={`size-btn ${
-                  selectedSize === size ? "selected" : ""
-                }`}
-                onClick={() => handleSelect(size)}
-              >
-                {size}
-                {selectedSize === size && " ✔️"}
-              </button>
-            ))}
-          </div>
+          {Object.entries(groupClassifies).map(([key, classifies]) => (
+            <div className="detail-classifies" key={key}>
+              <span>{key}</span>
+              {classifies.map((classify) => (
+                <button
+                  key={classify._id}
+                  className={`size-btn ${
+                    selectedOptions[key] === classify.value ? "selected" : ""
+                  }`}
+                  onClick={() => handleOptionChange(key, classify.value)}
+                >
+                  {classify.value}
+                  {selectedOptions[key] === classify.value && " ✔️"}
+                </button>
+              ))}
+            </div>
+          ))}
+
           <div className="detail-quantity">
             <span>Số lượng: </span>
             <div className="product-quantity">

@@ -22,16 +22,16 @@ const SliderSection = () => {
   return (
     <div className="slider-container">
       <Slider {...settings}>
-        <div>
+        <div className="slider-item">
           <img src={slider1} alt="Slider 1" />
         </div>
-        <div>
+        <div className="slider-item">
           <img src={slider2} alt="Slider 2" />
         </div>
-        <div>
+        <div className="slider-item">
           <img src={slider3} alt="Slider 3" />
         </div>
-        <div>
+        <div className="slider-item">
           <img src={slider4} alt="Slider 4" />
         </div>
       </Slider>

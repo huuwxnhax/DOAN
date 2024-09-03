@@ -13,11 +13,50 @@ import CheckIcon from "@mui/icons-material/Check";
 import { useState } from "react";
 import { useEffect } from "react";
 import Notification from "../../components/Notification/Notification";
+import {
+  getClassifiesByProductId,
+  getProductMainPage,
+} from "../../api/productAPI";
+import Loading from "../../components/Loading/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories } from "../../actions/cateAction";
+import { selectAllCategories } from "../../features/cateSlice";
 
 const Home = () => {
+  const [products, setProducts] = useState([]);
   const locate = useLocation();
   const successMessage = locate.state ? locate.state.successMessage : "";
   const [showNotification, setShowNotification] = useState(!!successMessage);
+
+  // get all products
+  useEffect(() => {
+    const fetchProductMainPage = async () => {
+      try {
+        const { data } = await getProductMainPage();
+        const productWithClassifies = await Promise.all(
+          data.map(async (product) => {
+            const classifiesResponse = await getClassifiesByProductId(
+              product._id
+            );
+            return { ...product, classifies: classifiesResponse.data };
+          })
+        );
+        setProducts(productWithClassifies);
+        console.log("Products Homepage: ", productWithClassifies);
+      } catch (error) {
+        console.log("Error fetching products: ", error);
+      }
+    };
+    fetchProductMainPage();
+  }, []);
+
+  // get all categories
+  const dispatch = useDispatch();
+  const categories = useSelector(selectAllCategories);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
 
   return (
     <div className="container">
@@ -49,7 +88,7 @@ const Home = () => {
         </section>
 
         <section className="products">
-          <ProductSection isHomepage={true} />
+          <ProductSection isHomepage={true} products={products} />
         </section>
 
         <section className="footer">

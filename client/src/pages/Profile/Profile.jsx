@@ -8,6 +8,14 @@ import ProfileSection from "../../components/Sections/ProfileSection";
 import AddressSection from "../../components/Sections/AddressSection";
 
 const Profile = () => {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [width]);
+
   return (
     <div className="container">
       <Navbar />
@@ -17,7 +25,7 @@ const Profile = () => {
           {/* <AddressSection /> */}
         </section>
         <section className="options">
-          <Options />
+          <Options width={width} />
         </section>
       </div>
     </div>

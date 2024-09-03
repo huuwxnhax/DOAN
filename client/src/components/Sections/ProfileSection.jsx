@@ -21,13 +21,13 @@ const ProfileSection = ({ props }) => {
   return (
     <>
       <div className="profile-header">
-        <h2>My Profile</h2>
-        <p>Profile details</p>
+        <h2>Hồ Sơ Cá Nhân</h2>
+        <p>Hồ Sơ Chi Tiết</p>
       </div>
       <div className="profile-body">
         <form className="form-container">
           <div className="form-items">
-            <label htmlFor="name">Name:</label>
+            <label htmlFor="name">Tên:</label>
             <a>Tran Huu Nha</a>
           </div>
           <div className="form-items">
@@ -35,12 +35,12 @@ const ProfileSection = ({ props }) => {
             <a>huunha21032k2@gmail.com</a>
           </div>
           <div className="form-items">
-            <label htmlFor="email">Phone Number:</label>
+            <label htmlFor="email">Số Điện Thoại:</label>
             <a>0987654321</a>
           </div>
 
           <div className="form-items">
-            <label htmlFor="email">Select Gender:</label>
+            <label htmlFor="email">Giới Tính:</label>
             <div className="radio-group">
               <input
                 type="radio"
@@ -50,7 +50,7 @@ const ProfileSection = ({ props }) => {
                 checked={gender === "male"}
                 onChange={handleChange}
               />
-              <label htmlFor="male">Male</label>
+              <label htmlFor="male">Nam</label>
             </div>
             <div className="radio-group">
               <input
@@ -61,7 +61,7 @@ const ProfileSection = ({ props }) => {
                 checked={gender === "female"}
                 onChange={handleChange}
               />
-              <label htmlFor="female">Female</label>
+              <label htmlFor="female">Nữ</label>
             </div>
             <div className="radio-group">
               <input
@@ -72,11 +72,11 @@ const ProfileSection = ({ props }) => {
                 checked={gender === "other"}
                 onChange={handleChange}
               />
-              <label htmlFor="other">Other</label>
+              <label htmlFor="other">Khác</label>
             </div>
           </div>
 
-          <div>
+          <div className="dropzone">
             <Dropzone
               openRef={openRef}
               onDrop={(files) => console.log("accepted files", files)}
@@ -86,8 +86,8 @@ const ProfileSection = ({ props }) => {
               {...props}
             >
               <Group
-                justify="center"
-                gap="xl"
+                position="center"
+                spacing="xl"
                 mih={220}
                 style={{ pointerEvents: "none" }}
               >
@@ -124,21 +124,22 @@ const ProfileSection = ({ props }) => {
 
                 <div>
                   <Text size="xl" inline>
-                    Drag images here or click to select files
+                    Kéo và thả hoặc chọn ảnh của bạn vào đây
                   </Text>
-                  <Text size="sm" c="dimmed" inline mt={7}>
-                    Attach as many files as you like, each file should not
-                    exceed 5mb
+                  <Text size="sm" color="dimmed" inline mt={7}>
+                    (Tối đa 5MB)
                   </Text>
                 </div>
               </Group>
             </Dropzone>
-            <Group justify="center" mt="md">
-              <Button onClick={() => openRef.current?.()}>Select files</Button>
+            <Group position="center" mt="md">
+              <Button onClick={() => openRef.current?.()}>Chọn Ảnh</Button>
             </Group>
           </div>
 
-          <Button variant="filled">Update</Button>
+          <Button className="update-btn" variant="filled">
+            Cập Nhật
+          </Button>
         </form>
       </div>
     </>
