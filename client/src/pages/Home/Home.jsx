@@ -66,7 +66,9 @@ const Home = () => {
           onClose={() => setShowNotification(false)}
         />
       )}
-      <Navbar />
+      <div className="navbar-section">
+        <Navbar />
+      </div>
       <div className="homepage-content">
         <div className="bg-color-1">
           <div className="slider-banner-section">
