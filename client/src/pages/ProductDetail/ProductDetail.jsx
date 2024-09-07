@@ -11,13 +11,14 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Rating, Typography } from "@mui/material";
 import FooterSection from "../../components/Sections/FooterSection";
-import ProductSection from "../../components/Sections/ProductSection";
 import DetailList from "../../components/DetailList/DetailList";
 import PurchaseModal from "../../components/PurchaseModal/PurchaseModal";
 import { useLocation, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectAllCategories } from "../../features/cateSlice";
+import { addToCart } from "../../api/cartAPI";
+import Notification from "../../components/Notification/Notification";
 
 const ProductDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +26,21 @@ const ProductDetail = () => {
   const [startIndex, setStartIndex] = useState(0);
   const [rating, setRating] = useState(4);
   const [quantity, setQuantity] = useState(1);
+  const [selectedKey, setSelectedKey] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [groupClassifies, setGroupClassifies] = useState({});
+  const [showNotification, setShowNotification] = useState(false);
+
+  const user = useSelector((state) => state.auth.user);
+
+  const itemAddToCart = {
+    buyer: user._id,
+    productId: "",
+    classifyId: "",
+    seller: "",
+    numberProduct: quantity,
+  };
 
   const productDetails = [
     { key: "Kho", value: "500" },
@@ -33,20 +48,6 @@ const ProductDetail = () => {
     { key: "Hạn bảo hành", value: "5 năm" },
     { key: "Loại bảo hành", value: "Bảo hành nhà sản xuất" },
     { key: "Độ cứng nệm & gối", value: "Êm" },
-    {
-      key: "Tính năng nệm",
-      value: "Đường viền cơ thể, Thoải mái, Hỗ trợ cổ & lưng",
-    },
-    { key: "Loại nệm", value: "Foam Mattress" },
-    { key: "Xuất xứ", value: "Trong nước" },
-    { key: "Sản phẩm đặt theo yêu cầu", value: "Không" },
-    { key: "Kích cỡ giường", value: "1M2X2M, 1M4X2M, 1M6X2M, 1M8X2M, 2M2X2M" },
-    {
-      key: "Kích thước (dài x rộng x cao)",
-      value: "1M2/1M4/1M6/1M8/2M2 X 2M X 10CM",
-    },
-    { key: "Chiều dài", value: "2m" },
-    { key: "Tên tổ chức chịu trách nhiệm sản xuất", value: "CT TNHH ZAVINA" },
   ];
 
   const { id } = useParams();
@@ -61,40 +62,46 @@ const ProductDetail = () => {
     return categories.find((cate) => cate._id === categoryId)?.categoriesName;
   };
 
-  // get the highest price of all classifies
-  const getPrice = (classifies) => {
-    if (classifies.length === 0) return 0;
-    return Math.max(...classifies.map((classify) => classify.price));
-  };
-
   // group classifies by key
-  const groupClassifies = product?.classifies.reduce((groups, classify) => {
-    if (!groups[classify.key]) {
-      groups[classify.key] = [];
+  useEffect(() => {
+    if (product && product.classifies) {
+      const grouped = product.classifies.reduce((groups, classify) => {
+        if (!groups[classify.key]) {
+          groups[classify.key] = [];
+        }
+        groups[classify.key].push(classify);
+        return groups;
+      }, {});
+      setGroupClassifies(grouped);
+      console.log(grouped);
     }
-    groups[classify.key].push(classify);
-    return groups;
-  }, {});
+  }, [product]);
 
   // handle option change
-  const handleOptionChange = (key, value) => {
-    setSelectedOptions((prevOptions) => ({
-      ...prevOptions,
-      [key]: value,
-    }));
+  const handleOptionChange = (key, classify) => {
+    if (classify.stock > 0) {
+      setSelectedOptions(classify);
+    }
   };
 
-  // Tính toán tổng giá trị dựa trên các tùy chọn đã chọn
+  // get the lowest price of all classifies
+  const getPrice = (classifies) => {
+    if (!classifies || classifies.length === 0) return 0; // Return 0 if no classifies
+    const prices = classifies
+      .map((classify) => classify.price)
+      .filter((price) => price > 0);
+    return prices.length > 0 ? Math.min(...prices) : 0; // Return the minimum price, or 0 if no valid prices
+  };
+
+  // Calculate total price based on selected option
   const calculateTotalPrice = () => {
-    const selectedClassifies = Object.entries(selectedOptions).map(
-      ([key, value]) => groupClassifies[key].find((cls) => cls.value === value)
-    );
-
-    const basePrice = selectedClassifies.reduce((total, classify) => {
-      return total + classify.price * quantity;
-    }, 0);
-
-    return basePrice;
+    if (selectedOptions && selectedOptions.price > 0) {
+      return selectedOptions.price * quantity;
+    }
+    // Return the lowest price if no classification is selected
+    const allClassifies = Object.values(groupClassifies).flat();
+    console.log(allClassifies);
+    return getPrice(allClassifies) * quantity;
   };
 
   // scroll to top when component mounted
@@ -125,6 +132,16 @@ const ProductDetail = () => {
     }
   };
 
+  const handleKeyChange = (key) => {
+    setSelectedKey(key);
+    setSelectedValue("");
+  };
+
+  const handleValueChange = (value) => {
+    setSelectedValue(value);
+    setSelectedOptions(value);
+  };
+
   const handleMouseEnter = (image) => {
     setCurrentImage(image);
   };
@@ -133,12 +150,38 @@ const ProductDetail = () => {
     setQuantity((prevQuantity) => Math.max(1, prevQuantity + delta));
   };
 
+  const handleAddToCart = async () => {
+    if (!product) return;
+    itemAddToCart.productId = product._id;
+    itemAddToCart.seller = product.seller;
+    itemAddToCart.classifyId = selectedOptions._id;
+    console.log(itemAddToCart);
+    try {
+      const response = await addToCart(itemAddToCart);
+      if (response.status === 201) {
+        setShowNotification(true);
+
+        console.log(response);
+      } else {
+        alert("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (!product) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="product-detail-page">
+      {showNotification && (
+        <Notification
+          message="Thêm sản phẩm vào giỏ hàng thành công!"
+          onClose={() => setShowNotification(false)}
+        />
+      )}
       <Navbar />
       <div className="product-detail-container">
         <div className="product-detail-image">
@@ -201,10 +244,7 @@ const ProductDetail = () => {
           <div className="detail-price">
             <div className="product-price">
               <span className="text-secondary price-promotional">
-                {calculateTotalPrice() === 0
-                  ? getPrice(product.classifies)
-                  : calculateTotalPrice()}
-                đ
+                {calculateTotalPrice()}đ
               </span>
               <span className="text-primary price-original">
                 {getPrice(product.classifies)}đ
@@ -216,34 +256,37 @@ const ProductDetail = () => {
               <span> sản phẩm</span>
             </div>
           </div>
-          {/* <div className="detail-color">
-            <span>Màu sắc: </span>
-            <span>Đỏ</span>
-          </div> */}
-          {/* <div className="detail-model">
-            <img src={product1} alt="Product" />
-            <img src={product1} alt="Product" />
-            <img src={product1} alt="Product" />
-            <img src={product1} alt="Product" />
-            <img src={product1} alt="Product" />
-          </div> */}
-          {Object.entries(groupClassifies).map(([key, classifies]) => (
-            <div className="detail-classifies" key={key}>
-              <span>{key}</span>
-              {classifies.map((classify) => (
+
+          <div className="detail-classifies">
+            {Object.keys(groupClassifies).map((key) => (
+              <button
+                key={key}
+                className={`key-btn ${selectedKey === key ? "selected" : ""}`}
+                onClick={() => handleKeyChange(key)}
+              >
+                {key}
+              </button>
+            ))}
+          </div>
+          {selectedKey && (
+            <div className="detail-classifies-values">
+              {groupClassifies[selectedKey].map((classify) => (
                 <button
                   key={classify._id}
-                  className={`size-btn ${
-                    selectedOptions[key] === classify.value ? "selected" : ""
+                  className={`value-btn ${
+                    selectedValue._id === classify._id ? "selected" : ""
                   }`}
-                  onClick={() => handleOptionChange(key, classify.value)}
+                  onClick={() =>
+                    classify.stock > 0 && handleValueChange(classify)
+                  } // Only allow selection if stock > 0
+                  disabled={classify.stock === 0} // Disable if out of stock
                 >
-                  {classify.value}
-                  {selectedOptions[key] === classify.value && " ✔️"}
+                  {classify.value} (
+                  {classify.stock > 0 ? "Còn hàng" : "Hết hàng"})
                 </button>
               ))}
             </div>
-          ))}
+          )}
 
           <div className="detail-quantity">
             <span>Số lượng: </span>
@@ -264,7 +307,9 @@ const ProductDetail = () => {
             </div>
           </div>
           <div className="detail-action">
-            <button className="add-cart-btn">Thêm vào giỏ hàng</button>
+            <button onClick={handleAddToCart} className="add-cart-btn">
+              Thêm vào giỏ hàng
+            </button>
             <button onClick={handleBuyNowClick} className="buy-now-btn">
               Mua ngay
             </button>
@@ -279,24 +324,6 @@ const ProductDetail = () => {
       <div className="product-about">
         <div className="detail-product">
           <h3>Thông tin sản phẩm</h3>
-          {/* <span>
-            Khô gà lá chanh Cobi Food hộp 300g xé giòn, đậm vị, cay vừa, đồ ăn
-            vặt không chứa phẩm màu
-          </span>
-          <ul>
-            <li>
-              Nguyên liệu: Thịt ức gà tươi, lá chanh, muối, đường, ớt, tỏi, gia
-              vị.
-            </li>
-            <li>Khối lượng: 300g.</li>
-            <li>Thương hiệu: Cobi Food.</li>
-            <li>Độ cay: Vừa.</li>
-            <li>Đóng gói: Hộp giấy.</li>
-            <li>Hạn sử dụng: 6 tháng kể từ ngày sản xuất.</li>
-            <li>
-              Bảo quản: Nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp.
-            </li>
-          </ul> */}
           <DetailList details={productDetails} />
           <div className="rating-section">
             <h3>Đánh Giá Sản Phẩm</h3>

@@ -136,7 +136,12 @@
   padding: 10px 0;
 }
 
-.size-btn {
+.detail-classifies-values {
+  display: flex;
+  gap: 10px;
+}
+
+.key-btn {
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -145,13 +150,33 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.size-btn.selected {
+.key-btn.selected {
   background-color: var(--color-tertiary);
   color: white;
   border-color: var(--color-tertiary);
 }
 
-.size-btn:not(.selected):hover {
+.key-btn:not(.selected):hover {
+  background-color: #f0f0f0;
+  border-color: var(--color-tertiary);
+}
+
+.value-btn {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.value-btn.selected {
+  background-color: var(--color-tertiary);
+  color: white;
+  border-color: var(--color-tertiary);
+}
+
+.value-btn:not(.selected):hover {
   background-color: #f0f0f0;
   border-color: var(--color-tertiary);
 }
@@ -218,6 +243,10 @@
 
 .add-cart-btn:hover {
   background-color: var(--color-tertiary-dark);
+}
+
+.add-cart-btn:active {
+  background-color: var(--color-secondary);
 }
 
 .buy-now-btn {

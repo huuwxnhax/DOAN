@@ -11,6 +11,8 @@ import prod1 from "../../assets/images/prod1.webp";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { logout } from "../../features/authSlice";
+import { getCartItemByBuyerId } from "../../api/cartAPI";
+import { getClassifiesByProductId, getProductById } from "../../api/productAPI";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -28,6 +30,9 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [productData, setProductData] = useState({});
+  const [selectedClassifies, setSelectedClassifies] = useState({});
 
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -53,13 +58,82 @@ const Navbar = () => {
     setShowSearch((prev) => !prev);
   };
 
-  const handleShowCart = () => {
+  const handleShowCart = async () => {
+    const response = await getCartItemByBuyerId(user._id);
+    const processedItems = response.data.products.flatMap((product) =>
+      product.items.map((item) => ({
+        ...item,
+        seller: product.seller,
+        numberProduct: item.numberProduct || 1,
+        price: item.price,
+      }))
+    );
+    setCartItems(processedItems);
+
     if (isMobile) {
       setOpenDrawer((prev) => !prev);
     } else {
       setShowCart((prev) => !prev);
     }
   };
+
+  // Fetch product data for all product IDs in cartItems
+  useEffect(() => {
+    const fetchProductData = async () => {
+      const productIds = [...new Set(cartItems.map((item) => item.productId))]; // Lấy danh sách productId duy nhất
+      const productDataMap = {}; // Dùng để lưu dữ liệu sản phẩm theo productId
+
+      try {
+        // Gọi API cho từng productId để lấy thông tin sản phẩm
+        await Promise.all(
+          productIds.map(async (productId) => {
+            const response = await getProductById(productId);
+            if (response && response.data && response.data.length > 0) {
+              productDataMap[productId] = response.data[0]; // Giả sử API trả về mảng, lấy đối tượng đầu tiên
+            }
+          })
+        );
+        setProductData(productDataMap); // Lưu dữ liệu sản phẩm vào state
+        console.log("Product data:", productDataMap);
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
+    };
+
+    if (cartItems.length > 0) {
+      fetchProductData();
+    }
+  }, [cartItems]);
+
+  // Fetch selected classify for each product in cartItems
+  useEffect(() => {
+    const fetchClassifyData = async () => {
+      try {
+        const classifyMap = {};
+        for (const item of cartItems) {
+          if (item.productId && item.classifyId) {
+            const response = await getClassifiesByProductId(item.productId);
+            const allClassifies = response.data;
+
+            const selectedClassify = allClassifies.find(
+              (classify) => classify._id === item.classifyId
+            );
+
+            if (selectedClassify) {
+              classifyMap[`${item.productId}-${item.classifyId}`] =
+                selectedClassify;
+            }
+          }
+        }
+        setSelectedClassifies(classifyMap);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (cartItems.length > 0) {
+      fetchClassifyData();
+    }
+  }, [cartItems]);
 
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -174,24 +248,38 @@ const Navbar = () => {
               {!isMobile && showCart && (
                 <div className={`dropdown-content ${showCart ? "show" : ""}`}>
                   <div className="cart-title">Sản Phẩm Mới Thêm</div>
-                  <div className="cart-item-container">
-                    <div className="cart-item">
-                      <img
-                        src={prod1}
-                        alt="Product Image"
-                        className="cart-item-img"
-                      />
-                      <div className="cart-item-info">
-                        <span className="cart-item-label">
-                          Combo khuyến mãi
-                        </span>
-                        <span className="cart-item-name">
-                          Dép gia đình chống trượt
-                        </span>
-                        <span className="cart-item-price">27.000₫</span>
+                  {cartItems.map((item) => {
+                    const product = productData[item.productId];
+                    const classify =
+                      selectedClassifies[
+                        `${item.productId}-${item.classifyId}`
+                      ];
+                    const itemPrice = classify?.price || item.price;
+                    return (
+                      <div
+                        className="cart-item-container"
+                        key={`${item.productId}-${item.classifyId}`}
+                      >
+                        <div className="cart-item">
+                          <img
+                            src={prod1}
+                            alt={product?.productName || "Product Image"}
+                            className="cart-item-img"
+                          />
+                          <div className="cart-item-info">
+                            <span className="cart-item-label">
+                              Combo khuyến mãi
+                            </span>
+                            <span className="cart-item-name">
+                              {product?.productName || "Loading..."}
+                            </span>
+                            <span className="cart-item-price">{itemPrice}</span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                    );
+                  })}
+
                   <a href="/cart" className="view-cart-button">
                     Xem Giỏ Hàng
                   </a>

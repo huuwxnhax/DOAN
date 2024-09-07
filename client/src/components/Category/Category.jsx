@@ -105,18 +105,15 @@ const Category = () => {
     navigate({ search: params.toString() }, { replace: true });
   }, [currentPage, navigate, location.search]);
 
-  // // get all categories
-  // const dispatch = useDispatch();
-  // const categories = useSelector(selectAllCategories);
-  const categories = useSelector((state) => selectAllCategories(state));
+  // get all categories
+  const dispatch = useDispatch();
+  const categories = useSelector(selectAllCategories);
 
   useEffect(() => {
-    console.log("Categories: ", categories);
-  }, [categories]);
-
-  // useEffect(() => {
-  //   dispatch(fetchCategories());
-  // }, [dispatch]);
+    if (categories.length === 0) {
+      dispatch(fetchCategories());
+    }
+  }, [categories.length, dispatch]);
 
   // set height for additional categories
   useEffect(() => {

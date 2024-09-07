@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import prod1 from "../../assets/images/prod1.webp";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Link, Pagination, Stack } from "@mui/material";
+import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 const ProductSection = ({ isHomepage, products }) => {
