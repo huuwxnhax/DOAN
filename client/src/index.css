@@ -9,10 +9,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --color-primary: #99b545;
+  /* --color-primary: #99b545; */
+  --color-primary: #007bff;
   --color-secondary: #ff5722;
   --color-tertiary: #8bc34a;
   --color-primary-dark: #9aa185;
+
   --hue: 223;
   --bg: hsl(var(--hue), 10%, 90%);
   --fg: hsl(var(--hue), 10%, 10%);

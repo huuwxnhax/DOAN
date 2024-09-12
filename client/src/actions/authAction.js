@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { registerAPI, loginAPI } from "../api/authAPI";
+import { registerAPI, loginAPI } from "../api/userAPI";
 
 export const register = createAsyncThunk(
   "users/register",
@@ -20,6 +20,8 @@ export const login = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const { data } = await loginAPI(formData);
+      const { access_token } = data;
+      localStorage.setItem("token", access_token);
       console.log("Response:", data);
       return data;
     } catch (error) {

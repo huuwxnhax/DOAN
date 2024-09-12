@@ -4,20 +4,166 @@ import { useState, useEffect, useRef } from "react";
 import { Button, Group, Text, rem } from "@mantine/core";
 import { IconUpload, IconPhoto, IconX } from "@tabler/icons-react";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserAPI } from "../../api/userAPI";
+import { updateUser } from "../../features/authSlice";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import Notification from "../Notification/Notification";
+import UploadComponent from "../Dropzone/UploadComponent";
+import { uploadFile } from "../../api/productAPI";
 
 const ProfileSection = ({ props }) => {
-  const [gender, setGender] = useState("");
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+
   const openRef = useRef(null);
+  const [name, setName] = useState(user?.name || "");
+  const [phoneNumber, setPhoneNumber] = useState(user?.number || "");
+  const [gender, setGender] = useState(user?.sex || "");
+  const [avatar, setAvatar] = useState(null);
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+  const [provinceName, setProvinceName] = useState("");
+  const [districtName, setDistrictName] = useState("");
+  const [wardName, setWardName] = useState("");
+  const [selectedProvince, setSelectedProvince] = useState(null);
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [selectedWard, setSelectedWard] = useState(null);
+  const [addressDetail, setAddressDetail] = useState("");
+  const [isEditAddress, setIsEditAddress] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+
+  useEffect(() => {
+    fetch("https://esgoo.net/api-tinhthanh/1/0.htm")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error === 0) {
+          setProvinces(data.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error provinces:", error);
+      });
+  }, []);
+
+  const handleProvinceChange = (e) => {
+    const provinceID = e.target.value;
+    setSelectedProvince(provinceID);
+    const selected = provinces.find((province) => province.id === provinceID);
+    setProvinceName(selected.full_name);
+    fetch(`https://esgoo.net/api-tinhthanh/2/${provinceID}.htm`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error === 0) {
+          setDistricts(data.data);
+          setWards([]);
+        }
+      })
+      .catch((error) => {
+        console.error("Error districts:", error);
+      });
+  };
+
+  const handleDistrictChange = (e) => {
+    const districtID = e.target.value;
+    setSelectedDistrict(districtID);
+    const selected = districts.find((district) => district.id === districtID);
+    setDistrictName(selected.full_name);
+    fetch(`https://esgoo.net/api-tinhthanh/3/${districtID}.htm`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error === 0) {
+          setWards(data.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error wards:", error);
+      });
+  };
+
+  const handleWardChange = (e) => {
+    const wardID = e.target.value;
+    setSelectedWard(wardID);
+    const selected = wards.find((ward) => ward.id === wardID);
+    setWardName(selected.full_name);
+  };
 
   const handleChange = (event) => {
     setGender(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Selected Gender:", gender);
-    // You can handle the form submission here, e.g., send data to a server
+  const handleChangeName = (event) => {
+    setName(event.target.value);
   };
+
+  const handleChangePhoneNumber = (event) => {
+    setPhoneNumber(event.target.value);
+  };
+
+  const handleChangeAddressDetail = (event) => {
+    setAddressDetail(event.target.value);
+  };
+
+  const toggleEditAddress = () => {
+    setIsEditAddress(!isEditAddress);
+  };
+
+  const handleUpload = (files) => {
+    setAvatar(files);
+    console.log("avatar", files);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (user.name === "" || user.phone === "" || user.address === "") {
+      alert("Vui lòng nhập đầy đủ thông tin");
+      return;
+    }
+
+    if (isEditAddress && addressDetail === "") {
+      alert("Vui lòng nhập địa chỉ chi tiết");
+      return;
+    }
+
+    const address =
+      selectedProvince && selectedDistrict && selectedWard
+        ? `${addressDetail} - ${wardName} - ${districtName} - ${provinceName}`
+        : user.address;
+
+    const profileData = {
+      id: user._id,
+      userName: user.userName,
+      role: user.role,
+      name: name,
+      avata: user.avata,
+      address: address,
+      sex: gender || user.sex,
+      number: phoneNumber,
+    };
+
+    try {
+      if (avatar) {
+        const formData = new FormData();
+        formData.append("files", avatar);
+        const uploadResponse = await uploadFile(formData);
+        const resUrl = uploadResponse.data;
+        profileData.avata = resUrl[0];
+      }
+
+      const resupdateUser = await updateUserAPI(profileData, user.access_token);
+      if (resupdateUser.status === 201) {
+        dispatch(updateUser(profileData));
+        console.log("Update success", resupdateUser.data);
+        setIsEditAddress(false);
+        setShowNotification(true);
+      }
+    } catch (error) {
+      console.error("Update error:", error.response?.data || error.message);
+    }
+  };
+
   return (
     <>
       <div className="profile-header">
@@ -25,18 +171,28 @@ const ProfileSection = ({ props }) => {
         <p>Hồ Sơ Chi Tiết</p>
       </div>
       <div className="profile-body">
-        <form className="form-container">
+        <form className="form-container" onSubmit={handleSubmit}>
           <div className="form-items">
             <label htmlFor="name">Tên:</label>
-            <a>Tran Huu Nha</a>
+            <input
+              id="name"
+              onChange={handleChangeName}
+              value={name}
+              type="text"
+            />
           </div>
           <div className="form-items">
             <label htmlFor="email">Email:</label>
-            <a>huunha21032k2@gmail.com</a>
+            <a>{user.userName}</a>
           </div>
           <div className="form-items">
             <label htmlFor="email">Số Điện Thoại:</label>
-            <a>0987654321</a>
+            <input
+              type="tel"
+              id="phone"
+              value={phoneNumber}
+              onChange={handleChangePhoneNumber}
+            />
           </div>
 
           <div className="form-items">
@@ -75,73 +231,94 @@ const ProfileSection = ({ props }) => {
               <label htmlFor="other">Khác</label>
             </div>
           </div>
-
-          <div className="dropzone">
-            <Dropzone
-              openRef={openRef}
-              onDrop={(files) => console.log("accepted files", files)}
-              onReject={(files) => console.log("rejected files", files)}
-              maxSize={5 * 1024 ** 2}
-              accept={IMAGE_MIME_TYPE}
-              {...props}
+          <div className="form-items">
+            <label>Địa chỉ:</label>
+            <span>{user.address || "Chưa cập nhật"}</span>
+            <button
+              className="edit-btn"
+              type="button"
+              onClick={toggleEditAddress}
             >
-              <Group
-                position="center"
-                spacing="xl"
-                mih={220}
-                style={{ pointerEvents: "none" }}
-              >
-                <Dropzone.Accept>
-                  <IconUpload
-                    style={{
-                      width: rem(52),
-                      height: rem(52),
-                      color: "var(--mantine-color-blue-6)",
-                    }}
-                    stroke={1.5}
-                  />
-                </Dropzone.Accept>
-                <Dropzone.Reject>
-                  <IconX
-                    style={{
-                      width: rem(52),
-                      height: rem(52),
-                      color: "var(--mantine-color-red-6)",
-                    }}
-                    stroke={1.5}
-                  />
-                </Dropzone.Reject>
-                <Dropzone.Idle>
-                  <IconPhoto
-                    style={{
-                      width: rem(52),
-                      height: rem(52),
-                      color: "var(--mantine-color-dimmed)",
-                    }}
-                    stroke={1.5}
-                  />
-                </Dropzone.Idle>
-
-                <div>
-                  <Text size="xl" inline>
-                    Kéo và thả hoặc chọn ảnh của bạn vào đây
-                  </Text>
-                  <Text size="sm" color="dimmed" inline mt={7}>
-                    (Tối đa 5MB)
-                  </Text>
+              Thay đổi
+              <ArrowDropDownIcon />
+            </button>
+          </div>
+          <div className={`address-form ${isEditAddress ? "show" : ""}`}>
+            {isEditAddress && (
+              <div className="address-form-section">
+                <div className="form-items">
+                  <label htmlFor="">Chọn địa chỉ:</label>
+                  <select
+                    className="css_select"
+                    id="tinh"
+                    name="tinh"
+                    title="Chọn Tỉnh Thành"
+                    onChange={handleProvinceChange}
+                  >
+                    <option value="0">Tỉnh Thành</option>
+                    {provinces.map((province) => (
+                      <option key={province.id} value={province.id}>
+                        {province.full_name}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    className="css_select"
+                    id="quan"
+                    name="quan"
+                    title="Chọn Quận Huyện"
+                    onChange={handleDistrictChange}
+                  >
+                    <option value="0">Quận Huyện</option>
+                    {districts.map((district) => (
+                      <option key={district.id} value={district.id}>
+                        {district.full_name}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    className="css_select"
+                    id="phuong"
+                    name="phuong"
+                    title="Chọn Phường Xã"
+                    onChange={handleWardChange}
+                  >
+                    <option value="0">Phường Xã</option>
+                    {wards.map((ward) => (
+                      <option key={ward.id} value={ward.id}>
+                        {ward.full_name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              </Group>
-            </Dropzone>
-            <Group position="center" mt="md">
-              <Button onClick={() => openRef.current?.()}>Chọn Ảnh</Button>
-            </Group>
+                <div>
+                  <div className="form-items">
+                    <label htmlFor="address">Địa chỉ chi tiết:</label>
+                    <input
+                      id="address"
+                      type="text"
+                      value={addressDetail}
+                      onChange={handleChangeAddressDetail}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
-          <Button className="update-btn" variant="filled">
+          <UploadComponent openRef={openRef} onUpload={handleUpload} />
+
+          <Button type="submit" className="update-btn" variant="filled">
             Cập Nhật
           </Button>
         </form>
       </div>
+      {showNotification && (
+        <Notification
+          message="Cập nhật thông tin thành công"
+          onClose={() => setShowNotification(false)}
+        />
+      )}
     </>
   );
 };

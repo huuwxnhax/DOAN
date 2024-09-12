@@ -10,3 +10,5 @@ export const getProductsByPage = (page) =>
 export const getClassifiesByProductId = (id) => API.get(`/classify/${id}`);
 export const getProductsDynamic = (query) =>
   API.get(`/products/dynamicFind?${query}`);
+
+export const uploadFile = (formData) => API.post("/products/files", formData);

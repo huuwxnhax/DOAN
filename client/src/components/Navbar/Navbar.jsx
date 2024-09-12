@@ -324,7 +324,7 @@ const Navbar = () => {
                 <div ref={profileRef}>
                   <Avatar
                     alt="User"
-                    src={user.avatar || "https://via.placeholder.com/150"}
+                    src={user.avata || ""}
                     style={{ cursor: "pointer" }}
                     onClick={handleShowProfile}
                   />

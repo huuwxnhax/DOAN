@@ -45,11 +45,6 @@ const Options = ({ width }) => {
                 </a>
               </li>
               <li className="options-items">
-                <a className="options-link" href="/address">
-                  Địa chỉ
-                </a>
-              </li>
-              <li className="options-items">
                 <a className="options-link" href="/voucher">
                   Voucher
                 </a>
