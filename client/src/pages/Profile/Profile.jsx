@@ -18,29 +18,18 @@ const Profile = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [width]);
 
-  // const renderSection = () => {
-  //   switch (selectedOption) {
-  //     case "profile":
-  //       return <ProfileSection />;
-  //     case "bank":
-  //       return <BankSection />;
-  //     case "bill":
-  //       return <BillSection />;
-  //     default:
-  //       return <ProfileSection />;
-  //   }
-  // }
-
   return (
     <div className="container">
-      <Navbar />
+      <div className="navbar-section">
+        <Navbar />
+      </div>
       <div className="content content-flex">
         <section className="profile-section">
           <ProfileSection />
         </section>
-        <section className="options">
+        {/* <section className="options">
           <Options width={width} />
-        </section>
+        </section> */}
       </div>
     </div>
   );

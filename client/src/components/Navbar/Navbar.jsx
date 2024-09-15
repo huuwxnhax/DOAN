@@ -334,9 +334,13 @@ const Navbar = () => {
                         showProfile ? "show" : ""
                       }`}
                     >
-                      <a href="/profile">Hồ sơ cá nhân</a>
-                      <a href="/settings">Cài đặt</a>
-                      <a onClick={handleLogout}>Đăng xuất</a>
+                      <a href="/profile">Thông Tin Cá Nhân</a>
+                      <a href="/orders">Đơn Hàng Của Bạn</a>
+                      <a href="/cart">Giỏ Hàng</a>
+                      <a href="/wishlist">Sản Phẩm Yêu Thích</a>
+                      <a href="/notifications">Thông Báo</a>
+                      <a href="/settings">Cài Đặt</a>
+                      <a onClick={handleLogout}>Đăng Xuất</a>
                     </div>
                   )}
                 </div>
@@ -430,9 +434,19 @@ const Navbar = () => {
               <Link className="subnavbar-link" to="/faq">
                 FAQ
               </Link>
-              <Link className="subnavbar-link" to="/seller">
-                Trở thành người bán
-              </Link>
+              {user.role.includes("ADMIN") ? (
+                <Link className="subnavbar-link" to="/admin">
+                  Trang Admin
+                </Link>
+              ) : user.role.includes("SELLER") ? (
+                <Link className="subnavbar-link" to="/seller">
+                  Trang Người Bán
+                </Link>
+              ) : user.role.includes("BUYER") ? (
+                <Link className="subnavbar-link" to="/buyer">
+                  Trở Thành Người Bán
+                </Link>
+              ) : null}
             </div>
           </div>
         </div>

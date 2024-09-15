@@ -173,7 +173,9 @@ const ProfileSection = ({ props }) => {
       <div className="profile-body">
         <form className="form-container" onSubmit={handleSubmit}>
           <div className="form-items">
-            <label htmlFor="name">Tên:</label>
+            <label className="label-item" htmlFor="name">
+              Tên:
+            </label>
             <input
               id="name"
               onChange={handleChangeName}
@@ -182,11 +184,15 @@ const ProfileSection = ({ props }) => {
             />
           </div>
           <div className="form-items">
-            <label htmlFor="email">Email:</label>
+            <label className="label-item" htmlFor="email">
+              Email:
+            </label>
             <a>{user.userName}</a>
           </div>
           <div className="form-items">
-            <label htmlFor="email">Số Điện Thoại:</label>
+            <label className="label-item" htmlFor="email">
+              Điện thoại:
+            </label>
             <input
               type="tel"
               id="phone"
@@ -196,44 +202,50 @@ const ProfileSection = ({ props }) => {
           </div>
 
           <div className="form-items">
-            <label htmlFor="email">Giới Tính:</label>
-            <div className="radio-group">
-              <input
-                type="radio"
-                id="male"
-                name="gender"
-                value="male"
-                checked={gender === "male"}
-                onChange={handleChange}
-              />
-              <label htmlFor="male">Nam</label>
-            </div>
-            <div className="radio-group">
-              <input
-                type="radio"
-                id="female"
-                name="gender"
-                value="female"
-                checked={gender === "female"}
-                onChange={handleChange}
-              />
-              <label htmlFor="female">Nữ</label>
-            </div>
-            <div className="radio-group">
-              <input
-                type="radio"
-                id="other"
-                name="gender"
-                value="other"
-                checked={gender === "other"}
-                onChange={handleChange}
-              />
-              <label htmlFor="other">Khác</label>
+            <label className="label-item" htmlFor="email">
+              Giới Tính:
+            </label>
+            <div className="radio-section">
+              <div className="radio-group">
+                <input
+                  type="radio"
+                  id="male"
+                  name="gender"
+                  value="male"
+                  checked={gender === "male"}
+                  onChange={handleChange}
+                />
+                <label htmlFor="male">Nam</label>
+              </div>
+              <div className="radio-group">
+                <input
+                  type="radio"
+                  id="female"
+                  name="gender"
+                  value="female"
+                  checked={gender === "female"}
+                  onChange={handleChange}
+                />
+                <label htmlFor="female">Nữ</label>
+              </div>
+              <div className="radio-group">
+                <input
+                  type="radio"
+                  id="other"
+                  name="gender"
+                  value="other"
+                  checked={gender === "other"}
+                  onChange={handleChange}
+                />
+                <label htmlFor="other">Khác</label>
+              </div>
             </div>
           </div>
           <div className="form-items">
-            <label>Địa chỉ:</label>
-            <span>{user.address || "Chưa cập nhật"}</span>
+            <label className="label-item">Địa chỉ:</label>
+            <span style={{ fontSize: "1rem", fontStyle: "italic" }}>
+              {user.address || "Chưa cập nhật"}
+            </span>
             <button
               className="edit-btn"
               type="button"
@@ -243,11 +255,19 @@ const ProfileSection = ({ props }) => {
               <ArrowDropDownIcon />
             </button>
           </div>
+          {/* mobile */}
+          <button
+            className="edit-btn-mobile"
+            type="button"
+            onClick={toggleEditAddress}
+          >
+            Thay đổi
+            <ArrowDropDownIcon />
+          </button>
           <div className={`address-form ${isEditAddress ? "show" : ""}`}>
             {isEditAddress && (
               <div className="address-form-section">
-                <div className="form-items">
-                  <label htmlFor="">Chọn địa chỉ:</label>
+                <div className="select-fields">
                   <select
                     className="css_select"
                     id="tinh"
@@ -291,16 +311,15 @@ const ProfileSection = ({ props }) => {
                     ))}
                   </select>
                 </div>
-                <div>
-                  <div className="form-items">
-                    <label htmlFor="address">Địa chỉ chi tiết:</label>
-                    <input
-                      id="address"
-                      type="text"
-                      value={addressDetail}
-                      onChange={handleChangeAddressDetail}
-                    />
-                  </div>
+                <div className="edit-detail-address">
+                  <input
+                    className="css_input"
+                    id="address"
+                    type="text"
+                    value={addressDetail}
+                    onChange={handleChangeAddressDetail}
+                    placeholder="Nhập địa chỉ chi tiết"
+                  />
                 </div>
               </div>
             )}
@@ -308,9 +327,17 @@ const ProfileSection = ({ props }) => {
 
           <UploadComponent openRef={openRef} onUpload={handleUpload} />
 
-          <Button type="submit" className="update-btn" variant="filled">
-            Cập Nhật
-          </Button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "20px",
+            }}
+          >
+            <Button type="submit" className="update-btn" variant="filled">
+              Cập Nhật
+            </Button>
+          </div>
         </form>
       </div>
       {showNotification && (

@@ -227,7 +227,7 @@
 }
 
 .dropdown-profile {
-  min-width: 150px;
+  min-width: 200px;
   padding: 0;
 }
 
@@ -312,6 +312,10 @@
 /* Responsive Styles */
 /* Mobile: 0 > 768px */
 @media (max-width: 768px) {
+  .navbar-container {
+    width: 80%;
+  }
+
   .navbar-content {
     flex-wrap: wrap;
   }
