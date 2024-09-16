@@ -1,6 +1,6 @@
 import React from "react";
-import banner1 from "../../assets/images/banner1.jpg";
-import banner2 from "../../assets/images/banner2.jpg";
+import banner1 from "../../../public/images/banner1.jpg";
+import banner2 from "../../../public/images/banner2.jpg";
 
 const BannerSection = () => {
   return (

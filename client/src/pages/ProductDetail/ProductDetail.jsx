@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./ProductDetail.css";
 import Navbar from "../../components/Navbar/Navbar";
-import product1 from "../../assets/images/product1.webp";
-import product2 from "../../assets/images/product2.webp";
-import product3 from "../../assets/images/product3.webp";
-import product4 from "../../assets/images/product4.webp";
-import prodBanner1 from "../../assets/images/prodBanner1.webp";
-import prodBanner2 from "../../assets/images/prodBanner2.webp";
+import product1 from "../../../public/images/product1.webp";
+import product2 from "../../../public/images/product2.webp";
+import product3 from "../../../public/images/product3.webp";
+import product4 from "../../../public/images/product4.webp";
+import prodBanner1 from "../../../public/images/prodBanner1.webp";
+import prodBanner2 from "../../../public/images/prodBanner2.webp";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Rating, Typography } from "@mui/material";

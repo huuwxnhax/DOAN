@@ -2,10 +2,10 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import slider1 from "../../assets/images/slider1.jpg";
-import slider2 from "../../assets/images/slider2.jpg";
-import slider3 from "../../assets/images/slider3.jpg";
-import slider4 from "../../assets/images/slider4.jpg";
+import slider1 from "../../../public/images/slider1.jpg";
+import slider2 from "../../../public/images/slider2.jpg";
+import slider3 from "../../../public/images/slider3.jpg";
+import slider4 from "../../../public/images/slider4.jpg";
 
 const SliderSection = () => {
   const settings = {

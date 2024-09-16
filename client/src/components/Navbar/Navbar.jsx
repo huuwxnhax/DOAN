@@ -7,7 +7,7 @@ import { Avatar, Drawer, useMediaQuery } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import prod1 from "../../assets/images/prod1.webp";
+import prod1 from "../../../public/images/prod1.webp";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { logout } from "../../features/authSlice";
@@ -434,19 +434,23 @@ const Navbar = () => {
               <Link className="subnavbar-link" to="/faq">
                 FAQ
               </Link>
-              {user.role.includes("ADMIN") ? (
+              {user?.role.includes("ADMIN") ? (
                 <Link className="subnavbar-link" to="/admin">
                   Trang Admin
                 </Link>
-              ) : user.role.includes("SELLER") ? (
+              ) : user?.role.includes("SELLER") ? (
                 <Link className="subnavbar-link" to="/seller">
                   Trang Người Bán
                 </Link>
-              ) : user.role.includes("BUYER") ? (
+              ) : user?.role.includes("BUYER") ? (
                 <Link className="subnavbar-link" to="/buyer">
                   Trở Thành Người Bán
                 </Link>
-              ) : null}
+              ) : (
+                <Link className="subnavbar-link" to="/buyer">
+                  Trở Thành Người Bán
+                </Link>
+              )}
             </div>
           </div>
         </div>

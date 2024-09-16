@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import prod1 from "../../assets/images/prod1.webp";
+import prod1 from "../../../public/images/prod1.webp";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";

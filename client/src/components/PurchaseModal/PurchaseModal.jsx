@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./PurchaseModal.css";
-import product1 from "../../assets/images/product1.webp";
+import product1 from "../../../public/images/product1.webp";
 
 const PurchaseModal = ({ isOpen, onClose, product }) => {
   const [discountCode, setDiscountCode] = useState("");

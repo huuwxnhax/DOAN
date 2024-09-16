@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./Cart.css";
-import prod1 from "../../assets/images/prod1.webp";
+import prod1 from "../../../public/images/prod1.webp";
 import FooterSection from "../../components/Sections/FooterSection";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
 import { useEffect } from "react";

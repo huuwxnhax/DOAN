@@ -1,9 +1,9 @@
 import React from "react";
-import brand1 from "../../assets/images/brand1.jpg";
-import brand2 from "../../assets/images/brand2.jpg";
-import brand3 from "../../assets/images/brand3.png";
-import brand4 from "../../assets/images/brand4.png";
-import brand5 from "../../assets/images/brand5.png";
+import brand1 from "../../../public/images/brand1.jpg";
+import brand2 from "../../../public/images/brand2.jpg";
+import brand3 from "../../../public/images/brand3.png";
+import brand4 from "../../../public/images/brand4.png";
+import brand5 from "../../../public/images/brand5.png";
 import { Link } from "react-router-dom";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";

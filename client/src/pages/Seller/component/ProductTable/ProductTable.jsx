@@ -28,7 +28,12 @@ const ProductTable = () => {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md flex-1">
-      <h1 className="text-xl font-bold mb-4">Manage Products</h1>
+      <div className="flex justify-between">
+        <h1 className="text-xl font-bold mb-4">Manage Products</h1>
+        <button className="bg-blue-500 text-white p-2 rounded">
+          New Product
+        </button>
+      </div>
 
       {/* Toggle columns */}
       <div className="mb-4">
