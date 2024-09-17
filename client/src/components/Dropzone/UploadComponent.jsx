@@ -11,7 +11,7 @@ const UploadComponent = ({ props, openRef, onUpload }) => {
 
   const handleDrop = async (acceptfiles) => {
     if (acceptfiles.length > 0) {
-      onUpload(acceptfiles[0]);
+      onUpload(acceptfiles);
     }
   };
 

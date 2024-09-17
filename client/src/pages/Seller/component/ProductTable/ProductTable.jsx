@@ -1,8 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-const ProductTable = () => {
+const ProductTable = ({ setActiveTab }) => {
   // Columns hiện tại
   const [columns, setColumns] = useState([
     { name: "ProductID", visible: true },
@@ -26,11 +26,19 @@ const ProductTable = () => {
     );
   };
 
+  // Handle New Product button click
+  const handleNewProduct = () => {
+    setActiveTab("add-product");
+  };
+
   return (
     <div className="p-6 bg-white rounded-lg shadow-md flex-1">
       <div className="flex justify-between">
         <h1 className="text-xl font-bold mb-4">Manage Products</h1>
-        <button className="bg-blue-500 text-white p-2 rounded">
+        <button
+          className="bg-blue-500 text-white p-2 rounded"
+          onClick={handleNewProduct}
+        >
           New Product
         </button>
       </div>
