@@ -14,3 +14,6 @@ export const getProductsDynamic = (query) =>
   API.get(`/products/dynamicFind?${query}`);
 
 export const uploadFile = (formData) => API.post("/products/files", formData);
+
+export const getProductsBySellerId = (id, page) =>
+  API.get(`/products/seller/${id}/${page}`);

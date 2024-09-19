@@ -143,11 +143,11 @@ const AddProduct = () => {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-xl font-bold mb-4">Add New Product</h1>
+      <h1 className="text-xl font-bold mb-4">Thêm Mới Sản Phẩm</h1>
 
       {/* Product Name */}
       <div className="mb-4">
-        <label className="block text-gray-700">Product Name</label>
+        <label className="block text-gray-700">Tên Sản Phẩm</label>
         <input
           type="text"
           className="w-full p-2 border rounded-lg mt-2"
@@ -159,7 +159,7 @@ const AddProduct = () => {
       {/* Category and Brand */}
       <div className="flex gap-10">
         <div className="mb-4">
-          <label className="block text-gray-700">Category</label>
+          <label className="block text-gray-700">Danh Mục</label>
           <select
             className="w-full p-2 border rounded-lg mt-2"
             value={category}
@@ -174,7 +174,7 @@ const AddProduct = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700">Brand</label>
+          <label className="block text-gray-700">Thương Hiệu</label>
           <input
             type="text"
             className="w-full p-2 border rounded-lg mt-2"
@@ -186,14 +186,14 @@ const AddProduct = () => {
 
       {/* Classify */}
       <div className="mb-4">
-        <label className="block text-gray-700">Classify</label>
+        <label className="block text-gray-700">Phân loại</label>
         {classifies.map((classify, index) => (
           <div key={index} className="flex space-x-4 items-center mb-4">
             <div className="w-1/4">
               {/* <label className="block text-gray-700 text-sm mb-1">Key</label> */}
               <input
                 type="text"
-                placeholder="Key"
+                placeholder="Mô tả"
                 className="w-full p-2 border rounded-lg"
                 value={classify.key}
                 onChange={(e) =>
@@ -209,7 +209,7 @@ const AddProduct = () => {
               {/* <label className="block text-gray-700 text-sm mb-1">Value</label> */}
               <input
                 type="text"
-                placeholder="Value"
+                placeholder="Nội dung"
                 className="w-full p-2 border rounded-lg"
                 value={classify.value}
                 onChange={(e) =>
@@ -221,7 +221,7 @@ const AddProduct = () => {
                 }
               />
             </div>
-            <label className="block text-gray-700 text-sm mb-1">Price</label>
+            <label className="block text-gray-700 text-sm mb-1">Giá</label>
             <div className="w-1/4">
               <input
                 type="number"
@@ -237,7 +237,7 @@ const AddProduct = () => {
                 }
               />
             </div>
-            <label className="block text-gray-700 text-sm mb-1">Stock</label>
+            <label className="block text-gray-700 text-sm mb-1">Số Lượng</label>
             <div className="w-1/4">
               <input
                 type="number"
@@ -257,7 +257,7 @@ const AddProduct = () => {
               className="p-2 bg-red-500 text-white rounded-lg"
               onClick={() => deleteClassify(index)}
             >
-              Delete
+              Xoá
             </button>
           </div>
         ))}
@@ -265,18 +265,18 @@ const AddProduct = () => {
           className="mt-2 p-2 bg-blue-500 text-white rounded-lg"
           onClick={addClassify}
         >
-          Add Classify
+          Thêm Phân Loại
         </button>
       </div>
 
       {/* Attributes */}
       <div className="mb-4">
-        <label className="block text-gray-700">Attributes</label>
+        <label className="block text-gray-700">Thuộc Tính</label>
         {attributes.map((attribute, index) => (
           <div key={index} className="flex space-x-4 mb-2">
             <input
               type="text"
-              placeholder="Key"
+              placeholder="Mô tả"
               className="w-1/2 p-2 border rounded-lg"
               value={attribute.key}
               onChange={(e) =>
@@ -289,7 +289,7 @@ const AddProduct = () => {
             />
             <input
               type="text"
-              placeholder="Value"
+              placeholder="Nội dung"
               className="w-1/2 p-2 border rounded-lg"
               value={attribute.value}
               onChange={(e) =>
@@ -304,7 +304,7 @@ const AddProduct = () => {
               className="p-2 bg-red-500 text-white rounded-lg"
               onClick={() => deleteAttribute(index)}
             >
-              Delete
+              Xoá
             </button>
           </div>
         ))}
@@ -312,18 +312,18 @@ const AddProduct = () => {
           className="mt-2 p-2 bg-blue-500 text-white rounded-lg"
           onClick={addAttribute}
         >
-          Add Attribute
+          Thêm Thuộc Tính
         </button>
       </div>
 
       {/* Description Product */}
       <div className="mb-4">
-        <label className="block text-gray-700">Descriptions</label>
+        <label className="block text-gray-700">Mô Tả Sản Phẩm</label>
         {productDescription.map((desc, index) => (
           <div key={index} className="flex space-x-4 mb-2 items-center">
             <input
               type="text"
-              placeholder="Key"
+              placeholder="Mô tả"
               className="w-1/2 p-2 border rounded-lg"
               value={desc.key}
               onChange={(e) =>
@@ -336,7 +336,7 @@ const AddProduct = () => {
             />
             <input
               type="text"
-              placeholder="Value"
+              placeholder="Nội dung"
               className="w-1/2 p-2 border rounded-lg"
               value={desc.value}
               onChange={(e) =>
@@ -351,7 +351,7 @@ const AddProduct = () => {
               className="p-2 bg-red-500 text-white rounded-lg"
               onClick={() => deleteDescription(index)}
             >
-              Delete
+              Xoá
             </button>
           </div>
         ))}
@@ -359,13 +359,13 @@ const AddProduct = () => {
           className="mt-2 p-2 bg-blue-500 text-white rounded-lg"
           onClick={addDescription}
         >
-          Add Description
+          Thêm Mô Tả
         </button>
       </div>
 
       {/* Image Upload */}
       <div className="mb-4">
-        <label className="block text-gray-700">Product Images</label>
+        <label className="block text-gray-700">Ảnh Sản Phẩm</label>
         <UploadComponent onUpload={handleDrop} />
         {/* Preview uploaded images */}
         <div className="flex space-x-4 mt-4">
@@ -382,7 +382,8 @@ const AddProduct = () => {
       {/* Submit Button */}
       <button
         onClick={handleSubmit}
-        className="mt-4 p-2 bg-green-500 text-white rounded-lg"
+        disabled={!images.length}
+        className="mt-4 p-2 bg-green-500 text-white rounded-lg disabled:opacity-50"
       >
         Submit
       </button>

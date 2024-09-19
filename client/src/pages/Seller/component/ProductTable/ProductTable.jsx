@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import CachedIcon from "@mui/icons-material/Cached";
+import { getProductsBySellerId } from "../../../../api/productAPI";
+import { useSelector } from "react-redux";
 
 const ProductTable = ({ setActiveTab }) => {
-  // Columns hiện tại
   const [columns, setColumns] = useState([
     { name: "ProductID", visible: true },
     { name: "Name", visible: true },
@@ -11,11 +13,18 @@ const ProductTable = ({ setActiveTab }) => {
     { name: "Brand", visible: true },
     { name: "Image", visible: true },
     { name: "Dateup", visible: true },
-    { name: "Attribute", visible: false },
-    { name: "Classify", visible: false },
-    { name: "Price", visible: false },
-    { name: "Stock", visible: false },
+    { name: "Selled", visible: false },
   ]);
+
+  const user = useSelector((state) => state.auth.user);
+  const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [sortedProducts, setSortedProducts] = useState([]);
+  const [sortConfig, setSortConfig] = useState({
+    column: "",
+    direction: "asc",
+  });
 
   // Toggle visibility of columns
   const toggleColumnVisibility = (name) => {
@@ -31,21 +40,89 @@ const ProductTable = ({ setActiveTab }) => {
     setActiveTab("add-product");
   };
 
+  useEffect(() => {
+    const fetchProductsofSeller = async () => {
+      const response = await getProductsBySellerId(user._id, page);
+      setProducts(response.data);
+      setSortedProducts(response.data);
+      setTotalPages(Math.ceil(response.data.length / 10));
+    };
+    fetchProductsofSeller();
+  }, [page, user._id]);
+
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  const handleSort = (column) => {
+    let direction = "asc";
+    if (sortConfig.column === column && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ column, direction });
+
+    const sortedArray = [...products].sort((a, b) => {
+      const colA = getValueByColumnName(a, column);
+      const colB = getValueByColumnName(b, column);
+      if (colA < colB) return direction === "asc" ? -1 : 1;
+      if (colA > colB) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortedProducts(sortedArray);
+  };
+
+  const getValueByColumnName = (product, column) => {
+    switch (column) {
+      case "Name":
+        return product.productName;
+      case "Category":
+        return product.categories[0]?.categoriesName || "";
+      case "Brand":
+        return product.brand;
+      case "Dateup":
+        return new Date(product.dateUp).getTime();
+      case "Selled":
+        return product.selled || 0;
+      default:
+        return "";
+    }
+  };
+
+  const getSortIcon = (column) => {
+    if (sortConfig.column === column) {
+      return sortConfig.direction === "asc" ? "▲" : "▼";
+    }
+    return "⇅";
+  };
+
+  const handleReload = () => {
+    setSortedProducts(products);
+  };
+
   return (
     <div className="p-6 bg-white rounded-lg shadow-md flex-1">
       <div className="flex justify-between">
-        <h1 className="text-xl font-bold mb-4">Manage Products</h1>
+        <h1 className="text-xl font-bold mb-4">Quản lý Sản Phẩm</h1>
         <button
           className="bg-blue-500 text-white p-2 rounded"
           onClick={handleNewProduct}
         >
-          New Product
+          Sản Phẩm Mới
         </button>
       </div>
 
       {/* Toggle columns */}
       <div className="mb-4">
-        <h2 className="font-bold mb-2">Customize Columns</h2>
+        <h2 className="font-bold mb-2">Tuỳ Chỉnh Cột</h2>
         {columns.map((col) => (
           <label key={col.name} className="mr-10">
             <input
@@ -56,9 +133,11 @@ const ProductTable = ({ setActiveTab }) => {
             <span className="ml-2">{col.name}</span>
           </label>
         ))}
+        <button onClick={handleReload} className="bg-gray-300 rounded p-1 ml-4">
+          <CachedIcon />
+        </button>
       </div>
 
-      {/* Table with horizontal scroll */}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border">
           <thead>
@@ -67,8 +146,12 @@ const ProductTable = ({ setActiveTab }) => {
               {columns.map(
                 (col) =>
                   col.visible && (
-                    <th key={col.name} className="py-2 px-4 border">
-                      {col.name}
+                    <th
+                      key={col.name}
+                      onClick={() => handleSort(col.name)}
+                      className="py-2 px-4 border cursor-pointer"
+                    >
+                      {col.name} {getSortIcon(col.name)}
                     </th>
                   )
               )}
@@ -76,30 +159,66 @@ const ProductTable = ({ setActiveTab }) => {
             </tr>
           </thead>
           <tbody>
-            {/* Dữ liệu sản phẩm, ví dụ */}
-            <tr>
-              <td className="py-2 px-4 border">
-                <input type="checkbox" />
-              </td>
-              {columns.map(
-                (col) =>
-                  col.visible && (
-                    <td key={col.name} className="py-2 px-4 border">
-                      Example Data
-                    </td>
-                  )
-              )}
-              <td className="py-2 px-4 border">
-                <button className="bg-blue-500 text-white p-1 rounded">
-                  <EditOutlinedIcon />
-                </button>
-                <button className="bg-red-500 text-white p-1 rounded ml-2">
-                  <DeleteOutlineOutlinedIcon />
-                </button>
-              </td>
-            </tr>
+            {sortedProducts?.map((product) => (
+              <tr key={product._id}>
+                <td className="py-2 px-4 border">
+                  <input type="checkbox" />
+                </td>
+                {columns.map(
+                  (col) =>
+                    col.visible && (
+                      <td key={col.name} className="py-2 px-4 border text-sm">
+                        {col.name === "ProductID" && product._id.slice(-6)}
+                        {col.name === "Name" && product.productName}
+                        {col.name === "Category" &&
+                          product.categories[0]?.categoriesName}
+                        {col.name === "Brand" && product.brand}
+                        {col.name === "Image" && (
+                          <img
+                            src={product.images[0]}
+                            alt={product.productName}
+                            className="w-16 h-16 object-cover"
+                          />
+                        )}
+                        {col.name === "Dateup" &&
+                          new Date(product.dateUp).toLocaleDateString()}
+                        {col.name === "Selled" && product?.selled}
+                      </td>
+                    )
+                )}
+                <td className="py-2 px-4 border">
+                  <button className="bg-blue-500 text-white p-1 rounded">
+                    <EditOutlinedIcon />
+                  </button>
+                  <button className="bg-red-500 text-white p-1 rounded ml-2">
+                    <DeleteOutlineOutlinedIcon />
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="mt-4 flex justify-end">
+        <button
+          className="bg-gray-300 p-2 rounded mr-2"
+          onClick={handlePreviousPage}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <span className="p-2">
+          Page {page} of {totalPages}
+        </span>
+        <button
+          className="bg-gray-300 p-2 rounded ml-2"
+          onClick={handleNextPage}
+          disabled={page === totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
