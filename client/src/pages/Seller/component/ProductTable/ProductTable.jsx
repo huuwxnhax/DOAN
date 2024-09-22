@@ -50,6 +50,7 @@ const ProductTable = ({ setActiveTab, setProductEdit }) => {
       const response = await getProductsBySellerId(user._id, page);
       setProducts(response.data);
       setSortedProducts(response.data);
+      console.log(response.data.length);
       setTotalPages(Math.ceil(response.data.length / 10));
     };
     fetchProductsofSeller();

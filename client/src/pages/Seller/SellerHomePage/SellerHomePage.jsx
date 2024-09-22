@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../Seller/SellerHomePage/SellerHomePage.css";
 import Sidebar from "../component/Sidebar/Sidebar";
 import Dashboard from "../component/Dashboard/Dashboard";
-import { useState } from "react";
 import ProductTable from "../component/ProductTable/ProductTable";
 import AddProduct from "../component/AddProduct/AddProduct";
 import UpdateProduct from "../component/UpdateProduct/UpdateProduct";
@@ -12,10 +11,14 @@ const SellerHomePage = () => {
   const [productEdit, setProductEdit] = useState(null);
 
   return (
-    <div className="flex">
-      <Sidebar setActiveTab={setActiveTab} activeTab={activeTab} />
+    <div className="flex h-screen">
+      {/* Fixed Sidebar */}
+      <div className="w-64 bg-gray-800 fixed h-full">
+        <Sidebar setActiveTab={setActiveTab} activeTab={activeTab} />
+      </div>
 
-      <div className="flex-1">
+      {/* Scrollable right section */}
+      <div className="ml-64 flex-1 overflow-y-scroll h-full">
         {activeTab === "dashboard" && <Dashboard />}
         {activeTab === "add-product" && <AddProduct />}
         {activeTab === "view-product" && (
@@ -27,7 +30,6 @@ const SellerHomePage = () => {
         {activeTab === "update-product" && productEdit && (
           <UpdateProduct product={productEdit} setActiveTab={setActiveTab} />
         )}
-        {/* Thêm các tab khác như orders, customers */}
       </div>
     </div>
   );
