@@ -434,23 +434,25 @@ const Navbar = () => {
               <Link className="subnavbar-link" to="/faq">
                 FAQ
               </Link>
-              {user?.role.includes("ADMIN") ? (
-                <Link className="subnavbar-link" to="/admin">
-                  Trang Admin
-                </Link>
-              ) : user?.role.includes("SELLER") ? (
-                <Link className="subnavbar-link" to="/seller">
-                  Trang Người Bán
-                </Link>
-              ) : user?.role.includes("BUYER") ? (
-                <Link className="subnavbar-link" to="/buyer">
-                  Trở Thành Người Bán
-                </Link>
-              ) : (
-                <Link className="subnavbar-link" to="/buyer">
-                  Trở Thành Người Bán
-                </Link>
-              )}
+              {user ? (
+                user.role.includes("ADMIN") ? (
+                  <Link className="subnavbar-link" to="/admin">
+                    Trang Admin
+                  </Link>
+                ) : user.role.includes("SELLER") ? (
+                  <Link className="subnavbar-link" to="/seller">
+                    Trang Người Bán
+                  </Link>
+                ) : user.role.includes("BUYER") ? (
+                  <Link className="subnavbar-link" to="/buyer">
+                    Trở Thành Người Bán
+                  </Link>
+                ) : (
+                  <Link className="subnavbar-link" to="/buyer">
+                    Trở Thành Người Bán
+                  </Link>
+                )
+              ) : null}
             </div>
           </div>
         </div>
