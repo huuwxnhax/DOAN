@@ -103,7 +103,6 @@ const UpdateProduct = ({ product, setActiveTab }) => {
       const response = await uploadFile(formData);
       const imageUrls = response.data;
 
-      // Merge old and new image URLs
       const updatedImages = [...oldImages, ...imageUrls];
 
       const responseUpdate = await updateProductAPI(
@@ -287,10 +286,6 @@ const UpdateProduct = ({ product, setActiveTab }) => {
 
   const handleBack = () => {
     setActiveTab("view-product");
-  };
-
-  const handleCancel = () => {
-    // Logic to reset or cancel updates
   };
 
   return (
