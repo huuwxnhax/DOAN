@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import UploadComponent from "../../../../components/Dropzone/UploadComponent";
+import ClearIcon from "@mui/icons-material/Clear";
+
 import { useSelector } from "react-redux";
 import {
   addClassifyAPI,
@@ -32,6 +34,7 @@ const AddProduct = () => {
 
   // Function to delete a description field
   const deleteDescription = (index) => {
+    if (productDescription.length === 1) return;
     setProductDescription(productDescription.filter((_, i) => i !== index));
   };
 
@@ -47,10 +50,12 @@ const AddProduct = () => {
 
   // Function to delete a classify field
   const deleteClassify = (index) => {
+    if (classifies.length === 1) return;
     setClassifies(classifies.filter((_, i) => i !== index));
   };
 
   const deleteAttribute = (index) => {
+    if (attributes.length === 1) return;
     setAttributes(attributes.filter((_, i) => i !== index));
   };
 
@@ -102,7 +107,10 @@ const AddProduct = () => {
           stock: classify.stock,
           product: resProduct.data._id,
         };
-        const resClassify = await addClassifyAPI(classifyData);
+        const resClassify = await addClassifyAPI(
+          classifyData,
+          user.access_token
+        );
         console.log(resClassify.data);
       }
 
@@ -113,7 +121,10 @@ const AddProduct = () => {
           value: attribute.value,
           productId: resProduct.data._id,
         };
-        const resAttribute = await addAttributeAPI(attributeData);
+        const resAttribute = await addAttributeAPI(
+          attributeData,
+          user.access_token
+        );
         console.log(resAttribute.data);
       }
 
@@ -124,7 +135,10 @@ const AddProduct = () => {
           value: description.value,
           product: resProduct.data._id,
         };
-        const resDescription = await addDescriptionAPI(descriptionData);
+        const resDescription = await addDescriptionAPI(
+          descriptionData,
+          user.access_token
+        );
         console.log(resDescription.data);
       }
 
@@ -253,12 +267,10 @@ const AddProduct = () => {
                 }
               />
             </div>
-            <button
-              className="p-2 bg-red-500 text-white rounded-lg"
+            <ClearIcon
+              className="text-red-500 cursor-pointer"
               onClick={() => deleteClassify(index)}
-            >
-              Xoá
-            </button>
+            />
           </div>
         ))}
         <button
@@ -300,12 +312,10 @@ const AddProduct = () => {
                 )
               }
             />
-            <button
-              className="p-2 bg-red-500 text-white rounded-lg"
+            <ClearIcon
+              className="text-red-500 cursor-pointer"
               onClick={() => deleteAttribute(index)}
-            >
-              Xoá
-            </button>
+            />
           </div>
         ))}
         <button
@@ -347,12 +357,10 @@ const AddProduct = () => {
                 )
               }
             />
-            <button
-              className="p-2 bg-red-500 text-white rounded-lg"
+            <ClearIcon
+              className="text-red-500 cursor-pointer"
               onClick={() => deleteDescription(index)}
-            >
-              Xoá
-            </button>
+            />
           </div>
         ))}
         <button

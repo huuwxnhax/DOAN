@@ -5,7 +5,7 @@ import CachedIcon from "@mui/icons-material/Cached";
 import { getProductsBySellerId } from "../../../../api/productAPI";
 import { useSelector } from "react-redux";
 
-const ProductTable = ({ setActiveTab }) => {
+const ProductTable = ({ setActiveTab, setProductEdit }) => {
   const [columns, setColumns] = useState([
     { name: "ProductID", visible: true },
     { name: "Name", visible: true },
@@ -38,6 +38,11 @@ const ProductTable = ({ setActiveTab }) => {
   // Handle New Product button click
   const handleNewProduct = () => {
     setActiveTab("add-product");
+  };
+
+  const handleEditProduct = (product) => {
+    setProductEdit(product);
+    setActiveTab("update-product");
   };
 
   useEffect(() => {
@@ -187,7 +192,10 @@ const ProductTable = ({ setActiveTab }) => {
                     )
                 )}
                 <td className="py-2 px-4 border">
-                  <button className="bg-blue-500 text-white p-1 rounded">
+                  <button
+                    onClick={() => handleEditProduct(product)}
+                    className="bg-blue-500 text-white p-1 rounded"
+                  >
                     <EditOutlinedIcon />
                   </button>
                   <button className="bg-red-500 text-white p-1 rounded ml-2">
