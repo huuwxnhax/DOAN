@@ -19,10 +19,19 @@ import { useSelector } from "react-redux";
 import { selectAllCategories } from "../../features/cateSlice";
 import { addToCart } from "../../api/cartAPI";
 import Notification from "../../components/Notification/Notification";
+import { getProductById } from "../../api/productAPI";
+import { getAllCate } from "../../api/cateAPI";
 
 const ProductDetail = () => {
+  const { id } = useParams();
+  const location = useLocation();
+  const product = location.state.product;
+  const [attributesData, setAttributesData] = useState([]);
+  const [descriptionData, setDescriptionData] = useState([]);
+  const [category, setCategory] = useState("");
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(product1);
+  const [currentImage, setCurrentImage] = useState(product.images[0]);
   const [startIndex, setStartIndex] = useState(0);
   const [rating, setRating] = useState(4);
   const [quantity, setQuantity] = useState(1);
@@ -43,24 +52,52 @@ const ProductDetail = () => {
   };
 
   const productDetails = [
-    { key: "Kho", value: "500" },
-    { key: "Thương hiệu", value: "FURJKO HOME" },
-    { key: "Hạn bảo hành", value: "5 năm" },
-    { key: "Loại bảo hành", value: "Bảo hành nhà sản xuất" },
-    { key: "Độ cứng nệm & gối", value: "Êm" },
+    { key: "Màu sắc", value: "Đen" },
+    { key: "Kích thước", value: "M" },
+    { key: "Chất liệu", value: "Da" },
+    { key: "Xuất xứ", value: "Việt Nam" },
   ];
 
-  const { id } = useParams();
-  const location = useLocation();
-  const product = location.state?.product;
+  useEffect(() => {
+    console.log(product);
+    const fetchProduct = async () => {
+      try {
+        const response = await getProductById(id);
+        if (response.status === 200) {
+          setAttributesData(response.data[0].attributes);
+          setDescriptionData(response.data[0].decriptions);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProduct();
+  }, [id]);
 
-  // get all categories from redux store
-  const categories = useSelector((state) => selectAllCategories(state));
+  useEffect(() => {
+    console.log(descriptionData);
+  }, [descriptionData]);
+
+  const [images, setImages] = useState(product.images);
+  const visibleThumbnail = images.slice(startIndex, startIndex + 3);
 
   // find category name by category id
-  const findCategoryName = (categoryId) => {
-    return categories.find((cate) => cate._id === categoryId)?.categoriesName;
-  };
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await getAllCate();
+        if (response.status === 200) {
+          const category = response.data.find(
+            (cate) => cate._id === product.cate
+          );
+          setCategory(category.categoriesName);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategories();
+  }, [product]);
 
   // group classifies by key
   useEffect(() => {
@@ -73,7 +110,6 @@ const ProductDetail = () => {
         return groups;
       }, {});
       setGroupClassifies(grouped);
-      console.log(grouped);
     }
   }, [product]);
 
@@ -116,9 +152,6 @@ const ProductDetail = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
-  const images = [product1, product2, product3, product4];
-  const visibleThumbnail = images.slice(startIndex, startIndex + 3);
 
   const handleNext = () => {
     if (startIndex < images.length - 3) {
@@ -190,7 +223,7 @@ const ProductDetail = () => {
           </div>
           <div className="thumbnail-section">
             <button
-              className="arrow-btn"
+              // className="arrow-btn"
               onClick={handlePrev}
               disabled={startIndex === 0}
             >
@@ -208,7 +241,7 @@ const ProductDetail = () => {
               ))}
             </div>
             <button
-              className="arrow-btn"
+              // className="arrow-btn"
               onClick={handleNext}
               disabled={startIndex >= images.length - 3}
             >
@@ -228,7 +261,7 @@ const ProductDetail = () => {
           <div className="detail-inline">
             <div className="product-type">
               <span>Danh mục: </span>
-              <span>{findCategoryName(product.cate)}</span>
+              <span>{category}</span>
             </div>
             <div className="product-rating" style={{ marginLeft: "30%" }}>
               <Rating name="read-only" size="small" value={rating} readOnly />
@@ -323,9 +356,9 @@ const ProductDetail = () => {
       </div>
       <div className="product-about">
         <div className="detail-product">
-          <h3>Thông tin sản phẩm</h3>
-          <DetailList details={productDetails} />
-          <div className="rating-section">
+          <h2>Mô tả sản phẩm</h2>
+          <DetailList details={attributesData} />
+          {/* <div className="rating-section">
             <h3>Đánh Giá Sản Phẩm</h3>
             <Rating
               name="simple-controlled"
@@ -334,12 +367,16 @@ const ProductDetail = () => {
                 setRating(newRating);
               }}
             />
-          </div>
+          </div> */}
         </div>
-        <div className="detail-banner">
+        <div className="detail-product">
+          <h2>Thông tin sản phẩm</h2>
+          <DetailList details={descriptionData} />
+        </div>
+        {/* <div className="detail-banner">
           <img src={prodBanner1} alt="Banner" />
           <img src={prodBanner2} alt="Banner" />
-        </div>
+        </div> */}
       </div>
 
       <div className="product-footer">

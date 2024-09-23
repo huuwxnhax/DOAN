@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import prod1 from "../../../public/images/prod1.webp";
 import Rating from "@mui/material/Rating";
@@ -15,6 +15,10 @@ const ProductSection = ({ isHomepage, products }) => {
     return Math.max(...classifies.map((classify) => classify.price));
   };
 
+  useEffect(() => {
+    console.log("ProductSection", products);
+  }, [products]);
+
   return (
     <>
       <div className="">{/* <h3 className="h3-title"></h3> */}</div>
@@ -27,7 +31,7 @@ const ProductSection = ({ isHomepage, products }) => {
             key={product._id}
           >
             <div className="product-item">
-              <img src={prod1} alt="Product 1" />
+              <img src={product.images[0]} alt="product" />
               <div className="product-detail">
                 <p className="product-name">{product.productName}</p>
                 <div className="product-rating">

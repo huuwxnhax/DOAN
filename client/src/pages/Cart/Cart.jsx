@@ -238,11 +238,13 @@ const Cart = () => {
                     <h3>{product?.productName || "Loading..."}</h3>
                     {classify && (
                       <>
-                        <p>{classify?.key}</p>
-                        <p>{classify?.value}</p>
+                        <p className="text-sm">{classify?.key}</p>
+                        <p className="text-sm">{classify?.value}</p>
                       </>
                     )}
-                    <p>Brand: {product?.brand || "Loading..."}</p>
+                    <p className="text-sm">
+                      Brand: {product?.brand || "Loading..."}
+                    </p>
                   </div>
                 </div>
                 <div className="product-quantity">
@@ -261,8 +263,8 @@ const Cart = () => {
                   </button>
                 </div>
                 <div className="product-price">
-                  <p>Giá: {itemPrice}đ</p>
-                  <p>Tổng: {totalPrice}đ</p>
+                  <p className="text-sm">Giá: {itemPrice}đ</p>
+                  <p className="text-sm">Tổng: {totalPrice}đ</p>
                 </div>
                 <div className="product-action">
                   <button

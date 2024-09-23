@@ -139,6 +139,7 @@
 
 .detail-classifies-values {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -221,8 +222,10 @@
   padding: 20px;
 }
 
-.detail-product h3 {
+.detail-product h2 {
   font-size: 1.2rem;
+  padding-bottom: 10px;
+  font-weight: 500;
 }
 
 .detail-action {
