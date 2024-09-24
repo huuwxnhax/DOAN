@@ -34,8 +34,8 @@
 }
 
 .product-info img {
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
   margin-right: 15px;
   border-radius: 4px;
@@ -47,7 +47,7 @@
 }
 
 .purchase-name {
-  font-size: 16px;
+  font-size: 1.4rem;
   margin-bottom: 10px;
   font-weight: 500;
   display: -webkit-box;
@@ -72,7 +72,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 30px;
+  font-style: italic;
 }
 
 .price-promotional {
@@ -100,6 +101,8 @@
   font-size: 16px;
   margin-bottom: 10px;
   font-weight: 500;
+  font-style: italic;
+  gap: 30px;
 }
 
 .detail-purchase {
@@ -167,7 +170,7 @@
 }
 
 .purchase-btn {
-  background-color: #5cb85c;
+  background-color: var(--color-primary);
   color: white;
   border: none;
   padding: 10px 20px;

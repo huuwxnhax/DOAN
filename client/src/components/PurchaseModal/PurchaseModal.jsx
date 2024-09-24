@@ -1,141 +1,180 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import "./PurchaseModal.css";
-import product1 from "../../../public/images/product1.webp";
+import { useSelector } from "react-redux";
+import OrderStatusModal from "../OrderStatus/OrderStatusModal";
 
 const PurchaseModal = ({ isOpen, onClose, product }) => {
+  const user = useSelector((state) => state.auth.user);
+
   const [discountCode, setDiscountCode] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState("");
 
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const orderDetails = {
+    orderId: "ORD123456",
+    paymentStatus: "success",
+    packingStatus: "inProgress",
+    shippingStatus: "pending",
+  };
+
   if (!isOpen) return null;
 
   const handleApplyDiscount = () => {
-    // Handle the discount code application logic here
     console.log("Applying discount code:", discountCode);
   };
 
   const handleViewDiscounts = () => {
-    // Handle the logic to view available discounts
     console.log("Viewing available discounts");
   };
 
-  const handleQuantityChange = (delta) => {
-    setQuantity((prevQuantity) => Math.max(1, prevQuantity + delta));
-  };
-
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2 className="modal-title">Xác Nhận Mua Hàng</h2>
-        <div className="product-info">
-          <img src={product1} alt="Product" />
-          <div className="purchase-detail">
-            <p className="purchase-name">
-              Khô gà lá chanh Cobi Food hộp 300g xé giòn, đậm vị, cay vừa, đồ ăn
-              vặt không chứa phẩm màu vặt không chứa phẩm màu
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white rounded-lg shadow-lg max-w-xl w-full h-[98vh] p-5 overflow-hidden overflow-y-auto ">
+        <h2 className="text-xl font-semibold mb-3">Xác Nhận Mua Hàng</h2>
+
+        <div className="flex items-center mb-3">
+          <img
+            src={product?.image}
+            alt={product?.productName}
+            className="w-24 h-24 object-cover rounded-md"
+          />
+          <div className="ml-4">
+            <p className="font-semibold text-lg">
+              {product.productName || "Product Name"}
             </p>
-            <div className="purchase-price">
-              <span className="text-secondary price-promotional">45.000đ</span>
-              <span className="text-primary price-original">50.000đ</span>
-              <div className="purchase-size">
-                <span> Túi 300g</span>
+            <div className="text-gray-600 mt-1">
+              <span className="text-red-500 font-bold">
+                {product?.classify.price.toLocaleString("vi-VN")}đ
+              </span>
+              <div className="text-sm text-gray-500">
+                Kích cỡ: {product?.classify.value}
               </div>
-              <div className="purchase-brand">
-                <a href="#">Cobi Food</a>
+              <div className="text-sm text-blue-500 mt-1">
+                <a href="#">{product?.brand}</a>
               </div>
             </div>
           </div>
         </div>
-        <div className="purchase-quantity">
-          <div className="detail-quantity">
-            <span>Số lượng: </span>
-            <div className="product-quantity">
-              <button
-                onClick={() => handleQuantityChange(-1)}
-                className="subtraction"
-              >
-                -
-              </button>
-              <input type="text" value={quantity} readOnly />
-              <button
-                onClick={() => handleQuantityChange(+1)}
-                className="addition"
-              >
-                +
-              </button>
-            </div>
-          </div>
-          <span>2</span>
-          <span>Tổng: 100.000đ</span>
-        </div>
-        <div className="detail-purchase">
-          <div className="ship-address">
-            <span>Địa chỉ giao hàng:</span>
-            <p>123 Nguyen Van Linh, Da Nang 123 Nguyen Van Linh, Da Nang</p>
-          </div>
-          <div className="ship-price">
-            <span>Tiền vận chuyển</span>
-            <span>20.000đ</span>
-          </div>
-          <div className="discount">
-            <span>Giảm giá:</span>
-            <span>0đ</span>
-          </div>
-          <div className="discount-code">
-            <input
-              type="text"
-              placeholder="Nhập mã giảm giá"
-              value={discountCode}
-              onChange={(e) => setDiscountCode(e.target.value)}
-            />
-            <button onClick={handleApplyDiscount}>Áp dụng</button>
-          </div>
-          <div className="view-discounts" onClick={handleViewDiscounts}>
-            Xem mã giảm giá đang có
-          </div>
-          <div className="total-price">
-            <span>Tổng cộng:</span>
-            <span>120.000đ</span>
-          </div>
-          <div className="payment-method">
-            <span>Phương thức thanh toán:</span>
-            <div className="payment-options">
-              <button
-                className={`payment-option ${
-                  paymentMethod === "cash" ? "active" : ""
-                }`}
-                onClick={() => setPaymentMethod("cash")}
-              >
-                Thanh toán khi nhận hàng
-              </button>
 
-              <button
-                className={`payment-option ${
-                  paymentMethod === "zalo" ? "active" : ""
-                }`}
-                onClick={() => setPaymentMethod("zalo")}
-              >
-                Zalo Pay
-              </button>
-            </div>
-          </div>
+        {/* Số lượng and Tổng giá in one row */}
+        <div className="flex justify-between mb-3">
+          <span className="font-medium">Số lượng: {product.numberProduct}</span>
+          <span className="font-medium">
+            Tổng giá: {product.price.toLocaleString("vi-VN")}đ
+          </span>
         </div>
-        {/* Add more product details as needed */}
 
-        <div className="modal-actions">
-          <button onClick={onClose} className="close-btn">
+        {/* Địa chỉ giao hàng */}
+        <div className="mb-3">
+          <span className="font-medium">Địa chỉ giao hàng:</span>
+          <p className="text-gray-600">{user.address}</p>
+        </div>
+
+        {/* Số điện thoại in one row */}
+        <div className="flex justify-between mb-3">
+          <span className="font-medium">Số điện thoại:</span>
+          <p className="text-gray-600">{user.number}</p>
+        </div>
+
+        {/* Tiền vận chuyển in one row */}
+        <div className="flex justify-between mb-3">
+          <span className="font-medium">Tiền vận chuyển:</span>
+          <span className="text-gray-600">0đ</span>
+        </div>
+
+        {/* Giảm giá in one row */}
+        <div className="flex justify-between mb-3">
+          <span className="font-medium">Giảm giá:</span>
+          <span className="text-gray-600">0đ</span>
+        </div>
+
+        <div className="mb-3 flex">
+          <input
+            type="text"
+            placeholder="Nhập mã giảm giá"
+            value={discountCode}
+            onChange={(e) => setDiscountCode(e.target.value)}
+            className="border rounded-md p-2 flex-grow mr-2"
+          />
+          <button
+            onClick={handleApplyDiscount}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          >
+            Áp dụng
+          </button>
+        </div>
+
+        <div
+          className="text-blue-500 cursor-pointer underline mb-3"
+          onClick={handleViewDiscounts}
+        >
+          Xem mã giảm giá đang có
+        </div>
+
+        {/* Thành Tiền in one row */}
+        <div className="flex justify-between mb-3">
+          <span className="font-medium">Thành Tiền:</span>
+          <span className="text-red-500 font-bold">
+            {product.price.toLocaleString("vi-VN")}đ
+          </span>
+        </div>
+
+        <div className="mb-6">
+          <span className="font-medium">Phương thức thanh toán:</span>
+          <div className="mt-2 flex space-x-4">
+            <button
+              className={`border px-4 py-2 rounded-md ${
+                paymentMethod === "cash"
+                  ? "bg-green-500 text-white"
+                  : "bg-gray-100 text-gray-700"
+              }`}
+              onClick={() => setPaymentMethod("cash")}
+            >
+              Thanh toán khi nhận hàng
+            </button>
+            <button
+              className={`border px-4 py-2 rounded-md ${
+                paymentMethod === "zalo"
+                  ? "bg-green-500 text-white"
+                  : "bg-gray-100 text-gray-700"
+              }`}
+              onClick={() => setPaymentMethod("zalo")}
+            >
+              Zalo Pay
+            </button>
+          </div>
+
+          <p
+            className={`text-red-500 text-sm mt-2 ${
+              paymentMethod === "" ? "visible" : "invisible"
+            }`}
+          >
+            Vui lòng chọn phương thức thanh toán
+          </p>
+        </div>
+
+        <div className="flex justify-end space-x-4">
+          <button
+            onClick={onClose}
+            className="bg-gray-300 px-4 py-2 rounded-md"
+          >
             Huỷ
           </button>
           <button
-            onClick={() => {
-              /* Add purchase functionality here */
-            }}
-            className="purchase-btn"
+            onClick={() => setModalOpen(true)}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
           >
             Tiếp tục mua hàng
           </button>
         </div>
+
+        <OrderStatusModal
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+          orderDetails={orderDetails}
+        />
       </div>
     </div>
   );

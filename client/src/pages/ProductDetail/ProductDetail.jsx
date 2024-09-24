@@ -41,6 +41,17 @@ const ProductDetail = () => {
   const [groupClassifies, setGroupClassifies] = useState({});
   const [showNotification, setShowNotification] = useState(false);
 
+  const [itemPurchase, setItemPurchase] = useState({
+    buyer: "",
+    productId: "",
+    productName: "",
+    category: "",
+    classifyId: "",
+    seller: "",
+    numberProduct: 0,
+    price: 0,
+  });
+
   const user = useSelector((state) => state.auth.user);
 
   const itemAddToCart = {
@@ -50,13 +61,6 @@ const ProductDetail = () => {
     seller: "",
     numberProduct: quantity,
   };
-
-  const productDetails = [
-    { key: "Màu sắc", value: "Đen" },
-    { key: "Kích thước", value: "M" },
-    { key: "Chất liệu", value: "Da" },
-    { key: "Xuất xứ", value: "Việt Nam" },
-  ];
 
   useEffect(() => {
     console.log(product);
@@ -77,6 +81,10 @@ const ProductDetail = () => {
   useEffect(() => {
     console.log(descriptionData);
   }, [descriptionData]);
+
+  useEffect(() => {
+    console.log("Selected Classify: ", selectedOptions);
+  }, [selectedOptions]);
 
   const [images, setImages] = useState(product.images);
   const visibleThumbnail = images.slice(startIndex, startIndex + 3);
@@ -145,10 +153,6 @@ const ProductDetail = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleBuyNowClick = () => {
-    setIsModalOpen(true);
-  };
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -201,6 +205,24 @@ const ProductDetail = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleBuyNowClick = () => {
+    const item = {
+      buyer: user._id,
+      productId: product._id,
+      productName: product.productName,
+      brand: product.brand,
+      image: product.images[0],
+      categoryName: category,
+      classify: selectedOptions,
+      seller: product.seller,
+      numberProduct: quantity,
+      price: calculateTotalPrice(),
+    };
+    setItemPurchase(item);
+    setIsModalOpen(true);
+    console.log(itemPurchase);
   };
 
   if (!product) {
@@ -277,10 +299,10 @@ const ProductDetail = () => {
           <div className="detail-price">
             <div className="product-price">
               <span className="text-secondary price-promotional">
-                {calculateTotalPrice()}đ
+                {calculateTotalPrice().toLocaleString("vi-VN")}đ
               </span>
               <span className="text-primary price-original">
-                {getPrice(product.classifies)}đ
+                {getPrice(product.classifies).toLocaleString("vi-VN")}đ
               </span>
             </div>
             <div>
@@ -349,7 +371,8 @@ const ProductDetail = () => {
             <PurchaseModal
               isOpen={isModalOpen}
               onClose={handleCloseModal}
-              product={product}
+              // product={product}
+              product={itemPurchase}
             />
           </div>
         </div>
