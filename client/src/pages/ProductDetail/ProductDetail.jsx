@@ -21,6 +21,7 @@ import { addToCart } from "../../api/cartAPI";
 import Notification from "../../components/Notification/Notification";
 import { getProductById } from "../../api/productAPI";
 import { getAllCate } from "../../api/cateAPI";
+import OrderSuccessModal from "../../components/Modal/OrderSuccessModal";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -40,6 +41,8 @@ const ProductDetail = () => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [groupClassifies, setGroupClassifies] = useState({});
   const [showNotification, setShowNotification] = useState(false);
+
+  const [isModalSuccessOrderOpen, setModalSuccessOrderOpen] = useState(false);
 
   const [itemPurchase, setItemPurchase] = useState({
     buyer: "",
@@ -373,6 +376,12 @@ const ProductDetail = () => {
               onClose={handleCloseModal}
               // product={product}
               product={itemPurchase}
+              onShowSuccessOrderModal={() => setModalSuccessOrderOpen(true)}
+            />
+            {/* OrderSuccessModal controlled from parent */}
+            <OrderSuccessModal
+              isOpen={isModalSuccessOrderOpen}
+              onClose={() => setModalSuccessOrderOpen(false)}
             />
           </div>
         </div>

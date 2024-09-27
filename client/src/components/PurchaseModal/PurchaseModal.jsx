@@ -2,13 +2,21 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import OrderStatusModal from "../OrderStatus/OrderStatusModal";
+import { addTradeAPI, tradePaymentAPI } from "../../api/tradeAPI";
+import OrderSuccessModal from "../Modal/OrderSuccessModal";
 
-const PurchaseModal = ({ isOpen, onClose, product }) => {
+const PurchaseModal = ({
+  isOpen,
+  onClose,
+  product,
+  onShowSuccessOrderModal,
+}) => {
   const user = useSelector((state) => state.auth.user);
 
   const [discountCode, setDiscountCode] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentUrl, setPaymentUrl] = useState("");
 
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -27,6 +35,61 @@ const PurchaseModal = ({ isOpen, onClose, product }) => {
 
   const handleViewDiscounts = () => {
     console.log("Viewing available discounts");
+  };
+
+  const handleContinuePurchase = async () => {
+    const formData = {
+      buyer: user._id,
+      products: [
+        {
+          seller: product.seller,
+          items: [
+            {
+              productId: product.productId,
+              classifyId: product.classify._id,
+              numberProduct: product.numberProduct,
+            },
+          ],
+        },
+      ],
+      from: "product",
+    };
+
+    try {
+      console.log("Adding trade:", formData);
+      // Gọi API thêm tradeId
+      const tradeResponse = await addTradeAPI(formData, user.token);
+      if (tradeResponse.status === 201) {
+        console.log("Trade added successfully:", tradeResponse.data);
+        const tradeId = tradeResponse.data.tradeId;
+
+        // Nếu thanh toán bằng tiền mặt khi nhận hàng
+        if (paymentMethod === "cash") {
+          onClose();
+          onShowSuccessOrderModal();
+        }
+
+        // Nếu thanh toán bằng Zalo Pay
+        if (paymentMethod === "zalo") {
+          const paymentData = {
+            tradeId: tradeId,
+            method: "zalo",
+          };
+          const paymentResponse = await tradePaymentAPI(
+            paymentData,
+            user.token
+          );
+          console.log("Payment response:", paymentResponse.data);
+          setPaymentUrl(paymentResponse.data.order_url);
+          const { order_url } = paymentResponse.data;
+          if (order_url) {
+            window.location.href = order_url;
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error adding trade:", error);
+    }
   };
 
   return (
@@ -163,18 +226,21 @@ const PurchaseModal = ({ isOpen, onClose, product }) => {
             Huỷ
           </button>
           <button
-            onClick={() => setModalOpen(true)}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            onClick={handleContinuePurchase}
+            className={`bg-blue-500 text-white px-4 py-2 rounded-md ${
+              !paymentMethod ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={!paymentMethod}
           >
             Tiếp tục mua hàng
           </button>
         </div>
 
-        <OrderStatusModal
+        {/* <OrderStatusModal
           isOpen={isModalOpen}
           onClose={() => setModalOpen(false)}
           orderDetails={orderDetails}
-        />
+        /> */}
       </div>
     </div>
   );
