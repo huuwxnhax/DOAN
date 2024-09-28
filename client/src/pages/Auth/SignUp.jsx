@@ -18,59 +18,86 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Notification from "../../components/Notification/Notification";
+import { sendOTP } from "../../api/userAPI";
 
 const defaultTheme = createTheme();
 
 function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [otp, setOtp] = useState("");
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
+  const [generatedOtp, setGeneratedOtp] = useState("");
+
   const [errorMsg, setErrorMsg] = useState("");
   const [showNotification, setShowNotification] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
-  const { user, loading, error } = useSelector((state) => state.auth);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     if (data.get("password") !== data.get("confirmPassword")) {
       setErrorMsg("Password and Confirm Password do not match");
       return;
     }
-    dispatch(
-      register({
-        userName: data.get("email"),
-        password: data.get("password"),
-      })
-    );
+    const formData = {
+      userName: data.get("email"),
+      password: data.get("password"),
+    };
+    console.log("Form Data:", formData.userName);
+
+    try {
+      const response = await sendOTP({ userName: formData.userName });
+      console.log("Response:", response);
+
+      if (response.data.code === 500) {
+        setErrorMsg("Email đã tồn tại trong hệ thống");
+      } else if (response.status === 201) {
+        setIsOtpSent(true);
+        // setGeneratedOtp(response.data);
+        navigate("/signup/verify-otp", {
+          state: { formData, generatedOtp: response.data },
+        });
+      }
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      setErrorMsg("An error occurred while sending OTP");
+    }
   };
 
   useEffect(() => {
-    if (error && error.status) {
-      setErrorMsg(error.status);
-    } else {
-      setErrorMsg("");
-    }
-  }, [error]);
+    console.log("Generated OTP:", generatedOtp);
+  }, [generatedOtp]);
 
-  useEffect(() => {
-    // Navigate to the home page on successful registration
-    if (user && user.userName) {
-      setSuccessMsg("Đăng Ký Thành Công! Đang chuyển hướng đến trang chủ...");
-      setShowNotification(true);
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-    }
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   if (error && error.status) {
+  //     setErrorMsg(error.status);
+  //   } else {
+  //     setErrorMsg("");
+  //   }
+  // }, [error]);
+
+  // useEffect(() => {
+  //   // Navigate to the home page on successful registration
+  //   if (user && user.userName) {
+  //     setSuccessMsg("Đăng Ký Thành Công! Đang chuyển hướng đến trang chủ...");
+  //     setShowNotification(true);
+  //     setTimeout(() => {
+  //       navigate("/");
+  //     }, 3000);
+  //   }
+  // }, [user, navigate]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      {showNotification && (
+      {/* {showNotification && (
         <Notification
           message={successMsg}
           onClose={() => setShowNotification(false)}
         />
-      )}
+      )} */}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -94,27 +121,6 @@ function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -145,14 +151,6 @@ function SignUp() {
                   id="confirmPassword"
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid> */}
               {errorMsg && (
                 <Typography variant="body2" color="error">
                   {errorMsg}
@@ -165,7 +163,7 @@ function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              {loading ? "Loading..." : "Sign Up"}
+              Send OTP
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

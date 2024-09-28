@@ -21,6 +21,8 @@ const ProfileSection = ({ props }) => {
   const [phoneNumber, setPhoneNumber] = useState(user?.number || "");
   const [gender, setGender] = useState(user?.sex || "");
   const [avatar, setAvatar] = useState(null);
+  // const [previewImages, setPreviewImages] = useState([]);
+  // const [avatarUrl, setAvatarUrl] = useState("");
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -109,10 +111,7 @@ const ProfileSection = ({ props }) => {
     setIsEditAddress(!isEditAddress);
   };
 
-  const handleUpload = (files) => {
-    setAvatar(files);
-    console.log("avatar", files);
-  };
+  const handleUpload = (files) => {};
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -132,29 +131,32 @@ const ProfileSection = ({ props }) => {
         ? `${addressDetail} - ${wardName} - ${districtName} - ${provinceName}`
         : user.address;
 
-    const profileData = {
-      id: user._id,
-      userName: user.userName,
-      role: user.role,
-      name: name,
-      avata: user.avata,
-      address: address,
-      sex: gender || user.sex,
-      number: phoneNumber,
-    };
-
     try {
-      if (avatar) {
-        const formData = new FormData();
-        formData.append("files", avatar);
-        const uploadResponse = await uploadFile(formData);
-        const resUrl = uploadResponse.data;
-        profileData.avata = resUrl[0];
-      }
+      // if (avatar) {
+      //   const formData = new FormData();
+      //   formData.append("file", avatar);
+      //   const resUpload = await uploadFile(formData);
+      //   if (resUpload.status === 201) {
+      //     setAvatarUrl(resUpload.data[0]);
+      //     console.log("Upload success", resUpload.data[0]);
+      //   }
+      // }
 
-      const resupdateUser = await updateUserAPI(profileData, user.access_token);
+      const resupdateUser = await updateUserAPI(
+        {
+          id: user._id,
+          userName: user.userName,
+          role: user.role,
+          name: name,
+          avata: avatarUrl,
+          address: address,
+          sex: gender || user.sex,
+          number: phoneNumber,
+        },
+        user.access_token
+      );
       if (resupdateUser.status === 201) {
-        dispatch(updateUser(profileData));
+        dispatch(updateUser(resupdateUser.data));
         console.log("Update success", resupdateUser.data);
         setIsEditAddress(false);
         setShowNotification(true);
@@ -325,7 +327,21 @@ const ProfileSection = ({ props }) => {
             )}
           </div>
 
-          <UploadComponent openRef={openRef} onUpload={handleUpload} />
+          {/* Image Upload */}
+          <div className="mb-4">
+            <label className="block text-gray-700">Ảnh Sản Phẩm</label>
+            <UploadComponent openRef={openRef} onUpload={handleUpload} />
+            {/* Preview uploaded images */}
+            {avatar && (
+              <div className="flex space-x-4 mt-4">
+                <img
+                  src={avatar}
+                  alt={`Preview ${avatar}`}
+                  className="w-20 h-20 object-cover"
+                />
+              </div>
+            )}
+          </div>
 
           <div
             style={{

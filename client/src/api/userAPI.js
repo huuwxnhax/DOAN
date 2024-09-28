@@ -15,3 +15,5 @@ export const getUserAPI = (id, token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+export const sendOTP = (user) => API.post("/users/sendOTP", user);

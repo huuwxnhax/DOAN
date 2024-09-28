@@ -11,6 +11,7 @@ import Cart from "./pages/Cart/Cart";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import SellerHomePage from "./pages/Seller/SellerHomePage/SellerHomePage";
 import Orders from "./pages/Orders/Orders";
+import VerifyOtp from "./pages/Auth/VerifyOtp";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/seller/" element={<SellerHomePage />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/signup/verify-otp" element={<VerifyOtp />} />
       </Routes>
     </div>
   );

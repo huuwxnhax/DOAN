@@ -30,3 +30,17 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+// export const sendOtp = createAsyncThunk(
+//   "users/sendOTP",
+//   async (user, { rejectWithValue }) => {
+//     try {
+//       const { data } = await sendOTP(user);
+//       console.log("Response:", data);
+//       return data;
+//     } catch (error) {
+//       console.error("Thunk Error:", error.response?.data);
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
