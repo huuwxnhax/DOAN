@@ -58,9 +58,9 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
 
           <li
             className={`p-4 hover:bg-gray-700 cursor-pointer ${
-              activeTab === "orders" ? "bg-gray-700" : ""
+              activeTab === "order-list" ? "bg-gray-700" : ""
             }`}
-            onClick={() => setActiveTab("orders")}
+            onClick={() => setActiveTab("order-list")}
           >
             Orders
           </li>

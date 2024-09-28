@@ -199,9 +199,9 @@ const ProductTable = ({ setActiveTab, setProductEdit }) => {
                   >
                     <EditOutlinedIcon />
                   </button>
-                  <button className="bg-red-500 text-white p-1 rounded ml-2">
+                  {/* <button className="bg-red-500 text-white p-1 rounded ml-2">
                     <DeleteOutlineOutlinedIcon />
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             ))}

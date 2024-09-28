@@ -11,3 +11,18 @@ export const tradePaymentAPI = (trade, token) =>
   API.post("/trade/payment", trade, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
+export const acceptTradeAPI = (trade, token) =>
+  API.post("/trade/accept", trade, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+export const cancelTradeAPI = (trade, token) =>
+  API.post("/trade/cancel", trade, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+export const refundTradeAPI = (trade, token) =>
+  API.post("/trade/refund", trade, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
