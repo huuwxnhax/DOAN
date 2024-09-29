@@ -11,6 +11,7 @@ import {
 import { getAllCate } from "../../../../api/cateAPI";
 import { addAttributeAPI } from "../../../../api/attriAPI";
 import { addDescriptionAPI } from "../../../../api/descriptAPI";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const AddProduct = () => {
   const user = useSelector((state) => state.auth.user);
@@ -26,6 +27,7 @@ const AddProduct = () => {
   ]);
   const [attributes, setAttributes] = useState([{ key: "", value: "" }]);
   const [images, setImages] = useState([]);
+  const [previewImages, setPreviewImages] = useState([]);
 
   // Function to add new description field
   const addDescription = () => {
@@ -59,20 +61,14 @@ const AddProduct = () => {
     setAttributes(attributes.filter((_, i) => i !== index));
   };
 
-  // Function to handle file drop
-  const handleDrop = async (files) => {
-    try {
-      const formData = new FormData();
-      for (const file of files) {
-        formData.append("files", file);
-      }
-      // Call API to upload file to S3
-      const response = await uploadFile(formData);
-      const imageUrls = response.data;
-      setImages([...images, ...imageUrls]); // Update images state
-    } catch (error) {
-      console.error("Error uploading file:", error);
+  const handleDrop = (files) => {
+    const previewUrls = [];
+    for (const file of files) {
+      const previewUrl = URL.createObjectURL(file);
+      previewUrls.push(previewUrl);
     }
+    setPreviewImages([...previewImages, ...previewUrls]);
+    setImages([...images, ...files]);
   };
 
   useEffect(() => {
@@ -83,15 +79,32 @@ const AddProduct = () => {
     fetchCategories();
   }, []);
 
+  // Xóa ảnh mới (chỉ là preview chưa upload)
+  const removeImagePreview = (index) => {
+    const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
+    const updatedNewImages = images.filter((_, i) => i !== index);
+    setPreviewImages(updatedPreviewImages);
+    setImages(updatedNewImages);
+  };
+
   const handleSubmit = async () => {
     try {
+      const formData = new FormData();
+      for (const image of images) {
+        formData.append("images", image);
+      }
+      const response = await uploadFile(formData);
+      const imagesURL = response.data;
+
+      const addedImages = [...imagesURL];
+
       // Prepare product data
       const product = {
         productName,
         brand,
         cate: category,
         seller: user._id,
-        images,
+        images: addedImages,
       };
       // Call API to add product
       console.log(product);
@@ -377,13 +390,20 @@ const AddProduct = () => {
         <UploadComponent onUpload={handleDrop} />
         {/* Preview uploaded images */}
         <div className="flex space-x-4 mt-4">
-          {images.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`Preview ${index}`}
-              className="w-20 h-20 object-cover"
-            />
+          {previewImages.map((image, index) => (
+            <div key={index} className="relative">
+              <img
+                src={image}
+                alt={`Preview ${index}`}
+                className="w-20 h-20 object-cover"
+              />
+              <button
+                className="absolute top-0 right-0 bg-red-500 text-white rounded-full"
+                onClick={() => removeImagePreview(index)}
+              >
+                <RemoveIcon />
+              </button>
+            </div>
           ))}
         </div>
       </div>
