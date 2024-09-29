@@ -20,9 +20,9 @@ const ProfileSection = ({ props }) => {
   const [name, setName] = useState(user?.name || "");
   const [phoneNumber, setPhoneNumber] = useState(user?.number || "");
   const [gender, setGender] = useState(user?.sex || "");
-  const [avatar, setAvatar] = useState(null);
-  // const [previewImages, setPreviewImages] = useState([]);
-  // const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [previewImages, setPreviewImages] = useState([]);
+  const [avatarUrl, setAvatarUrl] = useState("");
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -111,7 +111,13 @@ const ProfileSection = ({ props }) => {
     setIsEditAddress(!isEditAddress);
   };
 
-  const handleUpload = (files) => {};
+  const handleUpload = (files) => {
+    if (files.length > 0) {
+      const file = files[0];
+      setAvatar(file);
+      setPreviewImages([URL.createObjectURL(file)]);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -132,15 +138,18 @@ const ProfileSection = ({ props }) => {
         : user.address;
 
     try {
-      // if (avatar) {
-      //   const formData = new FormData();
-      //   formData.append("file", avatar);
-      //   const resUpload = await uploadFile(formData);
-      //   if (resUpload.status === 201) {
-      //     setAvatarUrl(resUpload.data[0]);
-      //     console.log("Upload success", resUpload.data[0]);
-      //   }
-      // }
+      let updateAvatar = user.avata;
+      if (avatar) {
+        const formData = new FormData();
+        formData.append("file", avatar);
+        const resUpload = await uploadFile(formData);
+        if (resUpload.status === 201) {
+          updateAvatar = resUpload.data[0];
+          console.log("Upload success", resUpload.data[0]);
+        }
+      }
+
+      console.log("url avatar", avatarUrl);
 
       const resupdateUser = await updateUserAPI(
         {
@@ -148,7 +157,7 @@ const ProfileSection = ({ props }) => {
           userName: user.userName,
           role: user.role,
           name: name,
-          avata: avatarUrl,
+          avata: updateAvatar,
           address: address,
           sex: gender || user.sex,
           number: phoneNumber,
@@ -165,6 +174,12 @@ const ProfileSection = ({ props }) => {
       console.error("Update error:", error.response?.data || error.message);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      previewImages.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [previewImages]);
 
   return (
     <>
@@ -332,11 +347,11 @@ const ProfileSection = ({ props }) => {
             <label className="block text-gray-700">Ảnh Sản Phẩm</label>
             <UploadComponent openRef={openRef} onUpload={handleUpload} />
             {/* Preview uploaded images */}
-            {avatar && (
+            {previewImages.length > 0 && (
               <div className="flex space-x-4 mt-4">
                 <img
-                  src={avatar}
-                  alt={`Preview ${avatar}`}
+                  src={previewImages[0]}
+                  alt="Preview"
                   className="w-20 h-20 object-cover"
                 />
               </div>
