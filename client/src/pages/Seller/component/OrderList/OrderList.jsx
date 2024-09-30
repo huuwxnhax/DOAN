@@ -1,12 +1,24 @@
 import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
+import { useEffect } from "react";
+import { getTradeBySellerAPI } from "../../../../api/tradeAPI";
+import { useSelector } from "react-redux";
 const OrderList = () => {
+  const user = useSelector((state) => state.auth.user);
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [selectedDateRange, setSelectedDateRange] = useState({
     from: "",
     to: "",
   });
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const response = await getTradeBySellerAPI(user._id, user.access_token);
+      console.log(response.data);
+    };
+    fetchOrders();
+  }, []);
 
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showModal, setShowModal] = useState(false);

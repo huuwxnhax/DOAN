@@ -52,6 +52,7 @@ const PurchaseModal = ({
           ],
         },
       ],
+      address: user.address,
       from: "product",
     };
 

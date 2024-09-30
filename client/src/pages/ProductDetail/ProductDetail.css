@@ -184,12 +184,14 @@
 
 .product-about,
 .product-other,
+.product-comment,
 .product-footer {
   width: 70%;
   margin: 40px auto;
 }
 
 .product-about,
+.product-comment,
 .product-other {
   background-color: #fff;
   border-radius: 8px;

@@ -38,6 +38,11 @@ export const uploadFile = (formData) => API.post("/products/files", formData);
 // get classify by product id
 export const getClassifiesByProductId = (id) => API.get(`/classify/${id}`);
 
+// // get classify by classify id
+// export const getClassifyById = (id, key = "", value = "") => {
+//   return API.get(`/classify/dynamicvalue?id=${id}&key=${key}&value=${value}`);
+// };
+
 // add classify
 export const addClassifyAPI = (classify, token) =>
   API.post("/classify", classify, {

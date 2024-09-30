@@ -22,6 +22,7 @@ import Notification from "../../components/Notification/Notification";
 import { getProductById } from "../../api/productAPI";
 import { getAllCate } from "../../api/cateAPI";
 import OrderSuccessModal from "../../components/Modal/OrderSuccessModal";
+import CommentSection from "../../components/Sections/CommentSection";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -410,7 +411,10 @@ const ProductDetail = () => {
           <img src={prodBanner2} alt="Banner" />
         </div> */}
       </div>
-
+      {/* Comment Section */}
+      {/* <div className="product-comment">
+        <CommentSection productId={product._id} />
+      </div> */}
       <div className="product-footer">
         <FooterSection />
       </div>

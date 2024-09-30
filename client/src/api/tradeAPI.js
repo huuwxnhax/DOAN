@@ -26,3 +26,13 @@ export const refundTradeAPI = (trade, token) =>
   API.post("/trade/refund", trade, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
+export const getTradeAPI = (id, token) =>
+  API.get(`/trade/buyer/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+export const getTradeBySellerAPI = (id, token) =>
+  API.get(`/trade/seller/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });

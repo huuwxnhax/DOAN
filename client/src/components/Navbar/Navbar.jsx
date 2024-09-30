@@ -337,7 +337,6 @@ const Navbar = () => {
                       <a href="/profile">Thông Tin Cá Nhân</a>
                       <a href="/orders">Đơn Hàng Của Bạn</a>
                       <a href="/cart">Giỏ Hàng</a>
-                      <a href="/wishlist">Sản Phẩm Yêu Thích</a>
                       <a href="/notifications">Thông Báo</a>
                       <a href="/settings">Cài Đặt</a>
                       <a onClick={handleLogout}>Đăng Xuất</a>
