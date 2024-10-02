@@ -26,7 +26,6 @@ const ProductTable = ({ setActiveTab, setProductEdit }) => {
     direction: "asc",
   });
 
-  // Toggle visibility of columns
   const toggleColumnVisibility = (name) => {
     setColumns((prev) =>
       prev.map((col) =>
@@ -35,7 +34,6 @@ const ProductTable = ({ setActiveTab, setProductEdit }) => {
     );
   };
 
-  // Handle New Product button click
   const handleNewProduct = () => {
     setActiveTab("add-product");
   };
@@ -50,7 +48,6 @@ const ProductTable = ({ setActiveTab, setProductEdit }) => {
       const response = await getProductsBySellerId(user._id, page);
       setProducts(response.data);
       setSortedProducts(response.data);
-      console.log(response.data.length);
       setTotalPages(Math.ceil(response.data.length / 10));
     };
     fetchProductsofSeller();
@@ -145,35 +142,35 @@ const ProductTable = ({ setActiveTab, setProductEdit }) => {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border">
+        <table className="min-w-full bg-white">
           <thead>
-            <tr>
-              <th className="py-2"></th>
+            <tr className="border-b">
+              {/* <th className="py-2"></th> */}
               {columns.map(
                 (col) =>
                   col.visible && (
                     <th
                       key={col.name}
                       onClick={() => handleSort(col.name)}
-                      className="py-2 px-4 border cursor-pointer"
+                      className="bg-gray-100 text-left p-4 cursor-pointer border-b"
                     >
                       {col.name} {getSortIcon(col.name)}
                     </th>
                   )
               )}
-              <th className="py-2 px-4 border">Action</th>
+              <th className="bg-gray-100 text-left p-4 border-b">Action</th>
             </tr>
           </thead>
           <tbody>
             {sortedProducts?.map((product) => (
-              <tr key={product._id}>
-                <td className="py-2 px-4 border">
+              <tr key={product._id} className="border-b">
+                {/* <td className="py-2 px-4">
                   <input type="checkbox" />
-                </td>
+                </td> */}
                 {columns.map(
                   (col) =>
                     col.visible && (
-                      <td key={col.name} className="py-2 px-4 border text-sm">
+                      <td key={col.name} className="py-2 px-4 text-sm">
                         {col.name === "ProductID" && product._id.slice(-6)}
                         {col.name === "Name" && product.productName}
                         {col.name === "Category" &&
@@ -192,7 +189,7 @@ const ProductTable = ({ setActiveTab, setProductEdit }) => {
                       </td>
                     )
                 )}
-                <td className="py-2 px-4 border">
+                <td className="py-2 px-4">
                   <button
                     onClick={() => handleEditProduct(product)}
                     className="bg-blue-500 text-white p-1 rounded"

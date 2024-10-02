@@ -52,6 +52,7 @@ const PurchaseModal = ({
           ],
         },
       ],
+      paymentMethod: paymentMethod,
       address: user.address,
       from: "product",
     };
