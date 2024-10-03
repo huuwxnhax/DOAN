@@ -12,7 +12,7 @@ const ProductSection = ({ isHomepage, products }) => {
 
   const getPrice = (classifies) => {
     if (classifies.length === 0) return 0;
-    return Math.max(...classifies.map((classify) => classify.price));
+    return Math.min(...classifies.map((classify) => classify.price));
   };
 
   useEffect(() => {

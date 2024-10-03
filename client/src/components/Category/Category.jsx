@@ -45,8 +45,6 @@ const Category = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // const debounceSort = useDebounce(selectedSort, 500);
-
   // get products
   useEffect(() => {
     const fetchProducts = async () => {
@@ -91,7 +89,7 @@ const Category = () => {
         setBrands(uniqueBrands);
 
         setProducts(productWithClassifies);
-        setTotalPages(data.totalPages || 10);
+        // setTotalPages(Math.ceil(response.total / 20).toFixed(0));
       } catch (error) {
         console.log("Error fetching products: ", error);
       }

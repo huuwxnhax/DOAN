@@ -5,6 +5,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import Modal from "@mui/material/Modal";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CloseIcon from "@mui/icons-material/Close";
+import SortIcon from "@mui/icons-material/Sort";
 import { useEffect } from "react";
 import {
   addTradeAPI,
@@ -142,6 +143,11 @@ const Orders = () => {
     }
   };
 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const handleSortClick = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -152,78 +158,163 @@ const Orders = () => {
           <div className="flex border-b-2 border-gray-300 mb-6">
             <div
               onClick={() => setActiveTab("paid")}
-              className={`py-3 px-6 cursor-pointer font-bold whitespace-nowrap ${
+              className={`py-3 px-6 cursor-pointer font-bold whitespace-nowrap hidden md:inline ${
                 activeTab === "paid"
                   ? "border-b-4 border-blue-500 text-blue-500"
                   : "text-gray-600"
               }`}
             >
-              Đơn hàng đã thanh toán
+              Đã Thanh Toán
             </div>
             <div
               onClick={() => setActiveTab("unpaid")}
-              className={`py-3 px-6 cursor-pointer font-bold whitespace-nowrap ${
+              className={`py-3 px-6 cursor-pointer font-bold whitespace-nowrap hidden md:inline ${
                 activeTab === "unpaid"
                   ? "border-b-4 border-blue-500 text-blue-500"
                   : "text-gray-600"
               }`}
             >
-              Đơn hàng chưa thanh toán
+              Chưa Thanh Toán
             </div>
             <div
               onClick={() => setActiveTab("canceled")}
-              className={`py-3 px-6 cursor-pointer font-bold whitespace-nowrap ${
+              className={`py-3 px-6 cursor-pointer font-bold whitespace-nowrap hidden md:inline ${
                 activeTab === "canceled"
                   ? "border-b-4 border-blue-500 text-blue-500"
                   : "text-gray-600"
               }`}
             >
-              Đơn hàng đã huỷ
+              Đã Huỷ
+            </div>
+
+            {/* Hiện khi reponsive là md trở xuống, để hiển thị ra option được chọn trong dropdown */}
+            <div className="flex justify-between items-center w-full">
+              <div
+                className={`py-3 px-6 cursor-pointer font-bold whitespace-nowrap inline md:hidden ${
+                  activeTab === "paid"
+                    ? "border-b-4 border-blue-500 text-blue-500"
+                    : activeTab === "unpaid"
+                    ? "border-b-4 border-blue-500 text-blue-500"
+                    : "border-b-4 border-blue-500 text-blue-500"
+                }`}
+              >
+                {activeTab === "paid" && "Đã Thanh Toán"}
+                {activeTab === "unpaid" && "Chưa Thanh Toán"}
+                {activeTab === "canceled" && "Đã Huỷ"}
+              </div>
+
+              {/* reponsive dropdown for sort */}
+              <div className="inline md:hidden py-3 px-6 cursor-pointer whitespace-nowrap relative">
+                <button
+                  onClick={handleSortClick}
+                  className="focus:outline-none"
+                >
+                  <SortIcon />
+                </button>
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-10">
+                    <div
+                      onClick={() => {
+                        setActiveTab("paid");
+                        setDropdownOpen(false);
+                      }}
+                      className={`py-2 px-4 cursor-pointer hover:bg-blue-500 hover:text-white ${
+                        activeTab === "paid" ? "bg-blue-100" : ""
+                      }`}
+                    >
+                      Đã Thanh Toán
+                    </div>
+                    <div
+                      onClick={() => {
+                        setActiveTab("unpaid");
+                        setDropdownOpen(false);
+                      }}
+                      className={`py-2 px-4 cursor-pointer hover:bg-blue-500 hover:text-white ${
+                        activeTab === "unpaid" ? "bg-blue-100" : ""
+                      }`}
+                    >
+                      Chưa Thanh Toán
+                    </div>
+                    <div
+                      onClick={() => {
+                        setActiveTab("canceled");
+                        setDropdownOpen(false);
+                      }}
+                      className={`py-2 px-4 cursor-pointer hover:bg-blue-500 hover:text-white ${
+                        activeTab === "canceled" ? "bg-blue-100" : ""
+                      }`}
+                    >
+                      Đã Huỷ
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Orders List */}
           <div className="space-y-4">
             {displayedOrders.map((order) => (
-              <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                <div className="flex items-center">
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between p-4 border border-gray-200 rounded-lg">
+                {/* Left section with image and product details */}
+                <div className="flex flex-col sm:flex-row sm:items-start  lg:items-center gap-4 w-full lg:w-auto">
                   <img
                     src={order.image}
                     alt={order.productName}
-                    className="w-16 h-16 object-cover rounded-md mr-4"
+                    className="sm:w-32 sm:h-32 lg:w-16 lg:h-16 object-cover rounded-md mr-0 lg:mr-4"
                   />
                   <div>
                     <h3 className="font-bold text-lg">{order.productName}</h3>
                     <p className="text-sm text-gray-500">
                       Mã đơn: {order.tradeId}
                     </p>
-                    {order.sellerAccept && !order.isCancel && (
-                      <p className="text-sm text-green-500 font-bold mt-1">
-                        Đã chấp nhận đơn hàng
-                      </p>
-                    )}
+                    <p className="font-bold">
+                      {order.balence.toLocaleString("vi-VN")}đ
+                    </p>
+                    {/* hiện khi reponsive là lg */}
+                    <div className="lg:hidden">
+                      {!order.isCancel && <p>{order.paymentMethod}</p>}
+                      {order.sellerAccept && !order.isCancel && (
+                        <p className="text-sm text-green-500 font-bold mt-1">
+                          Đã Chấp Nhận Đơn Hàng
+                        </p>
+                      )}
+                      {order.isCancel && (
+                        <p className="text-sm text-red-500 font-bold mt-1">
+                          Đơn Hàng Đã Huỷ
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
-                <div className="text-right order-1 sm:order-2">
-                  {order.isCancel && (
-                    <p className="text-red-500">Đơn hàng đã huỷ</p>
-                  )}
+
+                {/* Right section with price and payment method */}
+                <div className="hidden lg:flex flex-col lg:items-end mt-4 lg:mt-0 w-full lg:w-auto lg:text-right">
                   {!order.isCancel && <p>{order.paymentMethod}</p>}
-                  <p className="font-bold">
-                    {order.balence.toLocaleString("vi-VN")}đ
-                  </p>
+                  {order.sellerAccept && !order.isCancel && (
+                    <p className="text-sm text-green-500 font-bold mt-1">
+                      Đã Chấp Nhận Đơn Hàng
+                    </p>
+                  )}
+                  {order.isCancel && (
+                    <p className="text-sm text-red-500 font-bold mt-1">
+                      Đơn Hàng Đã Huỷ
+                    </p>
+                  )}
                 </div>
+
                 {/* Responsive buttons */}
-                <div className="flex flex-col items-center sm:flex-row sm:justify-end sm:w-auto mt-4 sm:mt-0 order-2 sm:order-3">
+                <div className="flex flex-col lg:items-center lg:justify-end mt-4 lg:mt-0 w-full lg:w-auto lg:self-end whitespace-nowrap">
                   <button
-                    className="mt-2 sm:mt-0 sm:ml-4 transition duration-300"
+                    className="mt-2 lg:mt-0 lg:ml-4 transition duration-300"
                     onClick={() => handleOrderDetails(order)}
                   >
-                    <span className="hidden sm:inline bg-blue-500 text-white py-2 px-4 rounded-lg whitespace-nowrap">
-                      Chi tiết đơn hàng
-                    </span>
-                    <span className="inline sm:hidden flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-lg">
+                    {/* Show icon on large screens, text on small screens */}
+                    <span className="hidden lg:inline-flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-lg mb-4">
                       <VisibilityOutlinedIcon className="text-white text-xl" />
+                    </span>
+                    <span className="inline lg:hidden flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-lg">
+                      Chi tiết đơn hàng
                     </span>
                   </button>
                 </div>
