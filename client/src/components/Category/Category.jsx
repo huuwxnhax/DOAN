@@ -17,7 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Category = () => {
   const sortOptions = [
-    { name: "Phổ biến", value: "popular", query: "popular=1" },
+    { name: "Bán chạy", value: "selled", query: "selled=-1" },
     { name: "Mới nhất", value: "dateUp", query: "dateUp=1" },
     { name: "Giá giảm dần", value: "priceDesc", query: "price=-1" },
     { name: "Giá tăng dần", value: "priceAsc", query: "price=1" },
@@ -45,36 +45,25 @@ const Category = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // get products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         let response;
-        if (selectedSort || selectedBrand) {
-          let query = "";
-          if (selectedBrand) {
-            query = `brand=${selectedBrand}`;
-            console.log("Query brand", query);
-          } else {
-            query = `brand=`;
-          }
-          if (selectedSort) {
-            const sortOption = sortOptions.find(
-              (option) => option.value === selectedSort
-            ).query;
-            query += `&${sortOption}`;
-            console.log("Query sort", query);
-          }
+        let query = `brand=${selectedBrand || ""}`;
 
-          // get products by sort
-          response = await getProductsDynamic(query);
-          console.log(`Response data ${query}`, response.data);
-        } else {
-          // get all products by page
-          response = await getProductsByPage(currentPage);
+        if (selectedSort) {
+          const sortOption = sortOptions.find(
+            (option) => option.value === selectedSort
+          ).query;
+          query += `&${sortOption}`;
+          console.log("Query sort", query);
         }
+
+        // Fetch products based on dynamic sorting and brand filtering
+        response = await getProductsDynamic(query);
+        console.log(`Response data for query: ${query}`, response.data);
+
         const data = response.data;
-        console.log("Products data", data);
 
         const productWithClassifies = await Promise.all(
           data.map(async (product) => {
@@ -84,16 +73,18 @@ const Category = () => {
             return { ...product, classifies: classifiesResponse.data };
           })
         );
+
+        // Filter unique brands from products
         const getBrands = data.map((product) => product.brand);
-        const uniqueBrands = [...new Set(getBrands)]; // filter duplicate brands
+        const uniqueBrands = [...new Set(getBrands)];
         setBrands(uniqueBrands);
 
         setProducts(productWithClassifies);
-        // setTotalPages(Math.ceil(response.total / 20).toFixed(0));
       } catch (error) {
         console.log("Error fetching products: ", error);
       }
     };
+
     fetchProducts();
   }, [currentPage, selectedSort, selectedBrand]);
 

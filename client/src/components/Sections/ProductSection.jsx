@@ -31,7 +31,7 @@ const ProductSection = ({ isHomepage, products }) => {
             key={product._id}
           >
             <div className="product-item">
-              <img src={product.images[0]} alt="product" />
+              <img src={product.images[1]} alt="product" />
               <div className="product-detail">
                 <p className="product-name">{product.productName}</p>
                 <div className="product-rating">
