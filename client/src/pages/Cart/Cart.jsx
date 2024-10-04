@@ -231,7 +231,7 @@ const Cart = () => {
               >
                 <div className="product-info">
                   <img
-                    src={prod1}
+                    src={product?.images[0] || prod1}
                     alt={product?.productName || "Product Image"}
                   />
                   <div className="detail">

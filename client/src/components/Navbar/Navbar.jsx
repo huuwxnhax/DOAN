@@ -262,7 +262,7 @@ const Navbar = () => {
                       >
                         <div className="cart-item">
                           <img
-                            src={prod1}
+                            src={product?.images[0] || prod1}
                             alt={product?.productName || "Product Image"}
                             className="cart-item-img"
                           />
@@ -273,7 +273,9 @@ const Navbar = () => {
                             <span className="cart-item-name">
                               {product?.productName || "Loading..."}
                             </span>
-                            <span className="cart-item-price">{itemPrice}</span>
+                            <span className="cart-item-price">
+                              {itemPrice}đ
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -285,39 +287,50 @@ const Navbar = () => {
                   </a>
                 </div>
               )}
-              <Drawer
-                anchor="bottom"
-                open={openDrawer}
-                onClose={() => setOpenDrawer(false)}
-                PaperProps={{
-                  style: {
-                    height: "60vh",
-                    overflow: "auto",
-                    padding: "16px",
-                  },
-                }}
-              >
-                <div className="cart-title">Sản Phẩm Mới Thêm</div>
-                <div className="cart-item-container">
-                  <div className="cart-item">
-                    <img
-                      src={prod1}
-                      alt="Product Image"
-                      className="cart-item-img"
-                    />
-                    <div className="cart-item-info">
-                      <span className="cart-item-label">Combo khuyến mãi</span>
-                      <span className="cart-item-name">
-                        Dép gia đình chống trượt
-                      </span>
-                      <span className="cart-item-price">27.000₫</span>
+              {cartItems.map((item) => {
+                const product = productData[item.productId];
+                const classify =
+                  selectedClassifies[`${item.productId}-${item.classifyId}`];
+                const itemPrice = classify?.price || item.price;
+                return (
+                  <Drawer
+                    key={`${item.productId}-${item.classifyId}`}
+                    anchor="bottom"
+                    open={openDrawer}
+                    onClose={() => setOpenDrawer(false)}
+                    PaperProps={{
+                      style: {
+                        height: "60vh",
+                        overflow: "auto",
+                        padding: "16px",
+                      },
+                    }}
+                  >
+                    <div className="cart-title">Sản Phẩm Mới Thêm</div>
+                    <div className="cart-item-container">
+                      <div className="cart-item">
+                        <img
+                          src={product?.images[0] || prod1}
+                          alt={product?.productName || "Product Image"}
+                          className="cart-item-img"
+                        />
+                        <div className="cart-item-info">
+                          <span className="cart-item-label">
+                            Combo khuyến mãi
+                          </span>
+                          <span className="cart-item-name">
+                            {product?.productName}
+                          </span>
+                          <span className="cart-item-price">{itemPrice}đ</span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <a href="/cart" className="view-cart-button">
-                  Xem Giỏ Hàng
-                </a>
-              </Drawer>
+                    <a href="/cart" className="view-cart-button">
+                      Xem Giỏ Hàng
+                    </a>
+                  </Drawer>
+                );
+              })}
             </div>
             <div className="navbar-avatar">
               {user ? (
