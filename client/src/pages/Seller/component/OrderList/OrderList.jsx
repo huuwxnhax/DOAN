@@ -88,11 +88,20 @@ const OrderList = () => {
   const filteredOrders = orders.filter((order) => {
     const statusMatch =
       selectedStatus === "All" || order.status === selectedStatus;
+
+    // Convert order date string to Date object
+    const orderDate = new Date(
+      order.formattedDate.split("/").reverse().join("-")
+    ); // Chuyển đổi từ dd/mm/yyyy sang yyyy-mm-dd
+    const fromDate = selectedDateRange.from
+      ? new Date(selectedDateRange.from)
+      : null;
+    const toDate = selectedDateRange.to ? new Date(selectedDateRange.to) : null;
+
+    // Check if order date is within the selected date range
     const dateMatch =
-      selectedDateRange.from === "" ||
-      selectedDateRange.to === "" ||
-      (new Date(order.date) >= new Date(selectedDateRange.from) &&
-        new Date(order.date) <= new Date(selectedDateRange.to));
+      (!fromDate || orderDate >= fromDate) && (!toDate || orderDate <= toDate);
+
     return statusMatch && dateMatch;
   });
 
@@ -252,7 +261,9 @@ const OrderList = () => {
               <td className="p-4 border-b">
                 {order.formattedDate} {order.formattedTime}
               </td>
-              <td className="p-4 border-b">{order.balence}</td>
+              <td className="p-4 border-b">
+                {order.balence.toLocaleString("vi-VN")}
+              </td>
               <td className={`p-4 border-b ${order.statusColor}`}>
                 {order.status}
               </td>
@@ -342,7 +353,7 @@ const OrderList = () => {
                     {selectedOrder.formattedDate} {selectedOrder.formattedTime}
                   </div>
                   <div>
-                    <strong className="text-sm">Tổng Tiền:</strong>{" "}
+                    <strong className="text-sm">Tổng:</strong>{" "}
                     {selectedOrder.balence.toLocaleString("vi-VN")} VND
                   </div>
                 </div>

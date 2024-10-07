@@ -14,6 +14,8 @@ import {
 import { useSelector } from "react-redux";
 import { getClassifiesByProductId, getProductById } from "../../api/productAPI";
 import Notification from "../../components/Notification/Notification";
+import { Modal } from "@mui/material";
+import { addTradeAPI, tradePaymentAPI } from "../../api/tradeAPI";
 
 const Cart = () => {
   const user = useSelector((state) => state.auth.user);
@@ -24,6 +26,12 @@ const Cart = () => {
   const [itemToDelete, setItemToDelete] = useState(null);
   const [productData, setProductData] = useState({});
   const [showNotification, setShowNotification] = useState(false);
+
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [deliveryAddress, setDeliveryAddress] = useState(user.address || "");
+  const [openPurchaseModal, setOpenPurchaseModal] = useState(false);
 
   // Fetch cart items for the current user
   useEffect(() => {
@@ -154,8 +162,12 @@ const Cart = () => {
   };
 
   // Xử lý mở modal xác nhận xóa sản phẩm khỏi giỏ hàng
-  const handleOpenModal = (productId) => {
-    setItemToDelete(productId); // Sử dụng productId để xác định mục cần xóa
+  const handleOpenModal = (productId, classifyId) => {
+    const dataDelete = {
+      productId,
+      classifyId,
+    };
+    setItemToDelete(dataDelete); // Sử dụng productId để xác định mục cần xóa
     setShowModal(true);
   };
 
@@ -165,27 +177,45 @@ const Cart = () => {
       return;
     }
 
-    const item = cartItems.find(
-      (cartItem) => cartItem.productId === itemToDelete
-    );
-    if (!item) {
-      console.error("Item muốn xóa không tồn tại trong giỏ hàng");
-      return;
-    }
+    const { productId, classifyId } = itemToDelete;
+
+    // const item = cartItems.find(
+    //   (cartItem) => cartItem.productId === itemToDelete
+    // );
+    // if (!item) {
+    //   console.error("Item muốn xóa không tồn tại trong giỏ hàng");
+    //   return;
+    // }
+
+    // const cartDTO = {
+    //   buyer: user._id,
+    //   productId: item.productId,
+    //   classifyId: item.classifyId,
+    //   seller: item.seller,
+    //   numberProduct: item.numberProduct,
+    // };
 
     const cartDTO = {
       buyer: user._id,
-      productId: item.productId,
-      classifyId: item.classifyId,
-      seller: item.seller,
-      numberProduct: item.numberProduct,
+      productId,
+      classifyId,
+      seller: cartItems.find(
+        (item) => item.productId === productId && item.classifyId === classifyId
+      )?.seller,
+      numberProduct: cartItems.find(
+        (item) => item.productId === productId && item.classifyId === classifyId
+      )?.numberProduct,
     };
 
     try {
       const response = await deleteCartItem(cartDTO);
       if (response.status === 201) {
         setCartItems((prevItems) =>
-          prevItems.filter((cartItem) => cartItem.productId !== itemToDelete)
+          prevItems.filter(
+            (cartItem) =>
+              cartItem.productId !== productId ||
+              cartItem.classifyId !== classifyId
+          )
         );
         setShowNotification(true);
       } else {
@@ -203,6 +233,147 @@ const Cart = () => {
   const handleCancelDelete = () => {
     setShowModal(false);
     setItemToDelete(null);
+  };
+
+  // const handlePurchase = async () => {
+  //   const selectedCartItems = cartItems.filter((item) =>
+  //     selectedItems.includes(`${item.productId}-${item.classifyId}`)
+  //   );
+  //   // Now only selectedCartItems will be processed for the purchase
+  //   if (selectedCartItems.length === 0) {
+  //     alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
+  //     return;
+  //   }
+  //   const formData = {
+  //     buyer: user._id,
+  //     products: selectedCartItems.map((item) => ({
+  //       seller: item.seller,
+  //       items: [
+  //         {
+  //           productId: item.productId,
+  //           classifyId: item.classifyId,
+  //           numberProduct: item.numberProduct,
+  //         },
+  //       ],
+  //     })),
+  //     paymentMethod: paymentMethod,
+  //     address: deliveryAddress,
+  //     from: "cart",
+  //   };
+
+  //   // Process the formData with the selected items for payment
+  //   try {
+  //     console.log("adding trade: ", formData);
+  //     const tradeResponse = await addTradeAPI(formData, user.access_token);
+  //     if (tradeResponse.status === 201) {
+  //       console.log("Trade added successfully:", tradeResponse.data);
+  //       const tradeId = tradeResponse.data.tradeId;
+
+  //       if (paymentMethod === "cash") {
+  //         setOpenPurchaseModal(false);
+  //       }
+  //       if (paymentMethod === "zalo") {
+  //         const paymentData = {
+  //           tradeId: tradeId,
+  //           method: "zalo",
+  //         };
+  //         const paymentResponse = await tradePaymentAPI(
+  //           paymentData,
+  //           user.access_token
+  //         );
+  //         console.log("Payment response:", paymentResponse.data);
+  //         const { order_url } = paymentResponse.data;
+  //         if (order_url) {
+  //           window.location.href = order_url;
+  //         }
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding trade:", error);
+  //   }
+  // };
+
+  const handlePurchase = async () => {
+    const selectedCartItems = cartItems.filter((item) =>
+      selectedItems.includes(`${item.productId}-${item.classifyId}`)
+    );
+
+    if (selectedCartItems.length === 0) {
+      alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
+      return;
+    }
+
+    // Group items by seller
+    const groupedBySeller = selectedCartItems.reduce((acc, item) => {
+      const sellerId = item.seller;
+
+      // If this seller hasn't been added to the accumulator yet, create a new entry for the seller
+      if (!acc[sellerId]) {
+        acc[sellerId] = {
+          seller: sellerId, // This represents the seller's ID
+          items: [], // Initialize with an empty items array for this seller
+        };
+      }
+
+      // Add the current item to the seller's items list
+      acc[sellerId].items.push({
+        productId: item.productId,
+        classifyId: item.classifyId,
+        numberProduct: item.numberProduct,
+      });
+
+      return acc;
+    }, {});
+
+    // Convert the grouped object into an array of sellers with their respective items
+    const formData = {
+      buyer: user._id,
+      products: Object.values(groupedBySeller), // Convert the object to an array of sellers with items
+      paymentMethod: paymentMethod,
+      address: deliveryAddress,
+      from: "cart",
+    };
+
+    // Process the formData with the selected items for payment
+    try {
+      console.log("Adding trade:", formData);
+      const tradeResponse = await addTradeAPI(formData, user.access_token);
+
+      if (tradeResponse.status === 201) {
+        console.log("Trade added successfully:", tradeResponse.data);
+        const tradeId = tradeResponse.data.tradeId;
+
+        if (paymentMethod === "cash") {
+          setOpenPurchaseModal(false);
+        }
+
+        if (paymentMethod === "zalo") {
+          const paymentData = {
+            tradeId: [...tradeId],
+            method: "zalo",
+          };
+          console.log("payment data: ", paymentData);
+
+          const paymentResponse = await tradePaymentAPI(
+            paymentData,
+            user.access_token
+          );
+          console.log("Payment response:", paymentResponse.data);
+          const { order_url } = paymentResponse.data;
+
+          if (order_url) {
+            // window.location.href = order_url;
+            window.open(order_url);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error adding trade:", error);
+    }
+  };
+
+  const handleOpenPurchaseModal = () => {
+    setOpenPurchaseModal(true);
   };
 
   return (
@@ -224,12 +395,32 @@ const Cart = () => {
             const itemPrice = classify?.price || item.price;
             const totalPrice = itemPrice * item.numberProduct;
 
+            const isSelected = selectedItems.includes(
+              `${item.productId}-${item.classifyId}`
+            );
+
+            const handleSelectionChange = () => {
+              const itemKey = `${item.productId}-${item.classifyId}`;
+              if (isSelected) {
+                setSelectedItems((prevSelected) =>
+                  prevSelected.filter((key) => key !== itemKey)
+                );
+              } else {
+                setSelectedItems((prevSelected) => [...prevSelected, itemKey]);
+              }
+            };
+
             return (
               <div
                 key={`${item.productId}-${item.classifyId}`}
                 className="item-cart"
               >
                 <div className="product-info">
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={handleSelectionChange}
+                  />
                   <img
                     src={product?.images[0] || prod1}
                     alt={product?.productName || "Product Image"}
@@ -268,7 +459,9 @@ const Cart = () => {
                 </div>
                 <div className="product-action">
                   <button
-                    onClick={() => handleOpenModal(item.productId)}
+                    onClick={() =>
+                      handleOpenModal(item.productId, item.classifyId)
+                    }
                     className="btn-delete"
                   >
                     Xóa
@@ -280,9 +473,16 @@ const Cart = () => {
         </div>
         <div className="cart-actions">
           <button className="continue-shopping">Tiếp Tục Shopping</button>
-          <button className="make-purchase">Thanh Toán</button>
+          <button
+            onClick={handleOpenPurchaseModal}
+            className="make-purchase disabled:bg-gray-300"
+            disabled={selectedItems.length === 0}
+          >
+            Thanh Toán
+          </button>
         </div>
       </div>
+
       <div className="cart-footer">
         <FooterSection />
       </div>
@@ -291,6 +491,144 @@ const Cart = () => {
           onClose={handleCancelDelete}
           onConfirm={handleConfirmDelete}
         />
+      )}
+      {openPurchaseModal && (
+        <Modal
+          open={openPurchaseModal}
+          onClose={() => setOpenPurchaseModal(false)}
+        >
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto mt-20">
+            <h2 className="text-xl font-bold mb-4 text-center">
+              Xác nhận thanh toán
+            </h2>
+
+            <div className="flex space-x-4">
+              {/* Left Side: Scrollable Cart Items */}
+              <div className="w-3/5 h-96 overflow-y-auto border-r pr-4">
+                {cartItems
+                  .filter((item) =>
+                    selectedItems.includes(
+                      `${item.productId}-${item.classifyId}`
+                    )
+                  )
+                  .map((item) => {
+                    const product = productData[item.productId];
+                    const classify =
+                      selectedClassifies[
+                        `${item.productId}-${item.classifyId}`
+                      ];
+                    const itemPrice = classify?.price || item.price;
+                    const totalPrice = itemPrice * item.numberProduct;
+                    const image =
+                      product?.images[0] || "/placeholder-image.png";
+
+                    return (
+                      <div
+                        key={`${item.productId}-${item.classifyId}`}
+                        className="mb-4 border-b pb-4 flex"
+                      >
+                        {/* Item Image */}
+                        <img
+                          src={image}
+                          alt={product?.productName || "Product Image"}
+                          className="w-16 h-16 object-cover mr-4"
+                        />
+                        <div>
+                          <p className="font-medium">
+                            {product?.productName || "Loading..."}
+                          </p>
+                          {classify && (
+                            <p className="text-sm text-gray-500">
+                              {classify?.key}: {classify?.value}
+                            </p>
+                          )}
+                          <p className="text-sm text-gray-700">
+                            Số lượng: {item.numberProduct}
+                          </p>
+                          <p className="text-sm text-gray-700">
+                            Giá: {itemPrice}đ
+                          </p>
+                          <p className="font-bold">Tổng: {totalPrice}đ</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+
+              {/* Right Side: Buyer Info & Payment Method */}
+              <div className="w-2/5">
+                <div className="mb-4">
+                  <h3 className="font-medium">Thông tin người mua</h3>
+                  <p className="text-sm text-gray-700">Tên: {user.name}</p>
+                  <p className="text-sm text-gray-700">
+                    Số điện thoại: {user.number}
+                  </p>
+                </div>
+
+                <div className="mb-4">
+                  <h3 className="font-medium">Địa chỉ giao hàng</h3>
+                  <input
+                    type="text"
+                    value={deliveryAddress}
+                    onChange={(e) => setDeliveryAddress(e.target.value)}
+                    placeholder="Nhập địa chỉ giao hàng"
+                    className="w-full p-2 border border-gray-300 rounded-lg"
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <h3 className="font-medium">Phương thức thanh toán</h3>
+                  <div className="mt-2 flex space-x-4">
+                    <button
+                      className={`border px-4 py-2 rounded-md whitespace-nowrap ${
+                        paymentMethod === "cash"
+                          ? "bg-green-500 text-white"
+                          : "bg-gray-100 text-gray-700"
+                      }`}
+                      onClick={() => setPaymentMethod("cash")}
+                    >
+                      Thanh toán khi nhận hàng
+                    </button>
+                    <button
+                      className={`border px-4 py-2 rounded-md whitespace-nowrap ${
+                        paymentMethod === "zalo"
+                          ? "bg-green-500 text-white"
+                          : "bg-gray-100 text-gray-700"
+                      }`}
+                      onClick={() => setPaymentMethod("zalo")}
+                    >
+                      Zalo Pay
+                    </button>
+                  </div>
+                  <p
+                    className={`text-red-500 text-sm mt-2 ${
+                      paymentMethod === "" ? "visible" : "invisible"
+                    }`}
+                  >
+                    Vui lòng chọn phương thức thanh toán
+                  </p>
+                </div>
+
+                {/* Confirm & Cancel Buttons */}
+                <div className="flex justify-end space-x-2 mt-6">
+                  <button
+                    className="bg-red-500 text-white px-4 py-2 rounded-md"
+                    onClick={() => setOpenPurchaseModal(false)}
+                  >
+                    Hủy
+                  </button>
+                  <button
+                    className="bg-green-500 text-white px-4 py-2 rounded-md disabled:bg-gray-300"
+                    onClick={handlePurchase}
+                    disabled={!paymentMethod || !deliveryAddress}
+                  >
+                    Xác nhận
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal>
       )}
     </div>
   );

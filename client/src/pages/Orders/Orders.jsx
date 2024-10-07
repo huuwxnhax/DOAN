@@ -255,7 +255,10 @@ const Orders = () => {
           {/* Orders List */}
           <div className="space-y-4">
             {displayedOrders.map((order) => (
-              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between p-4 border border-gray-200 rounded-lg">
+              <div
+                key={order.tradeId}
+                className="flex flex-col lg:flex-row items-start lg:items-center justify-between p-4 border border-gray-200 rounded-lg"
+              >
                 {/* Left section with image and product details */}
                 <div className="flex flex-col sm:flex-row sm:items-start  lg:items-center gap-4 w-full lg:w-auto">
                   <img
@@ -263,14 +266,18 @@ const Orders = () => {
                     alt={order.productName}
                     className="sm:w-32 sm:h-32 lg:w-16 lg:h-16 object-cover rounded-md mr-0 lg:mr-4"
                   />
-                  <div>
-                    <h3 className="font-bold text-lg">{order.productName}</h3>
-                    <p className="text-sm text-gray-500">
-                      Mã đơn: {order.tradeId}
-                    </p>
-                    <p className="font-bold">
-                      {order.balence.toLocaleString("vi-VN")}đ
-                    </p>
+                  <div className="">
+                    <div className="sm:w-64">
+                      <h3 className="font-bold text-lg truncate">
+                        {order.productName}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Mã đơn: {order.tradeId}
+                      </p>
+                      <p className="font-bold">
+                        {order.balence.toLocaleString("vi-VN")}đ
+                      </p>
+                    </div>
                     {/* hiện khi reponsive là lg */}
                     <div className="lg:hidden">
                       {!order.isCancel && <p>{order.paymentMethod}</p>}
@@ -393,9 +400,7 @@ const Orders = () => {
                   </p>
                   <p>
                     <strong>Phương thức thanh toán:</strong>{" "}
-                    {selectedOrder.paymentMethod === "cash"
-                      ? "Thanh toán khi nhận hàng"
-                      : "ZaloPay"}
+                    {selectedOrder.paymentMethod}
                   </p>
 
                   {selectedOrder.isCancel && (

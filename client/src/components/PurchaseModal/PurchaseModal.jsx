@@ -60,7 +60,7 @@ const PurchaseModal = ({
     try {
       console.log("Adding trade:", formData);
       // Gọi API thêm tradeId
-      const tradeResponse = await addTradeAPI(formData, user.token);
+      const tradeResponse = await addTradeAPI(formData, user.access_token);
       if (tradeResponse.status === 201) {
         console.log("Trade added successfully:", tradeResponse.data);
         const tradeId = tradeResponse.data.tradeId;
