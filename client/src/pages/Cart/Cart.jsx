@@ -179,22 +179,6 @@ const Cart = () => {
 
     const { productId, classifyId } = itemToDelete;
 
-    // const item = cartItems.find(
-    //   (cartItem) => cartItem.productId === itemToDelete
-    // );
-    // if (!item) {
-    //   console.error("Item muốn xóa không tồn tại trong giỏ hàng");
-    //   return;
-    // }
-
-    // const cartDTO = {
-    //   buyer: user._id,
-    //   productId: item.productId,
-    //   classifyId: item.classifyId,
-    //   seller: item.seller,
-    //   numberProduct: item.numberProduct,
-    // };
-
     const cartDTO = {
       buyer: user._id,
       productId,
@@ -234,64 +218,6 @@ const Cart = () => {
     setShowModal(false);
     setItemToDelete(null);
   };
-
-  // const handlePurchase = async () => {
-  //   const selectedCartItems = cartItems.filter((item) =>
-  //     selectedItems.includes(`${item.productId}-${item.classifyId}`)
-  //   );
-  //   // Now only selectedCartItems will be processed for the purchase
-  //   if (selectedCartItems.length === 0) {
-  //     alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
-  //     return;
-  //   }
-  //   const formData = {
-  //     buyer: user._id,
-  //     products: selectedCartItems.map((item) => ({
-  //       seller: item.seller,
-  //       items: [
-  //         {
-  //           productId: item.productId,
-  //           classifyId: item.classifyId,
-  //           numberProduct: item.numberProduct,
-  //         },
-  //       ],
-  //     })),
-  //     paymentMethod: paymentMethod,
-  //     address: deliveryAddress,
-  //     from: "cart",
-  //   };
-
-  //   // Process the formData with the selected items for payment
-  //   try {
-  //     console.log("adding trade: ", formData);
-  //     const tradeResponse = await addTradeAPI(formData, user.access_token);
-  //     if (tradeResponse.status === 201) {
-  //       console.log("Trade added successfully:", tradeResponse.data);
-  //       const tradeId = tradeResponse.data.tradeId;
-
-  //       if (paymentMethod === "cash") {
-  //         setOpenPurchaseModal(false);
-  //       }
-  //       if (paymentMethod === "zalo") {
-  //         const paymentData = {
-  //           tradeId: tradeId,
-  //           method: "zalo",
-  //         };
-  //         const paymentResponse = await tradePaymentAPI(
-  //           paymentData,
-  //           user.access_token
-  //         );
-  //         console.log("Payment response:", paymentResponse.data);
-  //         const { order_url } = paymentResponse.data;
-  //         if (order_url) {
-  //           window.location.href = order_url;
-  //         }
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding trade:", error);
-  //   }
-  // };
 
   const handlePurchase = async () => {
     const selectedCartItems = cartItems.filter((item) =>

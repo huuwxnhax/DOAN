@@ -16,6 +16,7 @@ import {
 import { useSelector } from "react-redux";
 import { getProductById } from "../../api/productAPI";
 import "../Orders/Orders.css";
+import { isCancel } from "axios";
 
 const Orders = () => {
   const user = useSelector((state) => state.auth.user);
@@ -253,7 +254,7 @@ const Orders = () => {
           </div>
 
           {/* Orders List */}
-          <div className="space-y-4">
+          <div className="space-y-4 max-h-[475px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent">
             {displayedOrders.map((order) => (
               <div
                 key={order.tradeId}
@@ -430,8 +431,8 @@ const Orders = () => {
                   )}
 
                   {!selectedOrder.payment &&
-                    selectedOrder.paymentMethod === "zalo" &&
-                    !selectedOrder.isCancel && (
+                    !selectedOrder.isCancel &&
+                    selectedOrder.paymentMethod === "ZaloPay" && (
                       <button
                         onClick={handlePurchaseOrder}
                         className="bg-blue-500 text-white py-2 px-4 rounded-lg w-full mt-4"

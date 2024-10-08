@@ -246,47 +246,52 @@ const Navbar = () => {
                 {/* <span className="cart-count">3</span> */}
               </button>
               {!isMobile && showCart && (
-                <div className={`dropdown-content ${showCart ? "show" : ""}`}>
-                  <div className="cart-title">Sản Phẩm Mới Thêm</div>
-                  {cartItems.map((item) => {
-                    const product = productData[item.productId];
-                    const classify =
-                      selectedClassifies[
-                        `${item.productId}-${item.classifyId}`
-                      ];
-                    const itemPrice = classify?.price || item.price;
-                    return (
-                      <div
-                        className="cart-item-container"
-                        key={`${item.productId}-${item.classifyId}`}
-                      >
-                        <div className="cart-item">
-                          <img
-                            src={product?.images[0] || prod1}
-                            alt={product?.productName || "Product Image"}
-                            className="cart-item-img"
-                          />
-                          <div className="cart-item-info">
-                            <span className="cart-item-label">
-                              Combo khuyến mãi
-                            </span>
-                            <span className="cart-item-name">
-                              {product?.productName || "Loading..."}
-                            </span>
-                            <span className="cart-item-price">
-                              {itemPrice}đ
-                            </span>
+                <div className={`dropdown-content ${showCart ? "show" : ""} `}>
+                  <div className="relative">
+                    <div className="cart-title">Sản Phẩm Mới Thêm</div>
+                    {/* Container có scroll chỉ cho danh sách sản phẩm */}
+                    <div className="cart-items-container">
+                      {cartItems.map((item) => {
+                        const product = productData[item.productId];
+                        const classify =
+                          selectedClassifies[
+                            `${item.productId}-${item.classifyId}`
+                          ];
+                        const itemPrice = classify?.price || item.price;
+                        return (
+                          <div
+                            className="cart-item-container"
+                            key={`${item.productId}-${item.classifyId}`}
+                          >
+                            <div className="cart-item">
+                              <img
+                                src={product?.images[0] || prod1}
+                                alt={product?.productName || "Product Image"}
+                                className="cart-item-img"
+                              />
+                              <div className="cart-item-info">
+                                <span className="cart-item-name">
+                                  {product?.productName || "Loading..."}
+                                </span>
+                                <span className="cart-item-price">
+                                  {itemPrice}đ
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-
-                  <a href="/cart" className="view-cart-button">
-                    Xem Giỏ Hàng
-                  </a>
+                        );
+                      })}
+                    </div>
+                    {/* Nút luôn ở dưới */}
+                    <div className="view-cart-container">
+                      <a href="/cart" className="view-cart-button">
+                        Xem Giỏ Hàng
+                      </a>
+                    </div>
+                  </div>
                 </div>
               )}
+
               {cartItems.map((item) => {
                 const product = productData[item.productId];
                 const classify =
@@ -303,6 +308,11 @@ const Navbar = () => {
                         height: "60vh",
                         overflow: "auto",
                         padding: "16px",
+                      },
+                    }}
+                    BackdropProps={{
+                      style: {
+                        backgroundColor: "transparent", // Loại bỏ nền đen khi mở Drawer
                       },
                     }}
                   >
