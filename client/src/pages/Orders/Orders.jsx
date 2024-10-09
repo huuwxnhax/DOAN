@@ -16,7 +16,8 @@ import {
 import { useSelector } from "react-redux";
 import { getProductById } from "../../api/productAPI";
 import "../Orders/Orders.css";
-import { isCancel } from "axios";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const Orders = () => {
   const user = useSelector((state) => state.auth.user);
@@ -26,6 +27,7 @@ const Orders = () => {
   const [cancelReason, setCancelReason] = useState("");
   const [orders, setOrders] = useState([]);
   const [paymentUrl, setPaymentUrl] = useState("");
+  const [currentProductIndex, setCurrentProductIndex] = useState(0);
 
   useEffect(() => {
     const fetchOrdersWithDetails = async () => {
@@ -35,37 +37,51 @@ const Orders = () => {
         console.log("Fetched orders", fetchedOrders.data);
         const detailedOrders = await Promise.all(
           fetchedOrders.data.map(async (order) => {
-            // Fetch product details for each order
-            const productResponse = await getProductById(
-              order.products[0].productId
+            // Fetch product details for each product in the order
+            const productDetails = await Promise.all(
+              order.products.map(async (product) => {
+                const productResponse = await getProductById(product.productId);
+
+                if (productResponse.status === 200) {
+                  const productData = productResponse.data[0];
+
+                  console.log("Product name", productData.productName);
+
+                  // Get classify details for the current product
+                  const classify = productData.classifies?.find(
+                    (c) => c._id === product.classifyId
+                  );
+
+                  console.log("Classify details", classify);
+
+                  return {
+                    productId: productData._id,
+                    productName: productData.productName,
+                    image: productData.images?.[0] || "",
+                    brand: productData.brand,
+                    category: productData.category,
+                    classify: classify ? classify.value : "N/A",
+                    price: classify ? classify.price : "N/A",
+                    numberProduct: product.numberProduct, // Include the quantity from the order
+                  };
+                }
+                return null; // Return null if product details not fetched
+              })
             );
 
-            if (productResponse.status === 200) {
-              const productData = productResponse.data[0];
+            // Filter out null values in case of failed product fetches
+            const validProductDetails = productDetails.filter(Boolean);
 
-              // Get classify details (if needed, using a classify API)
-              const classify = productData.classifies?.find(
-                (c) => c._id === order.products[0].classifyId
-              );
-              console.log("Classify details", classify);
-
-              // Merge product details with order data
-              return {
-                ...order,
-                productName: productData.productName,
-                image: productData.images?.[0] || "",
-                brand: productData.brand,
-                category: productData.category,
-                classify: classify ? classify.value : "N/A",
-                price: classify ? classify.price : "N/A",
-                phoneContact: user.number,
-                paymentMethod:
-                  order.paymentMethod == "cash"
-                    ? "Thanh toán khi nhận hàng"
-                    : "ZaloPay",
-              };
-            }
-            return order;
+            // Merge product details with order data
+            return {
+              ...order,
+              products: validProductDetails, // Add the detailed products
+              phoneContact: user.number,
+              paymentMethod:
+                order.paymentMethod === "cash"
+                  ? "Thanh toán khi nhận hàng"
+                  : "ZaloPay",
+            };
           })
         );
 
@@ -76,13 +92,21 @@ const Orders = () => {
     fetchOrdersWithDetails();
   }, [user._id, user.access_token]);
 
-  const paidOrders = orders.filter(
-    (order) => order.payment === true && !order.isCancel
-  );
-  const unpaidOrders = orders.filter(
-    (order) => order.payment === false && !order.isCancel
-  );
-  const canceledOrders = orders.filter((order) => order.isCancel === true);
+  useEffect(() => {
+    console.log("Orders", orders);
+  }, [orders]);
+
+  const paidOrders = orders
+    .filter((order) => order.payment === true && !order.isCancel)
+    .sort((a, b) => new Date(b.dateTrade) - new Date(a.dateTrade)); // Sắp xếp từ mới nhất đến cũ nhất
+
+  const unpaidOrders = orders
+    .filter((order) => order.payment === false && !order.isCancel)
+    .sort((a, b) => new Date(b.dateTrade) - new Date(a.dateTrade)); // Sắp xếp từ mới nhất đến cũ nhất
+
+  const canceledOrders = orders
+    .filter((order) => order.isCancel === true)
+    .sort((a, b) => new Date(b.dateTrade) - new Date(a.dateTrade)); // Sắp xếp từ mới nhất đến cũ nhất
 
   const displayedOrders =
     activeTab === "paid"
@@ -92,7 +116,9 @@ const Orders = () => {
       : canceledOrders;
 
   const handleOrderDetails = (order) => {
+    console.log("Viewing order details", order);
     setSelectedOrder(order);
+    setCurrentProductIndex(0);
     setModalOpen(true);
   };
 
@@ -148,6 +174,8 @@ const Orders = () => {
   const handleSortClick = () => {
     setDropdownOpen(!dropdownOpen);
   };
+
+  // const currentProduct = selectedOrder?.products[currentProductIndex];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -263,15 +291,21 @@ const Orders = () => {
                 {/* Left section with image and product details */}
                 <div className="flex flex-col sm:flex-row sm:items-start  lg:items-center gap-4 w-full lg:w-auto">
                   <img
-                    src={order.image}
-                    alt={order.productName}
+                    src={order.products[0].image}
+                    alt={order.products[0].productName}
                     className="sm:w-32 sm:h-32 lg:w-16 lg:h-16 object-cover rounded-md mr-0 lg:mr-4"
                   />
                   <div className="">
                     <div className="sm:w-64">
-                      <h3 className="font-bold text-lg truncate">
-                        {order.productName}
-                      </h3>
+                      {order.products.length > 1 ? (
+                        <h3 className="text-lg truncate">
+                          Đơn gộp {order.products.length} sản phẩm
+                        </h3>
+                      ) : (
+                        <h3 className="text-lg truncate">
+                          {order.products[0].productName}
+                        </h3>
+                      )}
                       <p className="text-sm text-gray-500">
                         Mã đơn: {order.tradeId}
                       </p>
@@ -283,12 +317,12 @@ const Orders = () => {
                     <div className="lg:hidden">
                       {!order.isCancel && <p>{order.paymentMethod}</p>}
                       {order.sellerAccept && !order.isCancel && (
-                        <p className="text-sm text-green-500 font-bold mt-1">
+                        <p className="text-sm text-green-500  mt-1">
                           Đã Chấp Nhận Đơn Hàng
                         </p>
                       )}
                       {order.isCancel && (
-                        <p className="text-sm text-red-500 font-bold mt-1">
+                        <p className="text-sm text-red-500  mt-1">
                           Đơn Hàng Đã Huỷ
                         </p>
                       )}
@@ -300,14 +334,12 @@ const Orders = () => {
                 <div className="hidden lg:flex flex-col lg:items-end mt-4 lg:mt-0 w-full lg:w-auto lg:text-right">
                   {!order.isCancel && <p>{order.paymentMethod}</p>}
                   {order.sellerAccept && !order.isCancel && (
-                    <p className="text-sm text-green-500 font-bold mt-1">
+                    <p className="text-sm text-green-500 mt-1">
                       Đã Chấp Nhận Đơn Hàng
                     </p>
                   )}
                   {order.isCancel && (
-                    <p className="text-sm text-red-500 font-bold mt-1">
-                      Đơn Hàng Đã Huỷ
-                    </p>
+                    <p className="text-sm text-red-500 mt-1">Đơn Hàng Đã Huỷ</p>
                   )}
                 </div>
 
@@ -339,7 +371,7 @@ const Orders = () => {
       {selectedOrder && (
         <Modal open={isModalOpen} onClose={() => setModalOpen(false)}>
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
+            <div className="bg-white p-2 sm:p-8 rounded-lg shadow-lg w-full max-w-4xl overflow-auto">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold">Chi tiết đơn hàng</h2>
                 <button
@@ -350,56 +382,88 @@ const Orders = () => {
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-6">
                 {/* Left Column: Product Information */}
-                <div className="space-y-4">
-                  <p>
-                    <strong>Tên sản phẩm:</strong> {selectedOrder.productName}
+                <div className="space-y-2 sm:space-y-4 relative">
+                  {/* Left Arrow */}
+                  {currentProductIndex > 0 && (
+                    <button
+                      className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+                      onClick={() =>
+                        setCurrentProductIndex(currentProductIndex - 1)
+                      }
+                    >
+                      <KeyboardArrowLeftIcon />
+                    </button>
+                  )}
+
+                  <p className="text-sm sm:text-base">
+                    <strong>Tên sản phẩm:</strong>{" "}
+                    {selectedOrder.products[currentProductIndex].productName}
                   </p>
                   <img
-                    src={selectedOrder.image}
-                    alt={selectedOrder.productName}
-                    className="w-48 h-48 object-cover rounded-md mx-auto"
+                    src={selectedOrder.products[currentProductIndex].image}
+                    alt={
+                      selectedOrder.products[currentProductIndex].productName
+                    }
+                    className="w-28 h-28 sm:w-48 sm:h-48 object-cover rounded-md mx-auto"
                   />
-                  <p>
-                    <strong>Thương hiệu:</strong> {selectedOrder.brand}
+                  <p className="text-sm sm:text-base">
+                    <strong>Thương hiệu:</strong>{" "}
+                    {selectedOrder.products[currentProductIndex].brand}
                   </p>
-                  <p>
-                    <strong>Loại sản phẩm:</strong> {selectedOrder.classify}
+                  <p className="text-sm sm:text-base">
+                    <strong>Loại sản phẩm:</strong>{" "}
+                    {selectedOrder.products[currentProductIndex].classify}
                   </p>
-                  <p>
+                  <p className="text-sm sm:text-base">
                     <strong>Giá:</strong>{" "}
-                    {selectedOrder.price.toLocaleString("vi-VN")}đ
+                    {selectedOrder.products[
+                      currentProductIndex
+                    ].price.toLocaleString("vi-VN")}
+                    đ
                   </p>
-                  <p>
+                  <p className="text-sm sm:text-base">
                     <strong>Số lượng:</strong>{" "}
-                    {selectedOrder.products[0].numberProduct}
+                    {selectedOrder.products[currentProductIndex].numberProduct}
                   </p>
-                  <p>
-                    <strong>Tổng tiền:</strong>{" "}
-                    {selectedOrder.balence.toLocaleString("vi-VN")}đ
-                  </p>
-                  <p>
-                    <strong>Ngày đặt hàng:</strong> {selectedOrder.dateTrade}
-                  </p>
+
+                  {/* Right Arrow */}
+                  {currentProductIndex < selectedOrder.products.length - 1 && (
+                    <button
+                      className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+                      onClick={() =>
+                        setCurrentProductIndex(currentProductIndex + 1)
+                      }
+                    >
+                      <KeyboardArrowRightIcon />
+                    </button>
+                  )}
                 </div>
 
                 {/* Right Column: Recipient and Order Status */}
                 <div className="space-y-4">
-                  <p>
+                  <p className="text-sm sm:text-base">
+                    <strong>Tổng tiền:</strong>{" "}
+                    {selectedOrder.balence.toLocaleString("vi-VN")}đ
+                  </p>
+                  <p className="text-sm sm:text-base">
+                    <strong>Ngày đặt hàng:</strong> {selectedOrder.dateTrade}
+                  </p>
+                  <p className="text-sm sm:text-base">
                     <strong>Địa chỉ giao hàng:</strong>{" "}
                     {selectedOrder.buyersaddress}
                   </p>
-                  <p>
+                  <p className="text-sm sm:text-base">
                     <strong>Tên người nhận:</strong> {selectedOrder.buyersname}
                   </p>
-                  <p>
+                  <p className="text-sm sm:text-base">
                     <strong>Số điện thoại:</strong> {selectedOrder.phoneContact}
                   </p>
-                  <p>
+                  <p className="text-sm sm:text-base">
                     <strong>Email:</strong> {selectedOrder.buyersuserName}
                   </p>
-                  <p>
+                  <p className="text-sm sm:text-base">
                     <strong>Phương thức thanh toán:</strong>{" "}
                     {selectedOrder.paymentMethod}
                   </p>
