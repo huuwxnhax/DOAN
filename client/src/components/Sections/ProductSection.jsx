@@ -3,7 +3,7 @@ import { useState } from "react";
 import prod1 from "../../../public/images/prod1.webp";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+// import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -51,9 +51,9 @@ const ProductSection = ({ isHomepage, products }) => {
                   </span>
                   <span>Đã bán {product.selled}</span>
                 </div>
-                <button className="add-to-cart-btn">
+                {/* <button className="add-to-cart-btn">
                   <AddShoppingCartIcon />
-                </button>
+                </button> */}
               </div>
             </div>
           </RouterLink>

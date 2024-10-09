@@ -187,7 +187,7 @@ const Orders = () => {
           <div className="flex border-b-2 border-gray-300 mb-6">
             <div
               onClick={() => setActiveTab("paid")}
-              className={`py-3 px-6 cursor-pointer font-bold whitespace-nowrap hidden md:inline ${
+              className={`py-3 px-6 cursor-pointer  whitespace-nowrap hidden md:inline ${
                 activeTab === "paid"
                   ? "border-b-4 border-blue-500 text-blue-500"
                   : "text-gray-600"
@@ -197,7 +197,7 @@ const Orders = () => {
             </div>
             <div
               onClick={() => setActiveTab("unpaid")}
-              className={`py-3 px-6 cursor-pointer font-bold whitespace-nowrap hidden md:inline ${
+              className={`py-3 px-6 cursor-pointer  whitespace-nowrap hidden md:inline ${
                 activeTab === "unpaid"
                   ? "border-b-4 border-blue-500 text-blue-500"
                   : "text-gray-600"
@@ -207,7 +207,7 @@ const Orders = () => {
             </div>
             <div
               onClick={() => setActiveTab("canceled")}
-              className={`py-3 px-6 cursor-pointer font-bold whitespace-nowrap hidden md:inline ${
+              className={`py-3 px-6 cursor-pointer  whitespace-nowrap hidden md:inline ${
                 activeTab === "canceled"
                   ? "border-b-4 border-blue-500 text-blue-500"
                   : "text-gray-600"
@@ -219,7 +219,7 @@ const Orders = () => {
             {/* Hiện khi reponsive là md trở xuống, để hiển thị ra option được chọn trong dropdown */}
             <div className="flex justify-between items-center w-full">
               <div
-                className={`py-3 px-6 cursor-pointer font-bold whitespace-nowrap inline md:hidden ${
+                className={`py-3 px-6 cursor-pointer whitespace-nowrap inline md:hidden ${
                   activeTab === "paid"
                     ? "border-b-4 border-blue-500 text-blue-500"
                     : activeTab === "unpaid"
