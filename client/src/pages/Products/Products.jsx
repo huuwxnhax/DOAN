@@ -8,6 +8,9 @@ const Products = () => {
   return (
     <div className="container">
       <Navbar />
+      <div className="product-header">
+        <h1>Danh Sách Sản Phẩm</h1>
+      </div>
       <div style={{ boxShadow: "none" }}>
         <Category />
       </div>

@@ -1,3 +1,18 @@
+.product-header {
+  background-color: #fff;
+  padding: 20px 0;
+  width: 70%;
+  margin: 20px auto;
+  align-items: center;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.product-header-mobile {
+  display: none;
+}
+
 .category {
   display: flex;
   flex-wrap: wrap;
@@ -91,8 +106,75 @@
   padding: 20px 0;
 }
 
+.filter-drawer {
+  display: none;
+}
+
+.drawer-sort {
+  display: none;
+}
+
+.filter-btn {
+  display: none;
+  padding: 10px 20px;
+}
+
+.drawer-container {
+  width: 300px; /* Adjust this width as necessary */
+  padding: 20px;
+  background-color: #fff;
+}
+
+.drawer-sort,
+.filter-drawer {
+  margin-bottom: 30px;
+}
+
+.drawer-sort h5,
+.filter-drawer h5 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.category__filter-item {
+  margin: 5px 0;
+}
+
+.drawer-sort button,
+.filter-drawer a {
+  width: 100%;
+  margin: 5px 0;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.drawer-container h5 {
+  color: #3f51b5;
+  font-weight: 600;
+}
+
 /* Responsive adjustments */
 @media (max-width: 992px) {
+  .product-header {
+    display: none; /* Ẩn header */
+  }
+
+  .product-header-mobile {
+    display: flex; /* Hiển thị header mobile */
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    background-color: #fff;
+    margin: 0;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+  }
+
   .category {
     flex-direction: column;
   }
@@ -107,8 +189,24 @@
   }
 
   .product-sort {
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
+  }
+
+  .filter-btn {
+    display: block; /* Hiển thị nút filter */
+  }
+
+  .category-filter {
+    display: none; /* Ẩn phần filter */
+  }
+
+  .filter-drawer {
+    display: block; /* Hiển thị drawer filter */
+  }
+
+  .drawer-sort {
+    display: none; /* Ẩn drawer sort */
   }
 }
 
@@ -138,6 +236,11 @@
   }
 
   .sort-btn {
+    display: none;
     padding: 4px 8px;
+  }
+
+  .drawer-sort {
+    display: block;
   }
 }

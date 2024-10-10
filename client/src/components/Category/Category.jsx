@@ -8,13 +8,14 @@ import {
   getProductsDynamic,
   getTotalProduct,
 } from "../../api/productAPI";
-import { Pagination, Stack } from "@mui/material";
+import { Drawer, Pagination, Stack } from "@mui/material";
 import { getAllCate } from "../../api/cateAPI";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllCategories } from "../../features/cateSlice";
 import { fetchCategories } from "../../actions/cateAction";
 import { useLocation, useNavigate } from "react-router-dom";
+import SortIcon from "@mui/icons-material/Sort";
 
 const Category = () => {
   const sortOptions = [
@@ -45,6 +46,12 @@ const Category = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -157,7 +164,10 @@ const Category = () => {
           <ul className="category__filter-list">
             {categories.slice(0, 5).map((category) => (
               <li className="category__filter-item" key={category._id}>
-                <a href="#category" className="category__filter-link">
+                <a
+                  href={`#${category.categoriesName}`}
+                  className="category__filter-link"
+                >
                   {category.categoriesName}
                 </a>
               </li>
@@ -192,12 +202,13 @@ const Category = () => {
         </div>
 
         {/* Brand filter */}
-        <div className="category__filter">
+        <div className="category-filter">
           <h5 className="category__filter-title">Thương hiệu</h5>
           <ul className="category__filter-list">
             {brands.slice(0, 5).map((brand) => (
               <li className="category__filter-item" key={brand}>
                 <a
+                  href={`#${brand}`}
                   onClick={() => handleBrandClick(brand)}
                   className={`category__filter-link ${
                     selectedBrand === brand ? "active" : ""
@@ -235,6 +246,140 @@ const Category = () => {
             </li>
           </ul>
         </div>
+
+        <div className="product-header-mobile">
+          <button className="filter-btn" onClick={toggleDrawer}>
+            <SortIcon />
+          </button>
+          <h1>Danh Sách Sản Phẩm</h1>
+        </div>
+        <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
+          <div className="drawer-container">
+            <div className="drawer-sort filter-drawer">
+              <h5>Sắp xếp theo</h5>
+              <ul className="category__filter-list">
+                {sortOptions.map((option) => (
+                  <li className="category__filter-item" key={option.value}>
+                    <a
+                      onClick={() => {
+                        handleSortClick(option);
+                        toggleDrawer(); // Đóng drawer khi chọn sắp xếp
+                      }}
+                      className={`category__filter-link ${
+                        selectedSort === option.value ? "active" : ""
+                      }`}
+                    >
+                      {option.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Categories in Drawer */}
+            <div className="filter-drawer">
+              <h5>Danh mục sản phẩm</h5>
+              <ul className="category__filter-list">
+                {categories.slice(0, 5).map((category) => (
+                  <li className="category__filter-item" key={category._id}>
+                    <a
+                      onClick={toggleDrawer}
+                      href="#category"
+                      className="category__filter-link"
+                    >
+                      {category.categoriesName}
+                    </a>
+                  </li>
+                ))}
+                <div
+                  ref={cateRef}
+                  className="additional-categories"
+                  style={{
+                    maxHeight: `${cateHeight}px`,
+                    overflow: "hidden",
+                    transition: "max-height 0.5s ease",
+                  }}
+                >
+                  {categories.slice(5).map((category) => (
+                    <li className="category__filter-item" key={category._id}>
+                      <a
+                        onClick={toggleDrawer}
+                        href="#category"
+                        className="category__filter-link"
+                      >
+                        {category.categoriesName}
+                      </a>
+                    </li>
+                  ))}
+                </div>
+                <li className="category__filter-item">
+                  <p
+                    className="category__filter-link"
+                    onClick={handleShowMoreCate}
+                    style={{ cursor: "pointer", color: "#ff5722" }}
+                  >
+                    {showMoreCate ? "Thu gọn" : "Xem thêm"}
+                  </p>
+                </li>
+              </ul>
+            </div>
+
+            {/* Brands in Drawer */}
+            <div className="filter-drawer">
+              <h5>Thương hiệu</h5>
+              <ul className="category__filter-list">
+                {brands.slice(0, 5).map((brand) => (
+                  <li className="category__filter-item" key={brand}>
+                    <a
+                      onClick={() => {
+                        handleBrandClick(brand);
+                        toggleDrawer(); // Đóng drawer khi chọn thương hiệu
+                      }}
+                      className={`category__filter-link ${
+                        selectedBrand === brand ? "active" : ""
+                      }`}
+                    >
+                      {brand}
+                    </a>
+                  </li>
+                ))}
+                <div
+                  ref={brandRef}
+                  className="additional-brands"
+                  style={{
+                    maxHeight: `${brandHeight}px`,
+                    overflow: "hidden",
+                    transition: "max-height 0.5s ease",
+                  }}
+                >
+                  {brands.slice(5).map((brand) => (
+                    <li className="category__filter-item" key={brand}>
+                      <a
+                        onClick={() => {
+                          handleBrandClick(brand);
+                          toggleDrawer(); // Đóng drawer khi chọn thương hiệu
+                        }}
+                        href="#brand"
+                        className="category__filter-link"
+                      >
+                        {brand}
+                      </a>
+                    </li>
+                  ))}
+                </div>
+                <li className="category__filter-item">
+                  <p
+                    className="category__filter-link"
+                    onClick={handleShowMoreBrand}
+                    style={{ cursor: "pointer", color: "#ff5722" }}
+                  >
+                    {showMoreBrand ? "Thu gọn" : "Xem thêm"}
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </Drawer>
       </div>
 
       <div className="category-right">
