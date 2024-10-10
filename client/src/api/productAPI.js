@@ -11,6 +11,9 @@ export const updateProductAPI = (product, token) =>
     headers: { Authorization: `Bearer ${token}` },
   });
 
+// get total product
+export const getTotalProduct = () => API.get("/products/number");
+
 // get product for homepage
 export const getProductMainPage = () => API.get("/products/mainFage");
 

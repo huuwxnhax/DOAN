@@ -6,6 +6,7 @@ import {
   getClassifiesByProductId,
   getProductsByPage,
   getProductsDynamic,
+  getTotalProduct,
 } from "../../api/productAPI";
 import { Pagination, Stack } from "@mui/material";
 import { getAllCate } from "../../api/cateAPI";
@@ -140,6 +141,12 @@ const Category = () => {
     setCurrentPage(value);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const response = getTotalProduct();
+    console.log("Total products", response.data);
+    setTotalPages(response.data);
+  }, [currentPage]);
 
   return (
     <div className="category">
