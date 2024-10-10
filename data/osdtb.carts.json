@@ -1,0 +1,31 @@
+[{
+  "_id": {
+    "$oid": "6703dc2eb249bc58433e5de2"
+  },
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "products": [
+    {
+      "seller": "66c9d91a0fc6c261b2415191",
+      "items": [
+        {
+          "productId": "66fea1a5dfa012507a14c128",
+          "classifyId": "66fea1a5dfa012507a14c12e",
+          "numberProduct": 6
+        },
+        {
+          "productId": "66fea1a5dfa012507a14c128",
+          "classifyId": "66fea1a5dfa012507a14c12c",
+          "numberProduct": 2
+        },
+        {
+          "productId": "66fea016dfa012507a14c11a",
+          "classifyId": "66fea016dfa012507a14c120",
+          "numberProduct": 2
+        }
+      ]
+    }
+  ],
+  "__v": 0
+}]

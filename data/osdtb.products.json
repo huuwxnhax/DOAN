@@ -1,0 +1,72 @@
+[{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "productName": "Điện thoại Iphone 16 chính hãng",
+  "cate": {
+    "$oid": "66cefced918a922e1a1ad3fd"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "brand": "Apple",
+  "selled": 81,
+  "dateUp": {
+    "$date": "2024-09-23T12:43:26.783Z"
+  },
+  "images": [
+    "https://doantotnghiepiuh.s3.amazonaws.com/edecd2c6-e110-4e81-b6ea-65509c7def8d",
+    "https://doantotnghiepiuh.s3.amazonaws.com/2e40e325-a94b-453d-97d4-cb3783c479c1",
+    "https://doantotnghiepiuh.s3.amazonaws.com/1f5e0ee3-c9e5-419c-aa32-76c0f5d4f00f",
+    "https://doantotnghiepiuh.s3.amazonaws.com/c9020051-03a0-48b4-8620-1e9865cefa2e",
+    "https://doantotnghiepiuh.s3.amazonaws.com/5e4590cf-43c9-4b77-9b3b-f8f3ccd4fb2f"
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea016dfa012507a14c11a"
+  },
+  "productName": "Bia Tiger Việt Nam",
+  "cate": {
+    "$oid": "66cefd96918a922e1a1ad404"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "brand": "Bia Việt",
+  "selled": 54,
+  "dateUp": {
+    "$date": "2024-10-03T13:45:58.237Z"
+  },
+  "images": [
+    "https://doantotnghiepiuh.s3.amazonaws.com/7bb5d2a6-dafa-472a-b3d6-74ade0e2715c",
+    "https://doantotnghiepiuh.s3.amazonaws.com/d15e5abc-5795-4130-8f40-3a5ffd3e7934",
+    "https://doantotnghiepiuh.s3.amazonaws.com/e3edea0b-21ee-49ac-8f23-f9c7be065e62",
+    "https://doantotnghiepiuh.s3.amazonaws.com/52184c3f-040e-4edc-b526-366f699cb92d"
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea1a5dfa012507a14c128"
+  },
+  "productName": "Nước uống có ga CoCa CoLa vị chanh",
+  "cate": {
+    "$oid": "66cefd96918a922e1a1ad404"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "brand": "CoCaCoLa",
+  "selled": 39,
+  "dateUp": {
+    "$date": "2024-10-03T13:52:37.390Z"
+  },
+  "images": [
+    "https://doantotnghiepiuh.s3.amazonaws.com/1dbd3498-5e3b-4ac2-805d-6d9383c9f5a5",
+    "https://doantotnghiepiuh.s3.amazonaws.com/e8b0f214-5a12-40fe-804f-b147db730205",
+    "https://doantotnghiepiuh.s3.amazonaws.com/cee3d422-6585-45b1-a7ae-7123aa96b036"
+  ],
+  "__v": 0
+}]

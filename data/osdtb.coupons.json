@@ -1,0 +1,102 @@
+[{
+  "_id": {
+    "$oid": "66fc00608300f2d1452139b5"
+  },
+  "code": "001e0a2d",
+  "nummOf": 5,
+  "recent": 10,
+  "buyers": [],
+  "seller": null,
+  "dateStart": {
+    "$date": "2024-01-08T17:00:00.000Z"
+  },
+  "dateEnd": {
+    "$date": "2024-03-08T17:00:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fd51e099243bd681434caa"
+  },
+  "code": "86ef2139",
+  "nummOf": 5,
+  "recent": 10,
+  "buyers": [],
+  "seller": null,
+  "dateStart": {
+    "$date": "2024-02-08T17:00:00.000Z"
+  },
+  "dateEnd": {
+    "$date": "2024-04-08T17:00:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea360dfa012507a14c1a3"
+  },
+  "code": "de564427",
+  "nummOf": 5,
+  "recent": 10,
+  "buyers": [],
+  "seller": null,
+  "dateStart": {
+    "$date": "2024-03-08T17:00:00.000Z"
+  },
+  "dateEnd": {
+    "$date": "2024-05-08T17:00:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703e960b249bc58433e6189"
+  },
+  "code": "6543e8b6",
+  "nummOf": 5,
+  "recent": 10,
+  "buyers": [],
+  "seller": null,
+  "dateStart": {
+    "$date": "2024-07-08T17:00:00.000Z"
+  },
+  "dateEnd": {
+    "$date": "2024-09-08T17:00:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67053ae01f69641af8aea646"
+  },
+  "code": "5778e520",
+  "nummOf": 5,
+  "recent": 10,
+  "buyers": [],
+  "seller": null,
+  "dateStart": {
+    "$date": "2024-08-08T17:00:00.000Z"
+  },
+  "dateEnd": {
+    "$date": "2024-10-08T17:00:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67068c6095577e949bdfa46c"
+  },
+  "code": "cf373e56",
+  "nummOf": 5,
+  "recent": 10,
+  "buyers": [],
+  "seller": null,
+  "dateStart": {
+    "$date": "2024-09-08T17:00:00.000Z"
+  },
+  "dateEnd": {
+    "$date": "2024-11-08T17:00:00.000Z"
+  },
+  "__v": 0
+}]

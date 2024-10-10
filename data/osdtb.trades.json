@@ -1,0 +1,965 @@
+[{
+  "_id": {
+    "$oid": "66fac1cbacdf017fc0761b94"
+  },
+  "tradeId": "TD93607415-6",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": true,
+  "isCancel": true,
+  "isTrade": true,
+  "tradeTitle": "Mua hàng",
+  "balence": 16800000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "dateTrade": {
+    "$date": "2024-09-30T15:20:43.970Z"
+  },
+  "products": [
+    {
+      "productId": "66f1626e6976de6d79900f0d",
+      "classifyId": "66f1626e6976de6d79900f17",
+      "numberProduct": 6
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fb6101f54b3eab08e4a707"
+  },
+  "tradeId": "TD2761229e-0",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": true,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": true,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 92000000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-01T02:40:01.326Z"
+  },
+  "products": [
+    {
+      "productId": "66f1626e6976de6d79900f0d",
+      "classifyId": "66f1626e6976de6d79900f1b",
+      "numberProduct": 2
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fb7452d191e5986485d1f4"
+  },
+  "tradeId": "TD31b7bade-2",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": true,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 64000000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "zalo",
+  "dateTrade": {
+    "$date": "2024-10-01T04:02:26.088Z"
+  },
+  "products": [
+    {
+      "productId": "66f1626e6976de6d79900f0d",
+      "classifyId": "66f1626e6976de6d79900f13",
+      "numberProduct": 2
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fbe7ad8300f2d1452136a4"
+  },
+  "tradeId": "TD84d12fe5-5",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": true,
+  "tradeStatus": false,
+  "payment": true,
+  "isCancel": false,
+  "isTrade": true,
+  "tradeTitle": "Mua hàng",
+  "balence": 8400000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "zalo",
+  "dateTrade": {
+    "$date": "2024-10-01T12:14:37.585Z"
+  },
+  "products": [
+    {
+      "productId": "66f1626e6976de6d79900f0d",
+      "classifyId": "66f1626e6976de6d79900f17",
+      "numberProduct": 3
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fbe93b8300f2d145213732"
+  },
+  "tradeId": "TD84ba6c06-3",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": true,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 2800000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "zalo",
+  "dateTrade": {
+    "$date": "2024-10-01T12:21:15.011Z"
+  },
+  "products": [
+    {
+      "productId": "66f1626e6976de6d79900f0d",
+      "classifyId": "66f1626e6976de6d79900f17",
+      "numberProduct": 1
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fd40cf99243bd681434626"
+  },
+  "tradeId": "TDfaac4750-e",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": true,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 40000000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-02T12:47:11.142Z"
+  },
+  "products": [
+    {
+      "productId": "66f1626e6976de6d79900f0d",
+      "classifyId": "66f1626e6976de6d79900f0f",
+      "numberProduct": 2
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fd40d599243bd68143462e"
+  },
+  "tradeId": "TD7437a8d3-8",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": true,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 232000000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-02T12:47:17.026Z"
+  },
+  "products": [
+    {
+      "productId": "66f1626e6976de6d79900f0d",
+      "classifyId": "66f164506976de6d79900fab",
+      "numberProduct": 4
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fd40dc99243bd681434636"
+  },
+  "tradeId": "TDae043711-8",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 19600000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-02T12:47:24.009Z"
+  },
+  "products": [
+    {
+      "productId": "66f1626e6976de6d79900f0d",
+      "classifyId": "66f1626e6976de6d79900f17",
+      "numberProduct": 7
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6700be3d92b0fe4daa5b6c7d"
+  },
+  "tradeId": "TD66903dc9-9",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 50000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-05T04:19:09.188Z"
+  },
+  "products": [
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12c",
+      "numberProduct": 2
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6700be5d92b0fe4daa5b6c97"
+  },
+  "tradeId": "TD0771203c-8",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 1520000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-05T04:19:41.053Z"
+  },
+  "products": [
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11e",
+      "numberProduct": 4
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703cc41b249bc58433e5a72"
+  },
+  "tradeId": "TD9eadf664-a",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 125000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T11:55:45.226Z"
+  },
+  "products": [
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12c",
+      "numberProduct": 5
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703cc41b249bc58433e5a74"
+  },
+  "tradeId": "TDd17ff8b7-c",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 32000000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T11:55:45.244Z"
+  },
+  "products": [
+    {
+      "productId": "66f1626e6976de6d79900f0d",
+      "classifyId": "66f1626e6976de6d79900f19",
+      "numberProduct": 1
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703cc8cb249bc58433e5a8a"
+  },
+  "tradeId": "TDdd634a71-7",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 125000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T11:57:00.181Z"
+  },
+  "products": [
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12c",
+      "numberProduct": 5
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703cd03b249bc58433e5a94"
+  },
+  "tradeId": "TD541df823-4",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 2400000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "zalo",
+  "dateTrade": {
+    "$date": "2024-10-07T11:58:59.823Z"
+  },
+  "products": [
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c120",
+      "numberProduct": 5
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703cec9b249bc58433e5b15"
+  },
+  "tradeId": "TD5b41fc54-0",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 1500000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T12:06:33.717Z"
+  },
+  "products": [
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11c",
+      "numberProduct": 2
+    },
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11e",
+      "numberProduct": 3
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703cf34b249bc58433e5b4a"
+  },
+  "tradeId": "TD4e01e178-a",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 1320000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T12:08:20.321Z"
+  },
+  "products": [
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11c",
+      "numberProduct": 2
+    },
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c120",
+      "numberProduct": 2
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703d015b249bc58433e5b8a"
+  },
+  "tradeId": "TD7982ad6e-a",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 15000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T12:12:05.139Z"
+  },
+  "products": [
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12a",
+      "numberProduct": 1
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703d0f7b249bc58433e5beb"
+  },
+  "tradeId": "TD4e988c84-e",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 390000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T12:15:51.105Z"
+  },
+  "products": [
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11c",
+      "numberProduct": 2
+    },
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12e",
+      "numberProduct": 2
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703d230b249bc58433e5bfb"
+  },
+  "tradeId": "TD961cfd8a-f",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 80000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T12:21:04.889Z"
+  },
+  "products": [
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12e",
+      "numberProduct": 2
+    },
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12c",
+      "numberProduct": 2
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703da9bb249bc58433e5d78"
+  },
+  "tradeId": "TD593b27c3-5",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 90000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T12:56:59.504Z"
+  },
+  "products": [
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12e",
+      "numberProduct": 3
+    },
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12a",
+      "numberProduct": 3
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703daf9b249bc58433e5d9a"
+  },
+  "tradeId": "TD1d651285-b",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 1005000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T12:58:33.576Z"
+  },
+  "products": [
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12e",
+      "numberProduct": 3
+    },
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c120",
+      "numberProduct": 2
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703db89b249bc58433e5dac"
+  },
+  "tradeId": "TD8c62f0f8-0",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 805000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T13:00:57.051Z"
+  },
+  "products": [
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12e",
+      "numberProduct": 3
+    },
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11e",
+      "numberProduct": 2
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703e080b249bc58433e5f47"
+  },
+  "tradeId": "TDa6a0b843-1",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": true,
+  "isCancel": false,
+  "isTrade": true,
+  "tradeTitle": "Mua hàng",
+  "balence": 1480000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "zalo",
+  "dateTrade": {
+    "$date": "2024-10-07T13:22:08.217Z"
+  },
+  "products": [
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11c",
+      "numberProduct": 4
+    },
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11e",
+      "numberProduct": 2
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703e1c3b249bc58433e5fd4"
+  },
+  "tradeId": "TD48d8cfb8-1",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 795000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T13:27:31.955Z"
+  },
+  "products": [
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12e",
+      "numberProduct": 4
+    },
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11c",
+      "numberProduct": 4
+    },
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12a",
+      "numberProduct": 1
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6703e1f2b249bc58433e5fed"
+  },
+  "tradeId": "TDcafe2a25-e",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 760000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-07T13:28:18.360Z"
+  },
+  "products": [
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11c",
+      "numberProduct": 4
+    },
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12a",
+      "numberProduct": 1
+    },
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12c",
+      "numberProduct": 1
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67049b4f21d9bcf54e83bfda"
+  },
+  "tradeId": "TDfbf28f4c-1",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 1720000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-08T02:39:11.813Z"
+  },
+  "products": [
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c120",
+      "numberProduct": 2
+    },
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11e",
+      "numberProduct": 2
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67053b0f1f69641af8aea6ce"
+  },
+  "tradeId": "TDda2237b0-3",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 8415000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-08T14:00:47.794Z"
+  },
+  "products": [
+    {
+      "productId": "66f1626e6976de6d79900f0d",
+      "classifyId": "66f1626e6976de6d79900f17",
+      "numberProduct": 3
+    },
+    {
+      "productId": "66fea1a5dfa012507a14c128",
+      "classifyId": "66fea1a5dfa012507a14c12a",
+      "numberProduct": 1
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6707872c4f61d2ad3b489cb1"
+  },
+  "tradeId": "TD9e2f6399-e",
+  "buyer": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "seller": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "sellerAccept": false,
+  "tradeStatus": false,
+  "payment": false,
+  "isCancel": false,
+  "isTrade": false,
+  "tradeTitle": "Mua hàng",
+  "balence": 380000,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "paymentMethod": "cash",
+  "dateTrade": {
+    "$date": "2024-10-10T07:50:04.441Z"
+  },
+  "products": [
+    {
+      "productId": "66fea016dfa012507a14c11a",
+      "classifyId": "66fea016dfa012507a14c11e",
+      "numberProduct": 1
+    }
+  ],
+  "__v": 0
+}]

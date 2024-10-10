@@ -1,0 +1,570 @@
+[{
+  "_id": {
+    "$oid": "66cf07f0918a922e1a1ad423"
+  },
+  "key": "Xuất xứ",
+  "value": "Trung Quốc",
+  "product": {
+    "$oid": "66cefe9d918a922e1a1ad407"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cf07fc918a922e1a1ad425"
+  },
+  "key": "Hạn bảo hành",
+  "value": "3 năm",
+  "product": {
+    "$oid": "66cefe9d918a922e1a1ad407"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cf0814918a922e1a1ad427"
+  },
+  "key": "Loại bảo hành",
+  "value": "Bảo hành nhà sản xuất",
+  "product": {
+    "$oid": "66cefe9d918a922e1a1ad407"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cf082f918a922e1a1ad429"
+  },
+  "key": "Chiều dài cáp",
+  "value": "5m, 10m, 20m",
+  "product": {
+    "$oid": "66cefe9d918a922e1a1ad407"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cf0844918a922e1a1ad42b"
+  },
+  "key": "Công suất",
+  "value": "2500",
+  "product": {
+    "$oid": "66cefe9d918a922e1a1ad407"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cf099e918a922e1a1ad42d"
+  },
+  "key": "description",
+  "value": "Ổ CẮM ĐIỆN ĐA NĂNG DELI CỔNG TYPE C SẠC NHANH PD 20W 2-12 Ổ CẮM, CHỊU TẢI 2500W, CẦU CHÌ TỰ NGẮT KHI QUÁ TẢI BH 36 THÁNG",
+  "product": {
+    "$oid": "66cefe9d918a922e1a1ad407"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d9b69ad1278f08822aeb04"
+  },
+  "key": "Mặc đồng hồ",
+  "value": "Kim",
+  "product": {
+    "$oid": "66d9b58ed1278f08822aeafc"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d9b6b2d1278f08822aeb06"
+  },
+  "key": "Đồng hồ đeo tay",
+  "value": "Tự động",
+  "product": {
+    "$oid": "66d9b58ed1278f08822aeafc"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d9b6c5d1278f08822aeb08"
+  },
+  "key": "Kiểu đồng hồ",
+  "value": "Thời trang",
+  "product": {
+    "$oid": "66d9b58ed1278f08822aeafc"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d9b6d9d1278f08822aeb0a"
+  },
+  "key": "Hạn bảo hành",
+  "value": "3 tháng",
+  "product": {
+    "$oid": "66d9b58ed1278f08822aeafc"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d9b6ecd1278f08822aeb0c"
+  },
+  "key": "Chống nước",
+  "value": "Không",
+  "product": {
+    "$oid": "66d9b58ed1278f08822aeafc"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66daeb1b7d09be0f11618b81"
+  },
+  "key": "Nơi sản xuất",
+  "value": "Trung Quốc",
+  "product": {
+    "$oid": "66cf0193918a922e1a1ad40e"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98357a6311f2b2d5c8e11"
+  },
+  "key": "abc",
+  "value": "valueee",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98382a6311f2b2d5c8e18"
+  },
+  "key": "abc",
+  "value": "valueee",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e984d2a6311f2b2d5c8e24"
+  },
+  "key": "abc",
+  "value": "valueee",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9855ca6311f2b2d5c8e2e"
+  },
+  "key": "abc",
+  "value": "valueee",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98576a6311f2b2d5c8e36"
+  },
+  "key": "abc",
+  "value": "valueee",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98631a6311f2b2d5c8e3b"
+  },
+  "key": "Nơi sản xuất",
+  "value": "Việt Nam",
+  "product": {
+    "$oid": "66cf0193918a922e1a1ad40e"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98645a6311f2b2d5c8e3d"
+  },
+  "key": "Nơi sản xuất",
+  "value": "Việt Nam",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9865fa6311f2b2d5c8e45"
+  },
+  "key": "abc",
+  "value": "valueee",
+  "product": {
+    "$oid": "66e9865fa6311f2b2d5c8e41"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9870ca6311f2b2d5c8e52"
+  },
+  "key": "abc",
+  "value": "valueee",
+  "product": {
+    "$oid": "66e9870ca6311f2b2d5c8e4c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9870ca6311f2b2d5c8e54"
+  },
+  "key": "bcd",
+  "value": "vailiuuu",
+  "product": {
+    "$oid": "66e9870ca6311f2b2d5c8e4c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9874aa6311f2b2d5c8e62"
+  },
+  "key": "abc",
+  "value": "valueee",
+  "product": {
+    "$oid": "66e9874aa6311f2b2d5c8e5c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9874aa6311f2b2d5c8e64"
+  },
+  "key": "bcd",
+  "value": "vailiuuu",
+  "product": {
+    "$oid": "66e9874aa6311f2b2d5c8e5c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98bcaa6311f2b2d5c8e76"
+  },
+  "key": "Sản xuất",
+  "value": "Indonesia",
+  "product": {
+    "$oid": "66e98bcaa6311f2b2d5c8e70"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98bcaa6311f2b2d5c8e78"
+  },
+  "key": "HSD",
+  "value": "2 năm",
+  "product": {
+    "$oid": "66e98bcaa6311f2b2d5c8e70"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98dacf1d47d2340dfa882"
+  },
+  "key": "c",
+  "value": "aaaa",
+  "product": {
+    "$oid": "66e98dacf1d47d2340dfa87c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e990cb1b2d061d6510ca53"
+  },
+  "key": "nhaaaaaaa",
+  "value": "c",
+  "product": {
+    "$oid": "66e990cb1b2d061d6510ca4d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e990cb1b2d061d6510ca55"
+  },
+  "key": "câcc",
+  "value": "ccc",
+  "product": {
+    "$oid": "66e990cb1b2d061d6510ca4d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e991c11b2d061d6510ca61"
+  },
+  "key": "v",
+  "value": "v",
+  "product": {
+    "$oid": "66e991c11b2d061d6510ca5d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9939f9b20b65288501106"
+  },
+  "key": "a",
+  "value": "a",
+  "product": {
+    "$oid": "66e9939f9b20b65288501102"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9a2fe794ba2a0a2ceb40c"
+  },
+  "key": "2",
+  "value": "2",
+  "product": {
+    "$oid": "66e9a2fe794ba2a0a2ceb408"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ec112b1c947453f77b8bbc"
+  },
+  "key": "xx",
+  "value": "xx",
+  "product": {
+    "$oid": "66ec112b1c947453f77b8bb6"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ec208cda7b2cd23b335cc0"
+  },
+  "key": "a",
+  "value": "a",
+  "product": {
+    "$oid": "66ec208cda7b2cd23b335cbc"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ec2131da7b2cd23b335cd5"
+  },
+  "key": "h",
+  "value": "h",
+  "product": {
+    "$oid": "66ec2131da7b2cd23b335cd1"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee442b849d10d87ea5b101"
+  },
+  "key": "e",
+  "value": "e",
+  "product": {
+    "$oid": "66ee442b849d10d87ea5b0fb"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee442b849d10d87ea5b103"
+  },
+  "key": "r",
+  "value": "r",
+  "product": {
+    "$oid": "66ee442b849d10d87ea5b0fb"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee4470849d10d87ea5b118"
+  },
+  "key": "j",
+  "value": "j",
+  "product": {
+    "$oid": "66ee4470849d10d87ea5b114"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee44a2849d10d87ea5b12c"
+  },
+  "key": "kkk",
+  "value": "ki",
+  "product": {
+    "$oid": "66ee44a2849d10d87ea5b126"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee916cd590ab77590c6ba6"
+  },
+  "key": "ui",
+  "value": "ui",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee91fbd590ab77590c6bb0"
+  },
+  "key": "aa",
+  "value": "aa",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66eebbf290f897dd28d786c9"
+  },
+  "key": "i",
+  "value": "s",
+  "product": {
+    "$oid": "66ee44a2849d10d87ea5b126"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f1d"
+  },
+  "key": "Màn hình",
+  "value": "6.1 inches, Super Retina XDR OLED, HDR10, Dolby Vision, 2.000 nits, tần số quét 60Hz.",
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f1f"
+  },
+  "key": "Camera trước",
+  "value": "12MP.",
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f21"
+  },
+  "key": "Camera sau",
+  "value": "Chính 48MP & Phụ 12MP.",
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f23"
+  },
+  "key": "Chipset",
+  "value": "Apple A18.",
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f25"
+  },
+  "key": "RAM",
+  "value": "8GB.",
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f27"
+  },
+  "key": "Thẻ Sim",
+  "value": "Nano-SIM và eSIM",
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f29"
+  },
+  "key": "Pin",
+  "value": ".561 mAh",
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f2b"
+  },
+  "key": "Bộ nhớ trong",
+  "value": "128GB, 256GB, 564 GB, 1T",
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea016dfa012507a14c122"
+  },
+  "key": "Nhà sản xuất",
+  "value": "Công ty Bia Việt Nam",
+  "product": {
+    "$oid": "66fea016dfa012507a14c11a"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea016dfa012507a14c124"
+  },
+  "key": "Nơi sản xuất",
+  "value": "Hà Nội, Việt Nam",
+  "product": {
+    "$oid": "66fea016dfa012507a14c11a"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea1a5dfa012507a14c130"
+  },
+  "key": "Nơi sản xuất",
+  "value": "Việt Nam",
+  "product": {
+    "$oid": "66fea1a5dfa012507a14c128"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea1a5dfa012507a14c132"
+  },
+  "key": "Nhà sản xuất",
+  "value": "Công ty CoCa CoLa Việt Nam ",
+  "product": {
+    "$oid": "66fea1a5dfa012507a14c128"
+  },
+  "__v": 0
+}]

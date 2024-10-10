@@ -1,0 +1,327 @@
+[{
+  "_id": {
+    "$oid": "66daeba67d09be0f11618b84"
+  },
+  "key": "key 1",
+  "value": "value 1",
+  "product": {
+    "$oid": "66cf0193918a922e1a1ad40e"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98382a6311f2b2d5c8e1a"
+  },
+  "key": "cấp độ",
+  "value": "max gà",
+  "product": {
+    "$oid": "66e98382a6311f2b2d5c8e14"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e984d2a6311f2b2d5c8e26"
+  },
+  "key": "cấp độ",
+  "value": "max gà",
+  "product": {
+    "$oid": "66e984d2a6311f2b2d5c8e20"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9855ca6311f2b2d5c8e30"
+  },
+  "key": "cấp độ",
+  "value": "max gà",
+  "product": {
+    "$oid": "66e9855ca6311f2b2d5c8e2a"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98576a6311f2b2d5c8e38"
+  },
+  "key": "cấp độ",
+  "value": "max gà",
+  "product": {
+    "$oid": "66e98575a6311f2b2d5c8e32"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9865fa6311f2b2d5c8e47"
+  },
+  "key": "cấp độ",
+  "value": "max gà",
+  "product": {
+    "$oid": "66e9865fa6311f2b2d5c8e41"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9870ca6311f2b2d5c8e56"
+  },
+  "key": "cấp độ",
+  "value": "max gà",
+  "product": {
+    "$oid": "66e9870ca6311f2b2d5c8e4c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9870ca6311f2b2d5c8e58"
+  },
+  "key": "level",
+  "value": "siêu vip",
+  "product": {
+    "$oid": "66e9870ca6311f2b2d5c8e4c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9874ba6311f2b2d5c8e66"
+  },
+  "key": "cấp độ",
+  "value": "max gà",
+  "product": {
+    "$oid": "66e9874aa6311f2b2d5c8e5c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9874ba6311f2b2d5c8e68"
+  },
+  "key": "level",
+  "value": "siêu vip",
+  "product": {
+    "$oid": "66e9874aa6311f2b2d5c8e5c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98bcaa6311f2b2d5c8e7a"
+  },
+  "key": "Mô tả",
+  "value": "Thức uống có ga",
+  "product": {
+    "$oid": "66e98bcaa6311f2b2d5c8e70"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98dacf1d47d2340dfa884"
+  },
+  "key": "j",
+  "value": "jjkkkk",
+  "product": {
+    "$oid": "66e98dacf1d47d2340dfa87c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e990cb1b2d061d6510ca57"
+  },
+  "key": "a",
+  "value": "c",
+  "product": {
+    "$oid": "66e990cb1b2d061d6510ca4d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e991c21b2d061d6510ca63"
+  },
+  "key": "v",
+  "value": "v",
+  "product": {
+    "$oid": "66e991c11b2d061d6510ca5d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9939f9b20b65288501108"
+  },
+  "key": "a",
+  "value": "a",
+  "product": {
+    "$oid": "66e9939f9b20b65288501102"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9a2fe794ba2a0a2ceb40e"
+  },
+  "key": "2",
+  "value": "2",
+  "product": {
+    "$oid": "66e9a2fe794ba2a0a2ceb408"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ec112b1c947453f77b8bbe"
+  },
+  "key": "xx",
+  "value": "xx",
+  "product": {
+    "$oid": "66ec112b1c947453f77b8bb6"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ec208cda7b2cd23b335cc2"
+  },
+  "key": "a",
+  "value": "a",
+  "product": {
+    "$oid": "66ec208cda7b2cd23b335cbc"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ec2131da7b2cd23b335cd7"
+  },
+  "key": "h",
+  "value": "h",
+  "product": {
+    "$oid": "66ec2131da7b2cd23b335cd1"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee442b849d10d87ea5b105"
+  },
+  "key": "i",
+  "value": "i",
+  "product": {
+    "$oid": "66ee442b849d10d87ea5b0fb"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee442b849d10d87ea5b107"
+  },
+  "key": "l",
+  "value": "l",
+  "product": {
+    "$oid": "66ee442b849d10d87ea5b0fb"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee442b849d10d87ea5b109"
+  },
+  "key": "k",
+  "value": "k",
+  "product": {
+    "$oid": "66ee442b849d10d87ea5b0fb"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee4470849d10d87ea5b11a"
+  },
+  "key": "j",
+  "value": "j",
+  "product": {
+    "$oid": "66ee4470849d10d87ea5b114"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee44a2849d10d87ea5b130"
+  },
+  "key": "ka",
+  "value": "k",
+  "product": {
+    "$oid": "66ee44a2849d10d87ea5b126"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee92d4d590ab77590c6bcb"
+  },
+  "key": "oi",
+  "value": "oi",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66eeb5fe90f897dd28d78699"
+  },
+  "key": "cv",
+  "value": "cv",
+  "product": {
+    "$oid": "66ee44a2849d10d87ea5b126"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f2d"
+  },
+  "key": "Thông tin sản phẩm",
+  "value": "ĐƯỢC ĐÚC TỪ TITAN - iPhone 15 Pro sở hữu thiết kế titan chuẩn hàng không vũ trụ, nhẹ và bền chắc với mặt sau bằng kính nhám. Mặt trước Ceramic Shield bền chắc hơn mọi mặt kính điện thoại thông minh. Và có khả năng chống tia nước, chống nước và chống bụi.",
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f2f"
+  },
+  "key": "Thông tin sản phẩm",
+  "value": "MÀN HÌNH TIÊN TIẾN - Màn hình Super Retina XDR 6,1\" 2 với ProMotion tăng tốc độ làm mới lên đến 120Hz khi bạn cần đến hiệu năng đồ họa vượt trội. Dynamic Island hiển thị linh động các cảnh báo và Hoạt Động Trực Tiếp. Đồng thời, với màn hình Luôn Bật, Màn Hình Khóa của bạn luôn hiển thị, nên bạn thậm chí không cần chạm vào màn hình để cập nhật thông tin.",
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea016dfa012507a14c126"
+  },
+  "key": "Về sản phẩm",
+  "value": "Đây là bia số 1 thị trường Việt Nam, với nồng độ cồn chỉ 4.5 độ. Cực thích hợp cho các cuộc vui cùng anh em, bạn bè, gia đình trong các dịp lễ, ăn mừng",
+  "product": {
+    "$oid": "66fea016dfa012507a14c11a"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea1a5dfa012507a14c134"
+  },
+  "key": "Về sản phẩm",
+  "value": "Đây là nước uống giải khát số 1 Việt Nam",
+  "product": {
+    "$oid": "66fea1a5dfa012507a14c128"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,689 @@
+[{
+  "_id": {
+    "$oid": "66dab1237029508eb7db5528"
+  },
+  "key": "Loại Thường",
+  "value": "Không bảo hành",
+  "price": 209000,
+  "stock": 863,
+  "product": {
+    "$oid": "66cf0193918a922e1a1ad40e"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66dab1867029508eb7db552c"
+  },
+  "key": "Loại Thường",
+  "value": "bảo hành",
+  "price": 309000,
+  "stock": 860,
+  "product": {
+    "$oid": "66cf0193918a922e1a1ad40e"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66dab20a7029508eb7db5530"
+  },
+  "key": "Loại Thường",
+  "value": "bảo hành 6 tháng",
+  "price": 350000,
+  "stock": 0,
+  "product": {
+    "$oid": "66cf0193918a922e1a1ad40e"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66dab2307029508eb7db5532"
+  },
+  "key": "Cao cấp",
+  "value": "Không bảo hành",
+  "price": 370000,
+  "stock": 724,
+  "product": {
+    "$oid": "66cf0193918a922e1a1ad40e"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66dab2497029508eb7db5534"
+  },
+  "key": "Cao cấp",
+  "value": "bảo hành",
+  "price": 450000,
+  "stock": 0,
+  "product": {
+    "$oid": "66cf0193918a922e1a1ad40e"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e981f9d72441d7cabf98dc"
+  },
+  "key": "Phân loại",
+  "value": "Phó GOAT",
+  "price": 10,
+  "stock": 1,
+  "product": {
+    "$oid": "66e981f9d72441d7cabf98da"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e982ffa6311f2b2d5c8e0a"
+  },
+  "key": "Phân loại",
+  "value": "Phó GOAT",
+  "price": 10,
+  "stock": 1,
+  "product": {
+    "$oid": "66e982ffa6311f2b2d5c8e08"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98357a6311f2b2d5c8e0f"
+  },
+  "key": "Phân loại",
+  "value": "Phó GOAT",
+  "price": 10,
+  "stock": 1,
+  "product": {
+    "$oid": "66e98357a6311f2b2d5c8e0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98382a6311f2b2d5c8e16"
+  },
+  "key": "Phân loại",
+  "value": "Phó GOAT",
+  "price": 10,
+  "stock": 1,
+  "product": {
+    "$oid": "66e98382a6311f2b2d5c8e14"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e984d2a6311f2b2d5c8e22"
+  },
+  "key": "Phân loại",
+  "value": "Phó GOAT",
+  "price": 10,
+  "stock": 1,
+  "product": {
+    "$oid": "66e984d2a6311f2b2d5c8e20"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9855ca6311f2b2d5c8e2c"
+  },
+  "key": "Phân loại",
+  "value": "Phó GOAT",
+  "price": 10,
+  "stock": 1,
+  "product": {
+    "$oid": "66e9855ca6311f2b2d5c8e2a"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98575a6311f2b2d5c8e34"
+  },
+  "key": "Phân loại",
+  "value": "Phó GOAT",
+  "price": 10,
+  "stock": 1,
+  "product": {
+    "$oid": "66e98575a6311f2b2d5c8e32"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9865fa6311f2b2d5c8e43"
+  },
+  "key": "Phân loại",
+  "value": "Phó GOAT",
+  "price": 10,
+  "stock": 1,
+  "product": {
+    "$oid": "66e9865fa6311f2b2d5c8e41"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9870ca6311f2b2d5c8e4e"
+  },
+  "key": "Phân loại",
+  "value": "Phó GOAT",
+  "price": 10,
+  "stock": 20,
+  "product": {
+    "$oid": "66e9870ca6311f2b2d5c8e4c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9870ca6311f2b2d5c8e50"
+  },
+  "key": "Phân loại",
+  "value": "GOAT",
+  "price": 100,
+  "stock": 1,
+  "product": {
+    "$oid": "66e9870ca6311f2b2d5c8e4c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9874aa6311f2b2d5c8e5e"
+  },
+  "key": "Phân loại",
+  "value": "Phó GOAT",
+  "price": 10,
+  "stock": 20,
+  "product": {
+    "$oid": "66e9874aa6311f2b2d5c8e5c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9874aa6311f2b2d5c8e60"
+  },
+  "key": "Phân loại",
+  "value": "GOAT",
+  "price": 100,
+  "stock": 1,
+  "product": {
+    "$oid": "66e9874aa6311f2b2d5c8e5c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98bcaa6311f2b2d5c8e72"
+  },
+  "key": "Chai",
+  "value": "2 lit",
+  "price": 22000,
+  "stock": 2000,
+  "product": {
+    "$oid": "66e98bcaa6311f2b2d5c8e70"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98bcaa6311f2b2d5c8e74"
+  },
+  "key": "Chai",
+  "value": "350 ml",
+  "price": 10000,
+  "stock": 5000,
+  "product": {
+    "$oid": "66e98bcaa6311f2b2d5c8e70"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98dacf1d47d2340dfa87e"
+  },
+  "key": "a",
+  "value": "cácc",
+  "price": 222,
+  "stock": 222,
+  "product": {
+    "$oid": "66e98dacf1d47d2340dfa87c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e98dacf1d47d2340dfa880"
+  },
+  "key": "njhba",
+  "value": "bica",
+  "price": 211,
+  "stock": 21,
+  "product": {
+    "$oid": "66e98dacf1d47d2340dfa87c"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e990cb1b2d061d6510ca4f"
+  },
+  "key": "a",
+  "value": "bc",
+  "price": 22,
+  "stock": 3,
+  "product": {
+    "$oid": "66e990cb1b2d061d6510ca4d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e990cb1b2d061d6510ca51"
+  },
+  "key": "b",
+  "value": "ca",
+  "price": 33,
+  "stock": 11,
+  "product": {
+    "$oid": "66e990cb1b2d061d6510ca4d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e991c11b2d061d6510ca5f"
+  },
+  "key": "a",
+  "value": "a",
+  "price": 1,
+  "stock": 1,
+  "product": {
+    "$oid": "66e991c11b2d061d6510ca5d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9939f9b20b65288501104"
+  },
+  "key": "a",
+  "value": "a",
+  "price": 1,
+  "stock": 1,
+  "product": {
+    "$oid": "66e9939f9b20b65288501102"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66e9a2fe794ba2a0a2ceb40a"
+  },
+  "key": "aa",
+  "value": "a",
+  "price": 2,
+  "stock": 2,
+  "product": {
+    "$oid": "66e9a2fe794ba2a0a2ceb408"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ec112b1c947453f77b8bb8"
+  },
+  "key": "a",
+  "value": "a",
+  "price": 1,
+  "stock": 22,
+  "product": {
+    "$oid": "66ec112b1c947453f77b8bb6"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ec112b1c947453f77b8bba"
+  },
+  "key": "n",
+  "value": "b",
+  "price": 4,
+  "stock": 2,
+  "product": {
+    "$oid": "66ec112b1c947453f77b8bb6"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ec208cda7b2cd23b335cbe"
+  },
+  "key": "a",
+  "value": "a",
+  "price": 3,
+  "stock": 2,
+  "product": {
+    "$oid": "66ec208cda7b2cd23b335cbc"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ec2131da7b2cd23b335cd3"
+  },
+  "key": "a",
+  "value": "a",
+  "price": 8,
+  "stock": 8,
+  "product": {
+    "$oid": "66ec2131da7b2cd23b335cd1"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee442b849d10d87ea5b0fd"
+  },
+  "key": "w",
+  "value": "w",
+  "price": 3,
+  "stock": 3,
+  "product": {
+    "$oid": "66ee442b849d10d87ea5b0fb"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee442b849d10d87ea5b0ff"
+  },
+  "key": "df",
+  "value": "df",
+  "price": 1,
+  "stock": 1,
+  "product": {
+    "$oid": "66ee442b849d10d87ea5b0fb"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee4470849d10d87ea5b116"
+  },
+  "key": "j",
+  "value": "j",
+  "price": 2,
+  "stock": 2,
+  "product": {
+    "$oid": "66ee4470849d10d87ea5b114"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee44a2849d10d87ea5b128"
+  },
+  "key": "k",
+  "value": "kk",
+  "price": 2,
+  "stock": 1,
+  "product": {
+    "$oid": "66ee44a2849d10d87ea5b126"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee44a2849d10d87ea5b12a"
+  },
+  "key": "kkkk",
+  "value": "k",
+  "price": 1,
+  "stock": 8,
+  "product": {
+    "$oid": "66ee44a2849d10d87ea5b126"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee615f849d10d87ea5b263"
+  },
+  "key": "aa",
+  "value": "aa",
+  "price": 2,
+  "stock": 12,
+  "product": {
+    "$oid": "66ee44a2849d10d87ea5b126"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ee617e849d10d87ea5b270"
+  },
+  "key": "Ram",
+  "value": "64G",
+  "price": 120000,
+  "stock": 8,
+  "product": {
+    "$oid": "66ee44a2849d10d87ea5b126"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f0f"
+  },
+  "key": "Phân loại",
+  "value": "126 GB, 8GB Ram",
+  "price": 20000000,
+  "stock": 284,
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f11"
+  },
+  "key": "Phân loại",
+  "value": "256 GB, 8GB Ram",
+  "price": 25000000,
+  "stock": 343,
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f13"
+  },
+  "key": "Phân loại",
+  "value": "564 GB, 8GB Ram",
+  "price": 32000000,
+  "stock": 388,
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f15"
+  },
+  "key": "Phân loại",
+  "value": "1T, 8GB Ram",
+  "price": 45000000,
+  "stock": 449,
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f17"
+  },
+  "key": "Phân loại",
+  "value": "126 GB, 16GB RAM",
+  "price": 2800000,
+  "stock": 179,
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f19"
+  },
+  "key": "Phân loại",
+  "value": "256 GB, 16GB RAM",
+  "price": 32000000,
+  "stock": 288,
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f1626e6976de6d79900f1b"
+  },
+  "key": "Phân loại",
+  "value": "564 GB, 16GB RAM",
+  "price": 46000000,
+  "stock": 496,
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f164506976de6d79900fab"
+  },
+  "key": "Phân loại",
+  "value": "1T, 16GB RAM",
+  "price": 58000000,
+  "stock": 396,
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f164506976de6d79900fad"
+  },
+  "key": "Phân loại",
+  "value": "1T, 32GB RAM",
+  "price": 66000000,
+  "stock": 696,
+  "product": {
+    "$oid": "66f1626e6976de6d79900f0d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f8cac405eed14bffda2be1"
+  },
+  "key": "",
+  "value": "",
+  "price": 0,
+  "stock": 0,
+  "product": {
+    "$oid": "66f8cac405eed14bffda2bdf"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea016dfa012507a14c11c"
+  },
+  "key": "Kích cỡ",
+  "value": "Thùng 12 lon",
+  "price": 180000,
+  "stock": 988,
+  "product": {
+    "$oid": "66fea016dfa012507a14c11a"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea016dfa012507a14c11e"
+  },
+  "key": "Kích cỡ",
+  "value": "Thùng 24 lon",
+  "price": 380000,
+  "stock": 977,
+  "product": {
+    "$oid": "66fea016dfa012507a14c11a"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea016dfa012507a14c120"
+  },
+  "key": "Kích cỡ",
+  "value": "Thùng 32 lon",
+  "price": 480000,
+  "stock": 981,
+  "product": {
+    "$oid": "66fea016dfa012507a14c11a"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea1a5dfa012507a14c12a"
+  },
+  "key": "Kích cỡ",
+  "value": "Chai 500 ml",
+  "price": 15000,
+  "stock": 4991,
+  "product": {
+    "$oid": "66fea1a5dfa012507a14c128"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea1a5dfa012507a14c12c"
+  },
+  "key": "Kích cỡ",
+  "value": "Chai 2 lit",
+  "price": 25000,
+  "stock": 4983,
+  "product": {
+    "$oid": "66fea1a5dfa012507a14c128"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fea1a5dfa012507a14c12e"
+  },
+  "key": "Kích cỡ",
+  "value": "Lon 320 ml",
+  "price": 15000,
+  "stock": 4987,
+  "product": {
+    "$oid": "66fea1a5dfa012507a14c128"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "66c9d91a0fc6c261b2415191"
+  },
+  "userName": "anhtruc@gmail.com",
+  "password": "$2b$10$uF9ONgd3xQewNCfjoNp4w.dfqav.yEicxMrk.Th8R1QWWKmGzXlC6",
+  "role": [
+    "BUYER",
+    "SELLER"
+  ],
+  "__v": 0,
+  "address": "277/11/1A - Thành phố Hồ Chí Minh - Huyện Củ Chi - Xã Nhuận Đức",
+  "avata": "https://doantotnghiepiuh.s3.amazonaws.com/2022fda7-d25a-4170-89c0-51cbd91dfd79",
+  "name": "huuwxnha",
+  "sex": "female",
+  "number": "093634382121"
+},
+{
+  "_id": {
+    "$oid": "66f7e8f40749fc5906131022"
+  },
+  "userName": "huunha21032k2@gmail.com",
+  "password": "$2b$10$gaIC0Wrdd0M0wGQAW3atH.cUACvzlygEUZWnNMkmPXxOo2D3lUn2W",
+  "role": [
+    "BUYER"
+  ],
+  "__v": 0,
+  "address": "277/11/1A, đường Nhuận Đức - Xã Nhuận Đức - Huyện Củ Chi - Thành phố Hồ Chí Minh",
+  "name": "Tran Huu Nha",
+  "number": "0936343821",
+  "sex": "male"
+}]

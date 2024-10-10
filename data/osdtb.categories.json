@@ -1,0 +1,77 @@
+[{
+  "_id": {
+    "$oid": "66cefccd918a922e1a1ad3f9"
+  },
+  "categoriesName": "Điện Da Dụng",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cefcdf918a922e1a1ad3fb"
+  },
+  "categoriesName": "Thức ăn vặt",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cefced918a922e1a1ad3fd"
+  },
+  "categoriesName": "Điện thoại",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cefcf8918a922e1a1ad3ff"
+  },
+  "categoriesName": "Laptop",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cefd0a918a922e1a1ad401"
+  },
+  "categoriesName": "Thực phẩm",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cefd96918a922e1a1ad404"
+  },
+  "categoriesName": "Đồ uống",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cefff6918a922e1a1ad409"
+  },
+  "categoriesName": "Phụ kiện",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cfe1cacde3f54b78c90a0b"
+  },
+  "categoriesName": "Thời trang nam",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cfe1d4cde3f54b78c90a0d"
+  },
+  "categoriesName": "Thời trang nữ",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cfe549cde3f54b78c90a1f"
+  },
+  "categoriesName": "Sức khoẻ",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d9b555d1278f08822aeafa"
+  },
+  "categoriesName": "Đồng hồ",
+  "__v": 0
+}]
