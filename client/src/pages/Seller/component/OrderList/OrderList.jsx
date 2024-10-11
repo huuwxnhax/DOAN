@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { acceptTradeAPI, getTradeBySellerAPI } from "../../../../api/tradeAPI";
 import { useSelector } from "react-redux";
 import { getProductById } from "../../../../api/productAPI";
+import Loading from "../../../../components/Loading/Loading";
 const OrderList = () => {
   const user = useSelector((state) => state.auth.user);
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -12,6 +13,7 @@ const OrderList = () => {
     from: "",
     to: "",
   });
+  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const [orders, setOrders] = useState([]);
@@ -19,66 +21,76 @@ const OrderList = () => {
 
   useEffect(() => {
     const fetchOrdersWithDetails = async () => {
-      const fetchedOrders = await getTradeBySellerAPI(
-        user._id,
-        user.access_token
-      );
-      if (fetchedOrders.status === 200) {
-        console.log("Fetch orders", fetchedOrders.data);
-
-        const detailedOrders = await Promise.all(
-          fetchedOrders.data
-            .filter(
-              (order) =>
-                (order.paymentMethod === "zalo" && order.payment === true) ||
-                order.paymentMethod === "cash"
-            )
-            .map(async (order) => {
-              const productResponse = await getProductById(
-                order.products[0].productId
-              );
-
-              if (productResponse.status === 200) {
-                const productData = productResponse.data[0];
-
-                const classify = productData.classifies?.find(
-                  (c) => c._id === order.products[0].classifyId
-                );
-                console.log("classify details", classify);
-
-                const formattedDate = new Date(
-                  order.dateTrade
-                ).toLocaleDateString("en-GB");
-                const formattedTime = new Date(
-                  order.dateTrade
-                ).toLocaleTimeString("en-GB");
-
-                return {
-                  ...order,
-                  productName: productData.productName,
-                  image: productData.images?.[0] || "",
-                  brand: productData.brand,
-                  category: productData.category,
-                  formattedDate,
-                  formattedTime,
-                  classify: classify ? classify.value : "N/A",
-                  price: classify ? classify.price : "N/A",
-                  numberProduct: order.products[0].numberProduct,
-                  phoneContact: user.number,
-                  status: order.sellerAccept ? "Approval" : "Pending",
-                  statusColor: order.sellerAccept
-                    ? "text-green-500"
-                    : "text-yellow-500",
-                  paymentMethod:
-                    order.paymentMethod == "cash"
-                      ? "Thanh toán khi nhận hàng"
-                      : "ZaloPay",
-                };
-              }
-              return order;
-            })
+      setLoading(true);
+      try {
+        const fetchedOrders = await getTradeBySellerAPI(
+          user._id,
+          user.access_token
         );
-        setOrders(detailedOrders);
+        if (fetchedOrders.status === 200) {
+          console.log("Fetch orders", fetchedOrders.data);
+
+          const detailedOrders = await Promise.all(
+            fetchedOrders.data
+              .filter(
+                (order) =>
+                  (order.paymentMethod === "zalo" && order.payment === true) ||
+                  order.paymentMethod === "cash"
+              )
+              .map(async (order) => {
+                const productResponse = await getProductById(
+                  order.products[0].productId
+                );
+
+                if (productResponse.status === 200) {
+                  const productData = productResponse.data[0];
+
+                  const classify = productData.classifies?.find(
+                    (c) => c._id === order.products[0].classifyId
+                  );
+                  console.log("classify details", classify);
+
+                  const formattedDate = new Date(
+                    order.dateTrade
+                  ).toLocaleDateString("en-GB");
+                  const formattedTime = new Date(
+                    order.dateTrade
+                  ).toLocaleTimeString("en-GB");
+
+                  return {
+                    ...order,
+                    productName: productData.productName,
+                    image: productData.images?.[0] || "",
+                    brand: productData.brand,
+                    category: productData.category,
+                    formattedDate,
+                    formattedTime,
+                    classify: classify ? classify.value : "N/A",
+                    price: classify ? classify.price : "N/A",
+                    numberProduct: order.products[0].numberProduct,
+                    phoneContact: user.number,
+                    status: order.sellerAccept ? "Approval" : "Pending",
+                    statusColor: order.sellerAccept
+                      ? "text-green-500"
+                      : "text-yellow-500",
+                    paymentMethod:
+                      order.paymentMethod == "cash"
+                        ? "Thanh toán khi nhận hàng"
+                        : "ZaloPay",
+                  };
+                }
+                return order;
+              })
+          );
+          const sortedOrders = detailedOrders.sort(
+            (a, b) => new Date(b.dateTrade) - new Date(a.dateTrade)
+          );
+          setOrders(sortedOrders);
+        }
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchOrdersWithDetails();
@@ -112,6 +124,7 @@ const OrderList = () => {
   };
 
   const handleAcceptedOrder = async () => {
+    setLoading(true);
     try {
       console.log(selectedOrder.tradeId);
 
@@ -136,6 +149,8 @@ const OrderList = () => {
       }
     } catch (error) {
       console.error("Error accept trade:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -143,6 +158,7 @@ const OrderList = () => {
 
   return (
     <div className="p-6">
+      {loading && <Loading />}
       <h2 className="text-2xl font-semibold mb-4">Order List</h2>
 
       {/* Filter Section */}

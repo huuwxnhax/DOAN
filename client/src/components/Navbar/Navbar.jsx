@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { logout } from "../../features/authSlice";
 import { getCartItemByBuyerId } from "../../api/cartAPI";
 import { getClassifiesByProductId, getProductById } from "../../api/productAPI";
+import Loading from "../Loading/Loading";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Navbar = () => {
   const [cartItems, setCartItems] = useState([]);
   const [productData, setProductData] = useState({});
   const [selectedClassifies, setSelectedClassifies] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -50,8 +52,15 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
-    navigate("/signin");
+    setLoading(true);
+    try {
+      dispatch(logout());
+      navigate("/signin");
+    } catch (error) {
+      console.log("Error logging out: ", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const toggleSearch = () => {
@@ -204,6 +213,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
+      {loading && <Loading />}
       <nav className="navbar-container">
         <div className="navbar-content">
           <div className="navbar-logo">

@@ -11,6 +11,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Notification from "../Notification/Notification";
 import UploadComponent from "../Dropzone/UploadComponent";
 import { uploadFile } from "../../api/productAPI";
+import Loading from "../Loading/Loading";
 
 const ProfileSection = ({ props }) => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const ProfileSection = ({ props }) => {
   const [addressDetail, setAddressDetail] = useState("");
   const [isEditAddress, setIsEditAddress] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetch("https://esgoo.net/api-tinhthanh/1/0.htm")
@@ -121,6 +123,7 @@ const ProfileSection = ({ props }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     if (user.name === "" || user.phone === "" || user.address === "") {
       alert("Vui lòng nhập đầy đủ thông tin");
@@ -136,7 +139,6 @@ const ProfileSection = ({ props }) => {
       selectedProvince && selectedDistrict && selectedWard
         ? `${addressDetail} - ${wardName} - ${districtName} - ${provinceName}`
         : user.address;
-
     try {
       let updateAvatar = user.avata;
       if (avatar) {
@@ -172,6 +174,8 @@ const ProfileSection = ({ props }) => {
       }
     } catch (error) {
       console.error("Update error:", error.response?.data || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -183,6 +187,7 @@ const ProfileSection = ({ props }) => {
 
   return (
     <>
+      {loading && <Loading />}
       <div className="profile-header">
         <h2>Hồ Sơ Cá Nhân</h2>
         <p>Hồ Sơ Chi Tiết</p>

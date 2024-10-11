@@ -1,62 +1,13 @@
 import React from "react";
 import "./Loading.css";
+
 const Loading = () => {
   return (
-    <div class="preloader">
-      <svg
-        class="cart"
-        role="img"
-        aria-label="Shopping cart line animation"
-        viewBox="0 0 128 128"
-        width="128px"
-        height="128px"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g
-          fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="8"
-        >
-          <g class="cart__track" stroke="hsla(0,10%,10%,0.1)">
-            <polyline points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" />
-            <circle cx="43" cy="111" r="13" />
-            <circle cx="102" cy="111" r="13" />
-          </g>
-          <g class="cart__lines" stroke="currentColor">
-            <polyline
-              class="cart__top"
-              points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80"
-              stroke-dasharray="338 338"
-              stroke-dashoffset="-338"
-            />
-            <g class="cart__wheel1" transform="rotate(-90,43,111)">
-              <circle
-                class="cart__wheel-stroke"
-                cx="43"
-                cy="111"
-                r="13"
-                stroke-dasharray="81.68 81.68"
-                stroke-dashoffset="81.68"
-              />
-            </g>
-            <g class="cart__wheel2" transform="rotate(90,102,111)">
-              <circle
-                class="cart__wheel-stroke"
-                cx="102"
-                cy="111"
-                r="13"
-                stroke-dasharray="81.68 81.68"
-                stroke-dashoffset="81.68"
-              />
-            </g>
-          </g>
-        </g>
-      </svg>
-      <div class="preloader__text">
-        <p class="preloader__msg preloader__msg--last">
-          This is taking long. Please be patient.
-        </p>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="relative flex justify-center items-center">
+        {/* Outer circle */}
+        <div className="absolute animate-spin-slow rounded-full h-24 w-24 border-t-4 border-r-4 border-green-500"></div>
+        <div className="absolute animate-spin-reverse-slow rounded-full h-20 w-20 border-b-4 border-l-4 border-blue-500"></div>
       </div>
     </div>
   );

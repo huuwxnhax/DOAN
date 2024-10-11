@@ -4,6 +4,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import CachedIcon from "@mui/icons-material/Cached";
 import { getProductsBySellerId } from "../../../../api/productAPI";
 import { useSelector } from "react-redux";
+import Loading from "../../../../components/Loading/Loading";
 
 const ProductTable = ({ setActiveTab, setProductEdit }) => {
   const [columns, setColumns] = useState([
@@ -16,6 +17,7 @@ const ProductTable = ({ setActiveTab, setProductEdit }) => {
     { name: "Selled", visible: false },
   ]);
 
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.auth.user);
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
@@ -44,13 +46,20 @@ const ProductTable = ({ setActiveTab, setProductEdit }) => {
   };
 
   useEffect(() => {
-    const fetchProductsofSeller = async () => {
-      const response = await getProductsBySellerId(user._id, page);
-      setProducts(response.data);
-      setSortedProducts(response.data);
-      setTotalPages(Math.ceil(response.data.length / 10));
-    };
-    fetchProductsofSeller();
+    setLoading(true);
+    try {
+      const fetchProductsofSeller = async () => {
+        const response = await getProductsBySellerId(user._id, page);
+        setProducts(response.data);
+        setSortedProducts(response.data);
+        setTotalPages(Math.ceil(response.data.length / 10));
+      };
+      fetchProductsofSeller();
+    } catch (error) {
+      console.log("Error fetching products: ", error);
+    } finally {
+      setLoading(false);
+    }
   }, [page, user._id]);
 
   const handleNextPage = () => {
@@ -113,6 +122,7 @@ const ProductTable = ({ setActiveTab, setProductEdit }) => {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md flex-1">
+      {loading && <Loading />}
       <div className="flex justify-between">
         <h1 className="text-xl font-bold mb-4">Quản lý Sản Phẩm</h1>
         <button

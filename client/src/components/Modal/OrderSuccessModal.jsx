@@ -27,16 +27,6 @@ const OrderSuccessModal = ({ isOpen, onClose }) => {
             </svg>
           </div>
         </div>
-        <h2 className="text-2xl font-semibold mb-4">Đặt hàng thành công!</h2>
-        <p className="text-gray-600 mb-6">
-          Đơn hàng của bạn đã được đặt. Vui lòng đợi người bán phê duyệt.
-        </p>
-        <button
-          onClick={onClose}
-          className="bg-blue-500 text-white px-6 py-2 rounded-md"
-        >
-          Đóng
-        </button>
       </div>
     </div>
   );

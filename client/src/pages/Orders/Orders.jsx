@@ -18,6 +18,7 @@ import { getProductById } from "../../api/productAPI";
 import "../Orders/Orders.css";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import Loading from "../../components/Loading/Loading";
 
 const Orders = () => {
   const user = useSelector((state) => state.auth.user);
@@ -28,64 +29,74 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [paymentUrl, setPaymentUrl] = useState("");
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchOrdersWithDetails = async () => {
-      const fetchedOrders = await getTradeAPI(user._id, user.access_token);
+      setLoading(true);
+      try {
+        const fetchedOrders = await getTradeAPI(user._id, user.access_token);
 
-      if (fetchedOrders.status === 200) {
-        console.log("Fetched orders", fetchedOrders.data);
-        const detailedOrders = await Promise.all(
-          fetchedOrders.data.map(async (order) => {
-            // Fetch product details for each product in the order
-            const productDetails = await Promise.all(
-              order.products.map(async (product) => {
-                const productResponse = await getProductById(product.productId);
-
-                if (productResponse.status === 200) {
-                  const productData = productResponse.data[0];
-
-                  console.log("Product name", productData.productName);
-
-                  // Get classify details for the current product
-                  const classify = productData.classifies?.find(
-                    (c) => c._id === product.classifyId
+        if (fetchedOrders.status === 200) {
+          console.log("Fetched orders", fetchedOrders.data);
+          const detailedOrders = await Promise.all(
+            fetchedOrders.data.map(async (order) => {
+              // Fetch product details for each product in the order
+              const productDetails = await Promise.all(
+                order.products.map(async (product) => {
+                  const productResponse = await getProductById(
+                    product.productId
                   );
 
-                  console.log("Classify details", classify);
+                  if (productResponse.status === 200) {
+                    const productData = productResponse.data[0];
 
-                  return {
-                    productId: productData._id,
-                    productName: productData.productName,
-                    image: productData.images?.[0] || "",
-                    brand: productData.brand,
-                    category: productData.category,
-                    classify: classify ? classify.value : "N/A",
-                    price: classify ? classify.price : "N/A",
-                    numberProduct: product.numberProduct, // Include the quantity from the order
-                  };
-                }
-                return null; // Return null if product details not fetched
-              })
-            );
+                    console.log("Product name", productData.productName);
 
-            // Filter out null values in case of failed product fetches
-            const validProductDetails = productDetails.filter(Boolean);
+                    // Get classify details for the current product
+                    const classify = productData.classifies?.find(
+                      (c) => c._id === product.classifyId
+                    );
 
-            // Merge product details with order data
-            return {
-              ...order,
-              products: validProductDetails, // Add the detailed products
-              phoneContact: user.number,
-              paymentMethod:
-                order.paymentMethod === "cash"
-                  ? "Thanh toán khi nhận hàng"
-                  : "ZaloPay",
-            };
-          })
-        );
+                    console.log("Classify details", classify);
 
-        setOrders(detailedOrders);
+                    return {
+                      productId: productData._id,
+                      productName: productData.productName,
+                      image: productData.images?.[0] || "",
+                      brand: productData.brand,
+                      category: productData.category,
+                      classify: classify ? classify.value : "N/A",
+                      price: classify ? classify.price : "N/A",
+                      numberProduct: product.numberProduct, // Include the quantity from the order
+                    };
+                  }
+                  return null; // Return null if product details not fetched
+                })
+              );
+
+              // Filter out null values in case of failed product fetches
+              const validProductDetails = productDetails.filter(Boolean);
+
+              // Merge product details with order data
+              return {
+                ...order,
+                products: validProductDetails, // Add the detailed products
+                phoneContact: user.number,
+                paymentMethod:
+                  order.paymentMethod === "cash"
+                    ? "Thanh toán khi nhận hàng"
+                    : "ZaloPay",
+              };
+            })
+          );
+
+          setOrders(detailedOrders);
+        }
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -180,7 +191,7 @@ const Orders = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-
+      {loading && <Loading />}
       <div className="order-list">
         <div className=" bg-white p-6 rounded-lg shadow-lg">
           {/* Header with Tabs (Styled like navigation bar) */}

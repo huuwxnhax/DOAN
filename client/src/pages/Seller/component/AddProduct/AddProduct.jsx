@@ -12,9 +12,11 @@ import { getAllCate } from "../../../../api/cateAPI";
 import { addAttributeAPI } from "../../../../api/attriAPI";
 import { addDescriptionAPI } from "../../../../api/descriptAPI";
 import RemoveIcon from "@mui/icons-material/Remove";
+import Loading from "../../../../components/Loading/Loading";
 
 const AddProduct = () => {
   const user = useSelector((state) => state.auth.user);
+  const [loading, setLoading] = useState(false);
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState([
     { key: "", value: "" },
@@ -88,6 +90,7 @@ const AddProduct = () => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       const formData = new FormData();
       for (const image of images) {
@@ -163,15 +166,18 @@ const AddProduct = () => {
       setAttributes([{ key: "", value: "" }]);
       setProductDescription([{ key: "", value: "" }]);
       setImages([]);
+      setPreviewImages([]);
     } catch (error) {
       console.error("An error occurred while submitting:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
+      {loading && <Loading />}
       <h1 className="text-xl font-bold mb-4">Thêm Mới Sản Phẩm</h1>
-
       {/* Product Name */}
       <div className="mb-4">
         <label className="block text-gray-700">Tên Sản Phẩm</label>

@@ -16,6 +16,7 @@ import { selectAllCategories } from "../../features/cateSlice";
 import { fetchCategories } from "../../actions/cateAction";
 import { useLocation, useNavigate } from "react-router-dom";
 import SortIcon from "@mui/icons-material/Sort";
+import Loading from "../Loading/Loading";
 
 const Category = () => {
   const sortOptions = [
@@ -47,6 +48,8 @@ const Category = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [loading, setLoading] = useState(false);
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -55,6 +58,7 @@ const Category = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
       try {
         let response;
         let query = `brand=${selectedBrand || ""}`;
@@ -90,6 +94,8 @@ const Category = () => {
         setProducts(productWithClassifies);
       } catch (error) {
         console.log("Error fetching products: ", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -157,6 +163,7 @@ const Category = () => {
 
   return (
     <div className="category">
+      {loading && <Loading />}
       <div className="category-left">
         {/* Category filter */}
         <div className="category-filter">
@@ -398,7 +405,11 @@ const Category = () => {
           ))}
         </div>
         <div className="product-list">
-          <ProductSection products={products} />
+          {loading ? ( // Show loading indicator while loading
+            <div className="loading-indicator">Loading...</div>
+          ) : (
+            <ProductSection products={products} />
+          )}
         </div>
         <div className="page-selection">
           <Stack spacing={2}>

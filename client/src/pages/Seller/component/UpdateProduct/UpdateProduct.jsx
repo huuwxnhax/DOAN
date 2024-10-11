@@ -20,6 +20,7 @@ import {
 import { useSelector } from "react-redux";
 import UploadComponent from "../../../../components/Dropzone/UploadComponent";
 import RemoveIcon from "@mui/icons-material/Remove";
+import Loading from "../../../../components/Loading/Loading";
 
 const UpdateProduct = ({ product, setActiveTab }) => {
   const user = useSelector((state) => state.auth.user);
@@ -29,6 +30,8 @@ const UpdateProduct = ({ product, setActiveTab }) => {
     category: product?.categories[0]?._id || "",
     brand: product?.brand || "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const [previewImages, setPreviewImages] = useState([]);
   const [oldImages, setOldImages] = useState(product?.images || []);
@@ -93,6 +96,7 @@ const UpdateProduct = ({ product, setActiveTab }) => {
 
   // Function to update product
   const handleUpdateProduct = async () => {
+    setLoading(true);
     try {
       const formData = new FormData();
       for (const file of newImages) {
@@ -135,11 +139,14 @@ const UpdateProduct = ({ product, setActiveTab }) => {
       setTimeout(() => {
         setShowMessagePro(false);
       }, 1500);
+    } finally {
+      setLoading(false);
     }
   };
 
   // Function to update classifies
   const handleUpdateClassifies = async () => {
+    setLoading(true);
     try {
       for (let i = 0; i < classifies.length; i++) {
         const newStock = classifies[i].newStock || 0;
@@ -170,11 +177,14 @@ const UpdateProduct = ({ product, setActiveTab }) => {
       }, 1500);
     } catch (error) {
       setMessageClassify("Có lỗi khi cập nhật phân loại");
+    } finally {
+      setLoading(false);
     }
   };
 
   // Function to update attributes
   const handleUpdateAttributes = async () => {
+    setLoading(true);
     try {
       for (let i = 0; i < attributes.length; i++) {
         const attributeData = {
@@ -203,11 +213,14 @@ const UpdateProduct = ({ product, setActiveTab }) => {
       }, 1500);
     } catch (error) {
       setMessageAttribute("Có lỗi khi cập nhật thuộc tính");
+    } finally {
+      setLoading(false);
     }
   };
 
   // Function to update descriptions
   const handleUpdateDescriptions = async () => {
+    setLoading(true);
     try {
       for (let i = 0; i < descriptions.length; i++) {
         const descriptionData = {
@@ -235,6 +248,8 @@ const UpdateProduct = ({ product, setActiveTab }) => {
       }, 1500);
     } catch (error) {
       setMessageDescription("Có lỗi khi cập nhật mô tả sản phẩm");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -290,6 +305,8 @@ const UpdateProduct = ({ product, setActiveTab }) => {
 
   return (
     <div className="p-6">
+      {loading && <Loading />}
+
       {/* Back Button */}
       <div className="mb-4">
         <button onClick={handleBack} className="bg-gray-300 px-4 py-2 rounded">

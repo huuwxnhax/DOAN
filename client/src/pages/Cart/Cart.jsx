@@ -16,6 +16,7 @@ import { getClassifiesByProductId, getProductById } from "../../api/productAPI";
 import Notification from "../../components/Notification/Notification";
 import { Modal } from "@mui/material";
 import { addTradeAPI, tradePaymentAPI } from "../../api/tradeAPI";
+import Loading from "../../components/Loading/Loading";
 
 const Cart = () => {
   const user = useSelector((state) => state.auth.user);
@@ -33,9 +34,12 @@ const Cart = () => {
   const [deliveryAddress, setDeliveryAddress] = useState(user.address || "");
   const [openPurchaseModal, setOpenPurchaseModal] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   // Fetch cart items for the current user
   useEffect(() => {
     const fetchCartItems = async () => {
+      setLoading(true);
       try {
         const response = await getCartItemByBuyerId(user._id);
         const processedItems = response.data.products.flatMap((product) =>
@@ -50,6 +54,8 @@ const Cart = () => {
         console.log("Cart items:", processedItems);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchCartItems();
@@ -172,6 +178,8 @@ const Cart = () => {
   };
 
   const handleConfirmDelete = async () => {
+    setLoading(true);
+
     if (!itemToDelete) {
       console.error("Item muốn xóa không hợp lệ");
       return;
@@ -190,7 +198,6 @@ const Cart = () => {
         (item) => item.productId === productId && item.classifyId === classifyId
       )?.numberProduct,
     };
-
     try {
       const response = await deleteCartItem(cartDTO);
       if (response.status === 201) {
@@ -210,6 +217,7 @@ const Cart = () => {
     } finally {
       setShowModal(false);
       setItemToDelete(null);
+      setLoading(false);
     }
   };
 
@@ -304,6 +312,7 @@ const Cart = () => {
 
   return (
     <div className="shopping-cart">
+      {loading && <Loading />}
       {showNotification && (
         <Notification
           message="Xóa sản phẩm thành công!"
