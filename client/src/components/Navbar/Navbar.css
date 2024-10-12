@@ -477,3 +477,9 @@
     gap: 20px;
   }
 }
+
+@media (max-width: 768px) {
+  .search-btn {
+    margin-left: 60px;
+  }
+}

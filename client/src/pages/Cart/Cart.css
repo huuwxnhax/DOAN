@@ -135,3 +135,18 @@ h2 {
   width: 70%;
   margin: 20px auto;
 }
+
+@media screen and (max-width: 768px) {
+  .cart-content {
+    width: 80%;
+  }
+
+  .product-info img {
+    min-width: 80px;
+    height: 80px;
+  }
+
+  .detail h3 {
+    width: 150px;
+  }
+}

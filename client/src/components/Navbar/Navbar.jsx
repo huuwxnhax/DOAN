@@ -232,7 +232,7 @@ const Navbar = () => {
               type="text"
               placeholder="Nhập tên sản phẩm bạn muốn tìm"
             />
-            <button className="search-btn">
+            <button className="search-btn" onClick={handleSearch}>
               <SearchIcon />
             </button>
             {showHistory && (
