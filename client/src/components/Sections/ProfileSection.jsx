@@ -190,7 +190,6 @@ const ProfileSection = ({ props }) => {
       {loading && <Loading />}
       <div className="profile-header">
         <h2>Hồ Sơ Cá Nhân</h2>
-        <p>Hồ Sơ Chi Tiết</p>
       </div>
       <div className="profile-body">
         <form className="form-container" onSubmit={handleSubmit}>
@@ -349,7 +348,7 @@ const ProfileSection = ({ props }) => {
 
           {/* Image Upload */}
           <div className="mb-4">
-            <label className="block text-gray-700">Ảnh Sản Phẩm</label>
+            <label className="block text-gray-700">Ảnh đại diện</label>
             <UploadComponent openRef={openRef} onUpload={handleUpload} />
             {/* Preview uploaded images */}
             {previewImages.length > 0 && (
