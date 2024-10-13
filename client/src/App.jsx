@@ -12,6 +12,7 @@ import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import SellerHomePage from "./pages/Seller/SellerHomePage/SellerHomePage";
 import Orders from "./pages/Orders/Orders";
 import VerifyOtp from "./pages/Auth/VerifyOtp";
+import Search from "./pages/Search/Search";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/seller/" element={<SellerHomePage />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/signup/verify-otp" element={<VerifyOtp />} />
+        <Route path="/search-results" element={<Search />} />
       </Routes>
     </div>
   );

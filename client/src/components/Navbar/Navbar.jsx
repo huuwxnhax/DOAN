@@ -12,7 +12,11 @@ import { useRef } from "react";
 import { useEffect } from "react";
 import { logout } from "../../features/authSlice";
 import { getCartItemByBuyerId } from "../../api/cartAPI";
-import { getClassifiesByProductId, getProductById } from "../../api/productAPI";
+import {
+  getClassifiesByProductId,
+  getProductById,
+  getProductsBySearching,
+} from "../../api/productAPI";
 import Loading from "../Loading/Loading";
 
 const Navbar = () => {
@@ -22,9 +26,9 @@ const Navbar = () => {
   const profileRef = useRef(null);
   const subNavbarLinksRef = useRef(null);
   const user = useSelector((state) => state.auth.user);
-  const history = ["Shoes", "T-shirts", "Smartphones", "Laptops"];
+  // const history = [];
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchHistory, setSearchHistory] = useState(history);
+  const [searchHistory, setSearchHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showCart, setShowCart] = useState(false);
@@ -38,17 +42,43 @@ const Navbar = () => {
 
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  const handleSearch = (e) => {
-    if (searchTerm) {
-      setSearchHistory([...searchHistory, searchTerm]);
-      setSearchTerm("");
-      setShowHistory(false);
-    }
-  };
+  useEffect(() => {
+    const storedHistory =
+      JSON.parse(localStorage.getItem("searchHistory")) || [];
+    setSearchHistory(storedHistory);
+  }, []);
 
   const handleClickHistory = (term) => {
-    setSearchTerm(term);
+    console.log("Clicked on history term: ", term); // Log clicked term
+    setSearchTerm(term); // Update the search term
     setShowHistory(false);
+    console.log("Updated searchTerm to: ", term); // Log updated search term
+    handleSearch({ type: "click" });
+  };
+
+  const handleSearch = async (e) => {
+    console.log("Search triggered by: ", e.type); // Log event type
+    if (e.type === "keydown" && e.keyCode !== 13) return;
+    console.log("Handling search for: ", searchTerm); // Log search term
+    if (searchTerm) {
+      try {
+        console.log("Searching for: ", searchTerm);
+        const response = await getProductsBySearching(searchTerm);
+        const searchResults = response.data;
+        console.log("Search results: ", searchResults);
+
+        const updatedHistory = [...new Set([...searchHistory, searchTerm])];
+        setSearchHistory(updatedHistory);
+        localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
+
+        setSearchTerm("");
+        setShowHistory(false);
+
+        navigate("/search-results", { state: { searchResults, searchTerm } });
+      } catch (error) {
+        console.log("Error searching: ", error);
+      }
+    }
   };
 
   const handleLogout = () => {
@@ -228,6 +258,7 @@ const Navbar = () => {
               onFocus={() => setShowHistory(true)}
               onChange={(e) => setSearchTerm(e.target.value)}
               onBlur={() => setShowHistory(false)}
+              onKeyDown={handleSearch}
               className="search-input"
               type="text"
               placeholder="Nhập tên sản phẩm bạn muốn tìm"
@@ -237,15 +268,19 @@ const Navbar = () => {
             </button>
             {showHistory && (
               <div className="search-history">
-                {searchHistory.map((term, index) => (
-                  <p
-                    className="history-item"
-                    key={index}
-                    onClick={() => handleClickHistory(term)}
-                  >
-                    {term}
-                  </p>
-                ))}
+                {searchHistory.length === 0 ? (
+                  <p className="history-item">Chưa có lịch sử tìm kiếm</p>
+                ) : (
+                  searchHistory.map((term, index) => (
+                    <p
+                      className="history-item"
+                      key={index}
+                      onClick={() => handleClickHistory(term)} // Trigger search on click
+                    >
+                      {term}
+                    </p>
+                  ))
+                )}
               </div>
             )}
           </div>
@@ -412,24 +447,29 @@ const Navbar = () => {
             onFocus={() => setShowHistory(true)}
             onChange={(e) => setSearchTerm(e.target.value)}
             onBlur={() => setShowHistory(false)}
+            onKeyDown={handleSearch}
             className="search-input"
             type="text"
             placeholder="Nhập tên sản phẩm bạn muốn tìm"
           />
-          <button className="search-btn">
+          <button className="search-btn" onClick={handleSearch}>
             <SearchIcon />
           </button>
           {showHistory && (
             <div className="search-history">
-              {searchHistory.map((term, index) => (
-                <p
-                  className="history-item"
-                  key={index}
-                  onClick={() => handleClickHistory(term)}
-                >
-                  {term}
-                </p>
-              ))}
+              {searchHistory.length === 0 ? (
+                <p className="history-item">Chưa có lịch sử tìm kiếm</p>
+              ) : (
+                searchHistory.map((term, index) => (
+                  <p
+                    className="history-item"
+                    key={index}
+                    onClick={() => handleClickHistory(term)} // Call handleClickHistory on click
+                  >
+                    {term}
+                  </p>
+                ))
+              )}
             </div>
           )}
         </div>

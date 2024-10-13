@@ -366,10 +366,18 @@ const ProductDetail = () => {
             </div>
           </div>
           <div className="detail-action">
-            <button onClick={handleAddToCart} className="add-cart-btn">
+            <button
+              onClick={handleAddToCart}
+              disabled={!selectedOptions._id}
+              className="add-cart-btn"
+            >
               Thêm vào giỏ hàng
             </button>
-            <button onClick={handleBuyNowClick} className="buy-now-btn">
+            <button
+              onClick={handleBuyNowClick}
+              disabled={!selectedOptions._id}
+              className="buy-now-btn"
+            >
               Mua ngay
             </button>
             <PurchaseModal

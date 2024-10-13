@@ -1,18 +1,15 @@
 import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import "./Products.css";
-import Category from "../../components/Category/Category";
+import "./Search.css";
 import FooterSection from "../../components/Sections/FooterSection";
-
-const Products = () => {
+import ProductSearch from "../../components/ProductSearch/ProductSearch";
+const Search = () => {
   return (
     <div>
       <Navbar />
-      <div className="product-header">
-        <h1>Danh Sách Sản Phẩm</h1>
-      </div>
+
       <div style={{ boxShadow: "none" }}>
-        <Category />
+        <ProductSearch />
       </div>
       <div className="footer-prod">
         <FooterSection />
@@ -21,4 +18,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Search;

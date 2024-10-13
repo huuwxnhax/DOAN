@@ -59,7 +59,7 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <div className="container">
+    <div>
       {showNotification && (
         <Notification
           message={successMessage}
