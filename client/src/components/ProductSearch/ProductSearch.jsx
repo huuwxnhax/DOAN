@@ -5,7 +5,7 @@ import ProductSection from "../Sections/ProductSection";
 const ProductSearch = () => {
   const location = useLocation();
   const searchResults = location.state?.searchResults || [];
-  const searchTerm = location.state?.searchTerm || "";
+  const valueToSearch = location.state?.valueToSearch || "";
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -13,7 +13,7 @@ const ProductSearch = () => {
         {/* Search Header */}
         <div className="bg-white p-5 rounded-s">
           <h1 className="text-2xl font-bold text-gray-900 text-center">
-            Kết Quả Tìm Kiếm Cho: "{searchTerm}"
+            Kết Quả Tìm Kiếm Cho: "{valueToSearch}"
           </h1>
         </div>
 

@@ -18,6 +18,7 @@ import {
   getProductsBySearching,
 } from "../../api/productAPI";
 import Loading from "../Loading/Loading";
+import useDebounce from "../Hook/useDebounce";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,12 @@ const Navbar = () => {
   const user = useSelector((state) => state.auth.user);
   // const history = [];
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useDebounce(
+    searchTerm || "",
+    500
+  );
+  const [isTyping, setIsTyping] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -45,40 +52,68 @@ const Navbar = () => {
   useEffect(() => {
     const storedHistory =
       JSON.parse(localStorage.getItem("searchHistory")) || [];
-    setSearchHistory(storedHistory);
+    // setSearchHistory(storedHistory);
+    setSearchHistory(storedHistory.filter((term) => typeof term === "string"));
   }, []);
 
-  const handleClickHistory = (term) => {
-    console.log("Clicked on history term: ", term); // Log clicked term
-    setSearchTerm(term); // Update the search term
-    setShowHistory(false);
-    console.log("Updated searchTerm to: ", term); // Log updated search term
-    handleSearch({ type: "click" });
-  };
+  useEffect(() => {
+    if (isFocused) {
+      // Chỉ khi input đã được focus
+      if (debouncedSearchTerm || !isTyping) {
+        setShowHistory(true);
+      } else {
+        setShowHistory(false);
+      }
+    } else {
+      setShowHistory(false); // Ẩn lịch sử nếu không có focus
+    }
+  }, [debouncedSearchTerm, isTyping, isFocused]);
 
   const handleSearch = async (e) => {
-    console.log("Search triggered by: ", e.type); // Log event type
-    if (e.type === "keydown" && e.keyCode !== 13) return;
-    console.log("Handling search for: ", searchTerm); // Log search term
-    if (searchTerm) {
+    if (!e || (e.type === "keydown" && e.keyCode !== 13)) return;
+    // console.log("Handling search for: ", searchTerm); // Log search term
+    const valueToSearch = e.target ? e.target.value : searchTerm;
+    if (valueToSearch) {
       try {
-        console.log("Searching for: ", searchTerm);
-        const response = await getProductsBySearching(searchTerm);
+        console.log("Searching for: ", valueToSearch);
+        const response = await getProductsBySearching(valueToSearch);
         const searchResults = response.data;
         console.log("Search results: ", searchResults);
 
-        const updatedHistory = [...new Set([...searchHistory, searchTerm])];
+        let updatedHistory = [...new Set([valueToSearch, ...searchHistory])];
         setSearchHistory(updatedHistory);
         localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
 
         setSearchTerm("");
         setShowHistory(false);
 
-        navigate("/search-results", { state: { searchResults, searchTerm } });
+        navigate("/search-results", {
+          state: { searchResults, valueToSearch },
+        });
       } catch (error) {
         console.log("Error searching: ", error);
       }
     }
+  };
+
+  const handleClickHistory = (term) => {
+    console.log("Clicked on history term: ", term); // Log clicked term
+    setSearchTerm(term); // Update the search term
+    setShowHistory(false);
+    setIsTyping(false); // Reset typing state
+    console.log("Updated searchTerm to: ", term); // Log updated search term
+    handleSearch({ type: "click", target: { value: term } });
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    setIsTyping(value.length > 0); // Đánh dấu trạng thái đang gõ khi có văn bản
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true); // Đặt biến isFocused khi input được nhấp vào
+    setShowHistory(true); // Hiển thị lịch sử khi nhấp vào input
   };
 
   const handleLogout = () => {
@@ -212,10 +247,25 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [showMenu]);
 
+  // useEffect(() => {
+  //   const handleClickOutside = (e) => {
+  //     if (cartRef.current && !cartRef.current.contains(e.target)) {
+  //       setShowCart(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
+
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (cartRef.current && !cartRef.current.contains(e.target)) {
+    const handleClickOutside = (event) => {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
         setShowCart(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setShowProfile(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -255,9 +305,8 @@ const Navbar = () => {
             </div> */}
             <input
               value={searchTerm}
-              onFocus={() => setShowHistory(true)}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onBlur={() => setShowHistory(false)}
+              onFocus={handleFocus}
+              onChange={handleInputChange}
               onKeyDown={handleSearch}
               className="search-input"
               type="text"
@@ -270,16 +319,42 @@ const Navbar = () => {
               <div className="search-history">
                 {searchHistory.length === 0 ? (
                   <p className="history-item">Chưa có lịch sử tìm kiếm</p>
+                ) : isTyping ? (
+                  searchHistory
+                    .filter((term) => {
+                      // Chỉ lọc khi người dùng đang gõ text
+                      if (
+                        typeof term === "string" &&
+                        typeof debouncedSearchTerm === "string"
+                      ) {
+                        return term
+                          .toLowerCase()
+                          .includes(debouncedSearchTerm.toLowerCase());
+                      }
+                      return false;
+                    })
+                    .slice(0, 6) // Chỉ hiển thị 6 từ khóa mới nhất
+                    .map((term, index) => (
+                      <p
+                        className="history-item"
+                        key={index}
+                        onClick={() => handleClickHistory(term)}
+                      >
+                        {term}
+                      </p>
+                    ))
                 ) : (
-                  searchHistory.map((term, index) => (
-                    <p
-                      className="history-item"
-                      key={index}
-                      onClick={() => handleClickHistory(term)} // Trigger search on click
-                    >
-                      {term}
-                    </p>
-                  ))
+                  searchHistory
+                    .slice(0, 6) // Hiển thị 6 từ khóa mới nhất khi chưa gõ text
+                    .map((term, index) => (
+                      <p
+                        className="history-item"
+                        key={index}
+                        onClick={() => handleClickHistory(term)}
+                      >
+                        {term}
+                      </p>
+                    ))
                 )}
               </div>
             )}
@@ -444,9 +519,9 @@ const Navbar = () => {
           </div> */}
           <input
             value={searchTerm}
-            onFocus={() => setShowHistory(true)}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onBlur={() => setShowHistory(false)}
+            onFocus={handleFocus}
+            onChange={handleInputChange}
+            // onBlur={() => setShowHistory(false)}
             onKeyDown={handleSearch}
             className="search-input"
             type="text"
@@ -459,16 +534,42 @@ const Navbar = () => {
             <div className="search-history">
               {searchHistory.length === 0 ? (
                 <p className="history-item">Chưa có lịch sử tìm kiếm</p>
+              ) : isTyping ? (
+                searchHistory
+                  .filter((term) => {
+                    // Chỉ lọc khi người dùng đang gõ text
+                    if (
+                      typeof term === "string" &&
+                      typeof debouncedSearchTerm === "string"
+                    ) {
+                      return term
+                        .toLowerCase()
+                        .includes(debouncedSearchTerm.toLowerCase());
+                    }
+                    return false;
+                  })
+                  .slice(0, 6) // Chỉ hiển thị 6 từ khóa mới nhất
+                  .map((term, index) => (
+                    <p
+                      className="history-item"
+                      key={index}
+                      onClick={() => handleClickHistory(term)}
+                    >
+                      {term}
+                    </p>
+                  ))
               ) : (
-                searchHistory.map((term, index) => (
-                  <p
-                    className="history-item"
-                    key={index}
-                    onClick={() => handleClickHistory(term)} // Call handleClickHistory on click
-                  >
-                    {term}
-                  </p>
-                ))
+                searchHistory
+                  .slice(0, 6) // Hiển thị 6 từ khóa mới nhất khi chưa gõ text
+                  .map((term, index) => (
+                    <p
+                      className="history-item"
+                      key={index}
+                      onClick={() => handleClickHistory(term)}
+                    >
+                      {term}
+                    </p>
+                  ))
               )}
             </div>
           )}
