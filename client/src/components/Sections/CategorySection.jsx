@@ -5,6 +5,20 @@ import { selectAllCategories } from "../../features/cateSlice";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useEffect } from "react";
+import diendadung from "../../../public/images/diendadung.webp";
+import dienthoai from "../../../public/images/dienthoai.webp";
+import dongho from "../../../public/images/dongho.webp";
+import laptop from "../../../public/images/laptop.webp";
+import suckhoe from "../../../public/images/suckhoe.webp";
+import thoitrangnam from "../../../public/images/thoitrangnam.webp";
+import thoitrangnu from "../../../public/images/thoitrangnu.webp";
+// import thucanvat from "../../../public/images/thucanvat.webp";
+
+import thucanvat from "../../../public/images/thucanvat.jpg";
+import thucpham from "../../../public/images/thucpham.jpg";
+import phukien from "../../../public/images/phukien.jpg";
+import douong from "../../../public/images/douong.jpg";
+
 // import "./CategorySection.css"; // Include the updated CSS file
 
 const CategorySection = () => {
@@ -49,19 +63,60 @@ const CategorySection = () => {
           <div className="category-list">
             {categories
               .slice(startIndex, startIndex + itemsPerPage)
-              .map((category) => (
-                <Link
-                  key={category._id}
-                  to={`/category/${category._id}`}
-                  className="category-item"
-                >
-                  <img
-                    src="https://via.placeholder.com/100"
-                    alt={category.categoriesName}
-                  />
-                  <p>{category.categoriesName}</p>
-                </Link>
-              ))}
+              .map((category) => {
+                let imgSrc;
+                switch (category.categoriesName) {
+                  case "Điện Da Dụng":
+                    imgSrc = diendadung;
+                    break;
+                  case "Thức ăn vặt":
+                    imgSrc = thucanvat;
+                    break;
+                  case "Điện thoại":
+                    imgSrc = dienthoai;
+                    break;
+                  case "Laptop":
+                    imgSrc = laptop;
+                    break;
+                  case "Thực phẩm":
+                    imgSrc = thucpham;
+                    break;
+                  case "Đồ uống":
+                    imgSrc = douong;
+                    break;
+                  case "Phụ kiện":
+                    imgSrc = phukien;
+                    break;
+                  case "Thời trang nam":
+                    imgSrc = thoitrangnam;
+                    break;
+                  case "Thời trang nữ":
+                    imgSrc = thoitrangnu;
+                    break;
+                  case "Sức khoẻ":
+                    imgSrc = suckhoe;
+                    break;
+                  case "Đồng hồ":
+                    imgSrc = dongho;
+                    break;
+                  default:
+                    imgSrc = "https://via.placeholder.com/100"; // Link đến hình mặc định nếu không có ảnh
+                }
+                return (
+                  <Link
+                    key={category._id}
+                    to={`/category/${category._id}`}
+                    className="category-item"
+                  >
+                    <img
+                      style={{ backgroundColor: "white" }}
+                      src={imgSrc}
+                      alt={category.categoriesName}
+                    />
+                    <p>{category.categoriesName}</p>
+                  </Link>
+                );
+              })}
           </div>
           <button
             className="arrow-btn right"
