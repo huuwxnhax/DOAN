@@ -35,6 +35,7 @@ const Category = () => {
   const [totalPages, setTotalPages] = useState(10);
 
   const [selectedSort, setSelectedSort] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const [showMoreCate, setShowMoreCate] = useState(false);
   const [showMoreBrand, setShowMoreBrand] = useState(false);
@@ -61,7 +62,9 @@ const Category = () => {
       setLoading(true);
       try {
         let response;
-        let query = `brand=${selectedBrand || ""}`;
+        let query = `&page=${currentPage}&brand=${selectedBrand || ""}&cate=${
+          selectedCategory || ""
+        }`;
 
         if (selectedSort) {
           const sortOption = sortOptions.find(
@@ -100,7 +103,7 @@ const Category = () => {
     };
 
     fetchProducts();
-  }, [currentPage, selectedSort, selectedBrand]);
+  }, [currentPage, selectedSort, selectedBrand, selectedCategory]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -139,6 +142,11 @@ const Category = () => {
     console.log("Selected brand", brand);
   };
 
+  // select category to filter products
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category.categoriesName);
+  };
+
   // show more categories
   const handleShowMoreCate = () => {
     setShowMoreCate(!showMoreCate);
@@ -157,7 +165,7 @@ const Category = () => {
 
   useEffect(() => {
     const response = getTotalProduct();
-    console.log("Total products", response.data);
+    console.log("Total products", response);
     setTotalPages(response.data);
   }, [currentPage]);
 
@@ -170,7 +178,11 @@ const Category = () => {
           <h5 className="category__filter-title">Danh mục sản phẩm</h5>
           <ul className="category__filter-list">
             {categories.slice(0, 5).map((category) => (
-              <li className="category__filter-item" key={category._id}>
+              <li
+                className="category__filter-item"
+                key={category._id}
+                onClick={() => handleCategoryClick(category)}
+              >
                 <a
                   href={`#${category.categoriesName}`}
                   className="category__filter-link"
@@ -189,7 +201,11 @@ const Category = () => {
               }}
             >
               {categories.slice(5).map((category) => (
-                <li className="category__filter-item" key={category._id}>
+                <li
+                  className="category__filter-item"
+                  key={category._id}
+                  onClick={() => handleCategoryClick(category)}
+                >
                   <a href="#category" className="category__filter-link">
                     {category.categoriesName}
                   </a>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { selectAllCategories } from "../../features/cateSlice";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -18,13 +18,16 @@ import thucanvat from "../../../public/images/thucanvat.jpg";
 import thucpham from "../../../public/images/thucpham.jpg";
 import phukien from "../../../public/images/phukien.jpg";
 import douong from "../../../public/images/douong.jpg";
-
-// import "./CategorySection.css"; // Include the updated CSS file
+import { getProductsDynamic } from "../../api/productAPI";
+import Loading from "../Loading/Loading";
 
 const CategorySection = () => {
   const categories = useSelector((state) => selectAllCategories(state));
   const [startIndex, setStartIndex] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
@@ -46,8 +49,25 @@ const CategorySection = () => {
     }
   };
 
+  const handleCategoryClick = async (categoryName) => {
+    setLoading(true);
+    try {
+      const response = await getProductsDynamic(
+        `&page=${currentPage}&brand=&cate=${categoryName}`
+      );
+      let products = response.data;
+      console.log("Products by category: ", response.data);
+      navigate("/cate-page", { state: { products, categoryName } });
+    } catch (error) {
+      console.log("Error fetching products: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="category-section">
+      {loading && <Loading />}
       <div style={{ padding: 20 }}>
         <div className="category-header">
           <h3 className="h3-title">Danh Mục</h3>
@@ -103,18 +123,14 @@ const CategorySection = () => {
                     imgSrc = "https://via.placeholder.com/100"; // Link đến hình mặc định nếu không có ảnh
                 }
                 return (
-                  <Link
+                  <div
                     key={category._id}
-                    to={`/category/${category._id}`}
+                    onClick={() => handleCategoryClick(category.categoriesName)}
                     className="category-item"
                   >
-                    <img
-                      style={{ backgroundColor: "white" }}
-                      src={imgSrc}
-                      alt={category.categoriesName}
-                    />
+                    <img src={imgSrc} alt={category.categoriesName} />
                     <p>{category.categoriesName}</p>
-                  </Link>
+                  </div>
                 );
               })}
           </div>
