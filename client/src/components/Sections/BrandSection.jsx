@@ -9,6 +9,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useState } from "react";
 import { useEffect } from "react";
+import { getTopSeller } from "../../api/userAPI";
 
 const BrandSection = () => {
   const brands = [
@@ -32,6 +33,18 @@ const BrandSection = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [width]);
+
+  useEffect(() => {
+    const topSeller = async () => {
+      try {
+        const response = await getTopSeller();
+        console.log("Top seller: ", response.data);
+      } catch (error) {
+        console.log("Error fetching top seller: ", error);
+      }
+    };
+    topSeller();
+  }, []);
 
   const itemsPerPage = width > 1024 ? 7 : width > 768 ? 4 : 2; // Dynamically adjust based on width
 

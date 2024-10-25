@@ -17,3 +17,5 @@ export const getUserAPI = (id, token) => {
 };
 
 export const sendOTP = (user) => API.post("/users/sendOTP", user);
+
+export const getTopSeller = () => API.get("/users/findtop10");

@@ -6,6 +6,7 @@ import ProductTable from "../component/ProductTable/ProductTable";
 import AddProduct from "../component/AddProduct/AddProduct";
 import UpdateProduct from "../component/UpdateProduct/UpdateProduct";
 import OrderList from "../component/OrderList/OrderList";
+import MultipleOrderList from "../component/OrderList/MultipleOrderList";
 
 const SellerHomePage = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -32,7 +33,8 @@ const SellerHomePage = () => {
           <UpdateProduct product={productEdit} setActiveTab={setActiveTab} />
         )}
 
-        {activeTab === "order-list" && <OrderList />}
+        {activeTab === "single-order" && <OrderList />}
+        {activeTab === "multiple-orders" && <MultipleOrderList />}
       </div>
     </div>
   );

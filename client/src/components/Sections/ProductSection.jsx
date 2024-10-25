@@ -47,7 +47,7 @@ const ProductSection = ({ isHomepage, products }) => {
                 </div>
                 <div className="product-price">
                   <span className="text-secondary">
-                    {getPrice(product.classifies)}
+                    {getPrice(product.classifies).toLocaleString("vi-VN")}đ
                   </span>
                   <span>Đã bán {product.selled}</span>
                 </div>

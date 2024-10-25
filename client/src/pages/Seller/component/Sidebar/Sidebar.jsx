@@ -2,9 +2,14 @@ import { useState } from "react";
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
+  const [isOrdersDropdownOpen, setIsOrdersDropdownOpen] = useState(false);
 
   const toggleProductsDropdown = () => {
     setIsProductsDropdownOpen(!isProductsDropdownOpen);
+  };
+
+  const toggleOrdersDropdown = () => {
+    setIsOrdersDropdownOpen(!isOrdersDropdownOpen);
   };
 
   return (
@@ -56,14 +61,49 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
             )}
           </li>
 
-          <li
+          {/* Orders Section with Dropdown */}
+          <li className="cursor-pointer">
+            <div
+              className={`p-4 flex justify-between items-center ${
+                isOrdersDropdownOpen ? "bg-gray-700" : "hover:bg-gray-700"
+              }`}
+              onClick={toggleOrdersDropdown}
+            >
+              <span>Orders</span>
+              <span>{isOrdersDropdownOpen ? "▼" : "►"}</span>
+            </div>
+
+            {/* Dropdown for Orders */}
+            {isOrdersDropdownOpen && (
+              <ul className="ml-4 mt-2 space-y-2">
+                <li
+                  className={`p-2 pl-4 hover:bg-gray-700 cursor-pointer ${
+                    activeTab === "single-order" ? "bg-gray-700" : ""
+                  }`}
+                  onClick={() => setActiveTab("single-order")}
+                >
+                  Single Order
+                </li>
+                <li
+                  className={`p-2 pl-4 hover:bg-gray-700 cursor-pointer ${
+                    activeTab === "multiple-orders" ? "bg-gray-700" : ""
+                  }`}
+                  onClick={() => setActiveTab("multiple-orders")}
+                >
+                  Multiple Orders
+                </li>
+              </ul>
+            )}
+          </li>
+
+          {/* <li
             className={`p-4 hover:bg-gray-700 cursor-pointer ${
               activeTab === "order-list" ? "bg-gray-700" : ""
             }`}
             onClick={() => setActiveTab("order-list")}
           >
             Orders
-          </li>
+          </li> */}
         </ul>
       </nav>
     </div>
