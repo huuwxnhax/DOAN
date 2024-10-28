@@ -30,6 +30,82 @@ const AddProduct = () => {
   const [attributes, setAttributes] = useState([{ key: "", value: "" }]);
   const [images, setImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
+  const [validationErrors, setValidationErrors] = useState({});
+
+  const validateFields = () => {
+    const errors = {};
+    if (!productName.trim()) errors.productName = "Tên Sản Phẩm là bắt buộc";
+    if (!category) errors.category = "Danh Mục là bắt buộc";
+    if (!brand.trim()) errors.brand = "Thương Hiệu là bắt buộc";
+    if (!images.length)
+      errors.images = "Vui lòng tải lên ít nhất một ảnh sản phẩm";
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const classifySuggestions = [
+    "Kích thước",
+    "Chất liệu",
+    "Loại sản phẩm",
+    "Phân loại",
+    "Loại vải",
+    "Loại da",
+    "Kiểu dáng",
+    "Màu sắc",
+    "Chất liệu",
+    "Loại sản phẩm",
+    "Phân loại",
+    "Loại vải",
+    "Loại da",
+    "Kiểu dáng",
+    "Màu sắc",
+    "Chất liệu",
+    "Loại sản phẩm",
+    "Phân loại",
+    "Loại vải",
+    "Loại da",
+    "Kiểu dáng",
+    "Màu sắc",
+    "Chất liệu",
+    "Loại sản phẩm",
+    "Phân loại",
+    "Loại vải",
+    "Loại da",
+    "Kiểu dáng",
+  ];
+  const attributeSuggestions = [
+    "Nơi sản xuất",
+    "Xuất sứ",
+    "Nhà sản xuất",
+    "Bảo hành",
+    "Chất liệu",
+    "Màu sắc",
+    "Kích thước",
+    "Cân nặng",
+    "Ram",
+    "CPU",
+    "Bộ nhớ",
+    "Màn hình",
+    "Camera",
+    "Pin",
+    "Hệ điều hành",
+    "Chipset",
+    "GPU",
+    "Bộ nhớ trong",
+    "Bộ nhớ ngoài",
+    "Loại pin",
+    "Dung lượng",
+    "Chất liệu",
+    "Màu sắc",
+    "Hạn sử dụng",
+  ];
+  const descriptionSuggestions = [
+    "Mô tả sản phẩm",
+    "Thông tin sản phẩm",
+    "Cách dùng",
+    "Hướng dẫn sử dụng",
+  ];
 
   // Function to add new description field
   const addDescription = () => {
@@ -90,6 +166,7 @@ const AddProduct = () => {
   };
 
   const handleSubmit = async () => {
+    if (!validateFields()) return;
     setLoading(true);
     try {
       const formData = new FormData();
@@ -183,10 +260,15 @@ const AddProduct = () => {
         <label className="block text-gray-700">Tên Sản Phẩm</label>
         <input
           type="text"
-          className="w-full p-2 border rounded-lg mt-2"
+          className={`w-full p-2 border rounded-lg mt-2 ${
+            validationErrors.productName ? "border-red-500" : ""
+          }`}
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
         />
+        {validationErrors.productName && (
+          <p className="text-red-500 text-sm">{validationErrors.productName}</p>
+        )}
       </div>
 
       {/* Category and Brand */}
@@ -194,7 +276,9 @@ const AddProduct = () => {
         <div className="mb-4">
           <label className="block text-gray-700">Danh Mục</label>
           <select
-            className="w-full p-2 border rounded-lg mt-2"
+            className={`w-full p-2 border rounded-lg mt-2 ${
+              validationErrors.category ? "border-red-500" : ""
+            }`}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -204,16 +288,24 @@ const AddProduct = () => {
               </option>
             ))}
           </select>
+          {validationErrors.category && (
+            <p className="text-red-500 text-sm">{validationErrors.category}</p>
+          )}
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700">Thương Hiệu</label>
           <input
             type="text"
-            className="w-full p-2 border rounded-lg mt-2"
+            className={`w-full p-2 border rounded-lg mt-2 ${
+              validationErrors.brand ? "border-red-500" : ""
+            }`}
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
           />
+          {validationErrors.brand && (
+            <p className="text-red-500 text-sm">{validationErrors.brand}</p>
+          )}
         </div>
       </div>
 
@@ -225,6 +317,7 @@ const AddProduct = () => {
             <div className="w-1/4">
               {/* <label className="block text-gray-700 text-sm mb-1">Key</label> */}
               <input
+                list={`classify-suggestions-${index}`}
                 type="text"
                 placeholder="Mô tả"
                 className="w-full p-2 border rounded-lg"
@@ -237,6 +330,11 @@ const AddProduct = () => {
                   )
                 }
               />
+              <datalist id={`classify-suggestions-${index}`}>
+                {classifySuggestions.map((suggestion, idx) => (
+                  <option key={idx} value={suggestion} />
+                ))}
+              </datalist>
             </div>
             <div className="w-1/4">
               {/* <label className="block text-gray-700 text-sm mb-1">Value</label> */}
@@ -306,6 +404,7 @@ const AddProduct = () => {
         {attributes.map((attribute, index) => (
           <div key={index} className="flex space-x-4 mb-2">
             <input
+              list={`attribute-suggestions-${index}`}
               type="text"
               placeholder="Mô tả"
               className="w-1/2 p-2 border rounded-lg"
@@ -318,6 +417,11 @@ const AddProduct = () => {
                 )
               }
             />
+            <datalist id={`attribute-suggestions-${index}`}>
+              {attributeSuggestions.map((suggestion, idx) => (
+                <option key={idx} value={suggestion} />
+              ))}
+            </datalist>
             <input
               type="text"
               placeholder="Nội dung"
@@ -351,6 +455,7 @@ const AddProduct = () => {
         {productDescription.map((desc, index) => (
           <div key={index} className="flex space-x-4 mb-2 items-center">
             <input
+              list={`description-suggestions-${index}`}
               type="text"
               placeholder="Mô tả"
               className="w-1/2 p-2 border rounded-lg"
@@ -363,6 +468,11 @@ const AddProduct = () => {
                 )
               }
             />
+            <datalist id={`description-suggestions-${index}`}>
+              {descriptionSuggestions.map((suggestion, idx) => (
+                <option key={idx} value={suggestion} />
+              ))}
+            </datalist>
             <input
               type="text"
               placeholder="Nội dung"
@@ -394,6 +504,9 @@ const AddProduct = () => {
       <div className="mb-4">
         <label className="block text-gray-700">Ảnh Sản Phẩm</label>
         <UploadComponent onUpload={handleDrop} />
+        {validationErrors.images && (
+          <p className="text-red-500 text-sm">{validationErrors.images}</p>
+        )}
         {/* Preview uploaded images */}
         <div className="flex space-x-4 mt-4">
           {previewImages.map((image, index) => (

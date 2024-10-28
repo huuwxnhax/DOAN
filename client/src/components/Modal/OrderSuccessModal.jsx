@@ -2,8 +2,14 @@ const OrderSuccessModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center">
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 text-center"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="relative mb-4">
           {/* Rotating circles animation */}
           <div className="relative flex justify-center items-center">
@@ -26,6 +32,7 @@ const OrderSuccessModal = ({ isOpen, onClose }) => {
               ></path>
             </svg>
           </div>
+          <p className="text-lg font-semibold mt-3 p-4">Đặt hàng thành công</p>
         </div>
       </div>
     </div>

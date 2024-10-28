@@ -238,11 +238,11 @@ const PurchaseModal = ({
           </button>
         </div>
 
-        {/* <OrderStatusModal
+        <OrderStatusModal
           isOpen={isModalOpen}
           onClose={() => setModalOpen(false)}
           orderDetails={orderDetails}
-        /> */}
+        />
       </div>
     </div>
   );

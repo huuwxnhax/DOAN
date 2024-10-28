@@ -152,7 +152,7 @@ const ProductTable = ({ setActiveTab, setProductEdit }) => {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white">
+        <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-sm">
           <thead>
             <tr className="border-b">
               {/* <th className="py-2"></th> */}

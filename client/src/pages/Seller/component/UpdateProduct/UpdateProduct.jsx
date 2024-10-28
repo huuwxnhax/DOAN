@@ -51,6 +51,69 @@ const UpdateProduct = ({ product, setActiveTab }) => {
   const [messageAttribute, setMessageAttribute] = useState("");
   const [messageDescription, setMessageDescription] = useState("");
 
+  const classifySuggestions = [
+    "Kích thước",
+    "Chất liệu",
+    "Loại sản phẩm",
+    "Phân loại",
+    "Loại vải",
+    "Loại da",
+    "Kiểu dáng",
+    "Màu sắc",
+    "Chất liệu",
+    "Loại sản phẩm",
+    "Phân loại",
+    "Loại vải",
+    "Loại da",
+    "Kiểu dáng",
+    "Màu sắc",
+    "Chất liệu",
+    "Loại sản phẩm",
+    "Phân loại",
+    "Loại vải",
+    "Loại da",
+    "Kiểu dáng",
+    "Màu sắc",
+    "Chất liệu",
+    "Loại sản phẩm",
+    "Phân loại",
+    "Loại vải",
+    "Loại da",
+    "Kiểu dáng",
+  ];
+  const attributeSuggestions = [
+    "Nơi sản xuất",
+    "Xuất sứ",
+    "Nhà sản xuất",
+    "Bảo hành",
+    "Chất liệu",
+    "Màu sắc",
+    "Kích thước",
+    "Cân nặng",
+    "Ram",
+    "CPU",
+    "Bộ nhớ",
+    "Màn hình",
+    "Camera",
+    "Pin",
+    "Hệ điều hành",
+    "Chipset",
+    "GPU",
+    "Bộ nhớ trong",
+    "Bộ nhớ ngoài",
+    "Loại pin",
+    "Dung lượng",
+    "Chất liệu",
+    "Màu sắc",
+    "Hạn sử dụng",
+  ];
+  const descriptionSuggestions = [
+    "Mô tả sản phẩm",
+    "Thông tin sản phẩm",
+    "Cách dùng",
+    "Hướng dẫn sử dụng",
+  ];
+
   useEffect(() => {
     console.log("Product:", product);
   }, [product]);
@@ -417,6 +480,7 @@ const UpdateProduct = ({ product, setActiveTab }) => {
             <div className="col-span-1">
               <label className="block font-semibold">Mô Tả</label>
               <input
+                list={`classify-suggestions-${index}`}
                 type="text"
                 value={classify.key}
                 onChange={(e) =>
@@ -428,6 +492,11 @@ const UpdateProduct = ({ product, setActiveTab }) => {
                 }
                 className="mt-2 p-2 border rounded w-full"
               />
+              <datalist id={`classify-suggestions-${index}`}>
+                {classifySuggestions.map((suggestion, idx) => (
+                  <option key={idx} value={suggestion} />
+                ))}
+              </datalist>
             </div>
             <div className="col-span-1">
               <label className="block font-semibold">Nội Dung</label>
@@ -519,6 +588,7 @@ const UpdateProduct = ({ product, setActiveTab }) => {
             <div>
               <label className="block font-semibold">Mô Tả</label>
               <input
+                list={`attribute-suggestions-${index}`}
                 type="text"
                 value={attribute.key}
                 onChange={(e) =>
@@ -530,6 +600,11 @@ const UpdateProduct = ({ product, setActiveTab }) => {
                 }
                 className="mt-2 p-2 border rounded w-full"
               />
+              <datalist id={`attribute-suggestions-${index}`}>
+                {attributeSuggestions.map((suggestion, idx) => (
+                  <option key={idx} value={suggestion} />
+                ))}
+              </datalist>
             </div>
             <div>
               <label className="block font-semibold">Nội Dung</label>
@@ -583,6 +658,7 @@ const UpdateProduct = ({ product, setActiveTab }) => {
             <div>
               <label className="block font-semibold">Mô Tả</label>
               <input
+                list={`description-suggestions-${index}`}
                 type="text"
                 value={description.key}
                 onChange={(e) =>
@@ -594,6 +670,11 @@ const UpdateProduct = ({ product, setActiveTab }) => {
                 }
                 className="mt-2 p-2 border rounded w-full"
               />
+              <datalist id={`description-suggestions-${index}`}>
+                {descriptionSuggestions.map((suggestion, idx) => (
+                  <option key={idx} value={suggestion} />
+                ))}
+              </datalist>
             </div>
             <div>
               <label className="block font-semibold">Nội Dung</label>

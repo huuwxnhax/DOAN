@@ -14,7 +14,7 @@ import { useState } from "react";
 import Notification from "../../components/Notification/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { register } from "../../actions/authAction";
+import { login, register } from "../../actions/authAction";
 
 const defaultTheme = createTheme();
 
@@ -63,6 +63,9 @@ function VerifyOtp() {
     if (user && user.userName) {
       setSuccessMsg("Đăng Ký Thành Công! Đang chuyển hướng đến trang chủ...");
       setShowNotification(true);
+      dispatch(
+        login({ userName: formData.userName, password: formData.password })
+      );
       setTimeout(() => {
         navigate("/");
       }, 3000);

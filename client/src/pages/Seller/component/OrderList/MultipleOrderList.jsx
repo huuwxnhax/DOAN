@@ -304,7 +304,7 @@ const MultipleOrderList = () => {
           aria-describedby="order-details-description"
         >
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="p-6 bg-white rounded-lg shadow-xl max-w-2xl w-full relative">
+            <div className="p-6 bg-white rounded-lg shadow-xl max-w-3xl w-full relative">
               <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent p-4">
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-2xl font-bold">

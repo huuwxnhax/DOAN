@@ -355,6 +355,7 @@ const Cart = () => {
                     type="checkbox"
                     checked={isSelected}
                     onChange={handleSelectionChange}
+                    className="select-checkbox"
                   />
                   <img
                     src={product?.images[0] || prod1}
@@ -364,12 +365,13 @@ const Cart = () => {
                     <h3>{product?.productName || "Loading..."}</h3>
                     {classify && (
                       <>
-                        <p className="text-sm">{classify?.key}</p>
-                        <p className="text-sm">{classify?.value}</p>
+                        <p className="text-sm">
+                          <strong>{classify?.key}:</strong> {classify?.value}
+                        </p>
                       </>
                     )}
                     <p className="text-sm">
-                      Brand: {product?.brand || "Loading..."}
+                      <strong>Brand:</strong> {product?.brand || "Loading..."}
                     </p>
                   </div>
                 </div>
@@ -389,8 +391,12 @@ const Cart = () => {
                   </button>
                 </div>
                 <div className="product-price">
-                  <p className="text-sm">Giá: {itemPrice}đ</p>
-                  <p className="text-sm">Tổng: {totalPrice}đ</p>
+                  <p className="text-sm">
+                    Giá: {itemPrice.toLocaleString("vi-VN")}đ
+                  </p>
+                  <p className="text-sm">
+                    Tổng: {totalPrice.toLocaleString("vi-VN")}đ
+                  </p>
                 </div>
                 <div className="product-action">
                   <button
