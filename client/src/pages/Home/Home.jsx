@@ -3,7 +3,6 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./Home.css";
 import SliderSection from "../../components/Sections/SliderSection";
 import BannerSection from "../../components/Sections/BannerSection";
-import BrandSection from "../../components/Sections/BrandSection";
 import CategorySection from "../../components/Sections/CategorySection";
 import ProductSection from "../../components/Sections/ProductSection";
 import FooterSection from "../../components/Sections/FooterSection";
@@ -21,6 +20,7 @@ import Loading from "../../components/Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../actions/cateAction";
 import { selectAllCategories } from "../../features/cateSlice";
+import TopSellerSection from "../../components/Sections/TopSellerSection";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -82,7 +82,7 @@ const Home = () => {
         </div>
 
         <section className="brand">
-          <BrandSection />
+          <TopSellerSection />
         </section>
 
         <section className="category">

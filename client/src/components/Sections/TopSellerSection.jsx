@@ -4,27 +4,32 @@ import brand2 from "../../../public/images/brand2.jpg";
 import brand3 from "../../../public/images/brand3.png";
 import brand4 from "../../../public/images/brand4.png";
 import brand5 from "../../../public/images/brand5.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getTopSeller } from "../../api/userAPI";
+import { getProductsBySellerId } from "../../api/productAPI";
 
-const BrandSection = () => {
-  const brands = [
-    { id: 1, name: "Brand 1", image: brand1 },
-    { id: 2, name: "Brand 2", image: brand2 },
-    { id: 3, name: "Brand 3", image: brand3 },
-    { id: 4, name: "Brand 4", image: brand4 },
-    { id: 5, name: "Brand 5", image: brand5 },
-    { id: 6, name: "Brand 6", image: brand1 },
-    { id: 7, name: "Brand 7", image: brand2 },
-    { id: 8, name: "Brand 8", image: brand3 },
-    { id: 9, name: "Brand 9", image: brand4 },
-    { id: 10, name: "Brand 10", image: brand5 },
-  ];
+const TopSellerSection = () => {
+  // const brands = [
+  //   { id: 1, name: "Brand 1", image: brand1 },
+  //   { id: 2, name: "Brand 2", image: brand2 },
+  //   { id: 3, name: "Brand 3", image: brand3 },
+  //   { id: 4, name: "Brand 4", image: brand4 },
+  //   { id: 5, name: "Brand 5", image: brand5 },
+  //   { id: 6, name: "Brand 6", image: brand1 },
+  //   { id: 7, name: "Brand 7", image: brand2 },
+  //   { id: 8, name: "Brand 8", image: brand3 },
+  //   { id: 9, name: "Brand 9", image: brand4 },
+  //   { id: 10, name: "Brand 10", image: brand5 },
+  // ];
 
+  const [sellers, setSellers] = useState([]);
+
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -39,6 +44,7 @@ const BrandSection = () => {
       try {
         const response = await getTopSeller();
         console.log("Top seller: ", response.data);
+        setSellers(response.data);
       } catch (error) {
         console.log("Error fetching top seller: ", error);
       }
@@ -55,8 +61,20 @@ const BrandSection = () => {
   };
 
   const handleNext = () => {
-    if (startIndex < brands.length - itemsPerPage) {
+    if (startIndex < sellers.length - itemsPerPage) {
       setStartIndex(startIndex + 1);
+    }
+  };
+
+  const handleTopSellerClick = async (sellerId) => {
+    try {
+      const response = await getProductsBySellerId(sellerId, 1);
+      console.log("Top seller: ", response.data);
+      navigate("/product-seller-page", {
+        state: { productsBySeller: response.data },
+      });
+    } catch (error) {
+      console.log("Error fetching top seller: ", error);
     }
   };
   return (
@@ -74,22 +92,26 @@ const BrandSection = () => {
             <KeyboardArrowLeftIcon />
           </button>
           <div className="brand-list">
-            {brands
+            {sellers
               .slice(startIndex, startIndex + itemsPerPage)
-              .map((brand) => (
+              .map((seller) => (
                 <Link
-                  key={brand.id}
-                  to={`/brand/${brand.id}`}
+                  key={seller._id}
+                  onClick={() => handleTopSellerClick(seller._id)}
                   className="brand-item"
                 >
-                  <img src={brand.image} alt={brand.name} />
+                  <img
+                    className="w-20 h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 object-cover"
+                    src={seller.avata}
+                    alt={seller.name}
+                  />
                 </Link>
               ))}
           </div>
           <button
             className="arrow-btn right"
             onClick={handleNext}
-            disabled={startIndex >= brands.length - itemsPerPage}
+            disabled={startIndex >= sellers.length - itemsPerPage}
           >
             <KeyboardArrowRightIcon />
           </button>
@@ -99,4 +121,4 @@ const BrandSection = () => {
   );
 };
 
-export default BrandSection;
+export default TopSellerSection;
