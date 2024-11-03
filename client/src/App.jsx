@@ -15,6 +15,7 @@ import VerifyOtp from "./pages/Auth/VerifyOtp";
 import Search from "./pages/Search/Search";
 import CatePage from "./pages/CatePage/CatePage";
 import TopSeller from "./pages/TopSeller/TopSeller";
+import AdminHomePage from "./pages/Admin/AdminHomePage/AdminHomePage";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/search-results" element={<Search />} />
         <Route path="/cate-page" element={<CatePage />} />
         <Route path="/product-seller-page" element={<TopSeller />} />
+        <Route path="/admin" element={<AdminHomePage />} />
       </Routes>
     </div>
   );

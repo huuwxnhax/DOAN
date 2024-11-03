@@ -19,6 +19,8 @@ import {
 } from "../../api/productAPI";
 import Loading from "../Loading/Loading";
 import useDebounce from "../Hook/useDebounce";
+import Notification from "../Notification/Notification";
+import { registerSellerAPI } from "../../api/userAPI";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -46,8 +48,29 @@ const Navbar = () => {
   const [productData, setProductData] = useState({});
   const [selectedClassifies, setSelectedClassifies] = useState({});
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [canRegister, setCanRegister] = useState(true); // Kiểm tra điều kiện đầy đủ thông tin
+  const [showNotification, setShowNotification] = useState(false);
 
   const isMobile = useMediaQuery("(max-width: 768px)");
+
+  const toggleModal = () => {
+    // Kiểm tra nếu thông tin user chưa đầy đủ thì không cho gửi đăng ký
+    if (
+      user &&
+      user.name &&
+      user.userName &&
+      user.number &&
+      user.address &&
+      user.sex &&
+      user.avata
+    ) {
+      setCanRegister(true);
+    } else {
+      setCanRegister(false);
+    }
+    setShowModal(!showModal);
+  };
 
   useEffect(() => {
     const storedHistory =
@@ -290,6 +313,22 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleRegisterSeller = async () => {
+    if (canRegister) {
+      const formData = {
+        id: user._id,
+      };
+      try {
+        const response = await registerSellerAPI(formData, user.access_token);
+        console.log("Register seller response: ", response);
+        setShowModal(false);
+        setShowNotification(true);
+      } catch (error) {
+        console.log("Error registering seller: ", error);
+      }
+    }
+  };
 
   return (
     <div className="navbar">
@@ -604,32 +643,105 @@ const Navbar = () => {
               <Link className="subnavbar-link" to="/contact">
                 Liên Hệ
               </Link>
-              <Link className="subnavbar-link" to="/faq">
-                FAQ
-              </Link>
+
               {user ? (
-                user.role.includes("ADMIN") ? (
-                  <Link className="subnavbar-link" to="/admin">
-                    Trang Admin
-                  </Link>
-                ) : user.role.includes("SELLER") ? (
-                  <Link className="subnavbar-link" to="/seller">
-                    Trang Người Bán
-                  </Link>
-                ) : user.role.includes("BUYER") ? (
-                  <Link className="subnavbar-link" to="/buyer">
-                    Trở Thành Người Bán
-                  </Link>
-                ) : (
-                  <Link className="subnavbar-link" to="/buyer">
-                    Trở Thành Người Bán
-                  </Link>
-                )
+                <>
+                  {user.role.includes("ADMIN") && (
+                    <Link className="subnavbar-link" to="/admin">
+                      Trang Admin
+                    </Link>
+                  )}
+                  {user.role.includes("SELLER") && (
+                    <Link className="subnavbar-link" to="/seller">
+                      Trang Người Bán
+                    </Link>
+                  )}
+                  {!user.role.includes("ADMIN") &&
+                    !user.role.includes("SELLER") &&
+                    user.role.includes("BUYER") && (
+                      <span
+                        className="subnavbar-link cursor-pointer"
+                        onClick={toggleModal}
+                      >
+                        Trở Thành Người Bán
+                      </span>
+                    )}
+                </>
               ) : null}
             </div>
           </div>
         </div>
       </nav>
+
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div
+            className={`bg-white rounded-lg p-6 w-full max-w-md shadow-lg transform transition-all duration-1000 ease-out ${
+              showModal ? "scale-100 opacity-100" : "scale-0 opacity-0"
+            }`}
+          >
+            <h2 className="text-xl font-semibold mb-4">
+              Đăng Ký Trở Thành Người Bán
+            </h2>
+            <p className="mb-2">
+              <strong>Họ Tên:</strong> {user.name ? user.name : "Chưa cập nhật"}
+            </p>
+            <p className="mb-2">
+              <strong>Email:</strong>{" "}
+              {user.userName ? user.userName : "Chưa cập nhật"}
+            </p>
+            <p className="mb-2">
+              <strong>Số điện thoại:</strong>{" "}
+              {user.number ? user.number : "Chưa cập nhật"}
+            </p>
+            <p className="mb-2">
+              <strong>Địa chỉ:</strong>{" "}
+              {user.address ? user.address : "Chưa cập nhật"}
+            </p>
+
+            <div className="mb-4">
+              <strong>Ảnh đại diện cửa hàng:</strong>
+              <div className="flex justify-center mt-2">
+                <img
+                  src={user.avata || prod1}
+                  alt={`Avatar of ${user.name}`}
+                  className="w-[300px] h-[300px] object-fit shadow-md"
+                />
+              </div>
+            </div>
+
+            <button
+              className={`w-full py-2 mt-4 text-white rounded ${
+                canRegister
+                  ? "bg-blue-500 hover:bg-blue-600"
+                  : "bg-gray-400 cursor-not-allowed"
+              }`}
+              disabled={!canRegister}
+              onClick={handleRegisterSeller}
+            >
+              Gửi Đăng Ký
+            </button>
+            {!canRegister && (
+              <p className="text-red-500 text-sm mt-2">
+                Vui lòng hoàn thành thông tin của bạn để đăng ký.
+              </p>
+            )}
+
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              onClick={() => setShowModal(false)}
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
+      {showNotification && (
+        <Notification
+          message="Đã gửi đăng ký bán hàng thành công, vui lòng chờ admin duyệt"
+          onClose={() => setShowNotification(false)}
+        />
+      )}
     </div>
   );
 };

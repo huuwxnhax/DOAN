@@ -21,3 +21,29 @@ export const getUserAPI = (id, token) => {
 export const sendOTP = (user) => API.post("/users/sendOTP", user);
 
 export const getTopSeller = () => API.get("/users/findtop10");
+
+export const registerSellerAPI = (formData, token) => {
+  return API.post(
+    "/users/buyer/register",
+    { id: formData.id },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};
+
+export const acceptRegisterSellerAPI = (formData, token) => {
+  return API.post(
+    "/users/admin/update",
+    { id: formData.id },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};
+
+export const getAllRegisterSellerAPI = (token) => {
+  return API.get("/users/admin/getSeller", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
