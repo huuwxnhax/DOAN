@@ -392,10 +392,22 @@ const Cart = () => {
                 </div>
                 <div className="product-price">
                   <p className="text-sm">
-                    Giá: {itemPrice.toLocaleString("vi-VN")}đ
+                    Giá:{" "}
+                    {itemPrice >= 1000
+                      ? itemPrice.toLocaleString("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        })
+                      : `${itemPrice} đ`}
                   </p>
                   <p className="text-sm">
-                    Tổng: {totalPrice.toLocaleString("vi-VN")}đ
+                    Tổng:{" "}
+                    {totalPrice >= 1000
+                      ? totalPrice.toLocaleString("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        })
+                      : `${totalPrice} đ`}
                   </p>
                 </div>
                 <div className="product-action">

@@ -433,7 +433,12 @@ const Navbar = () => {
                                   {product?.productName || "Loading..."}
                                 </span>
                                 <span className="cart-item-price">
-                                  {itemPrice}đ
+                                  {itemPrice >= 1000
+                                    ? itemPrice.toLocaleString("vi-VN", {
+                                        style: "currency",
+                                        currency: "VND",
+                                      })
+                                    : `${itemPrice} đ`}
                                 </span>
                               </div>
                             </div>
@@ -490,7 +495,14 @@ const Navbar = () => {
                           <span className="cart-item-name">
                             {product?.productName}
                           </span>
-                          <span className="cart-item-price">{itemPrice}đ</span>
+                          <span className="cart-item-price">
+                            {itemPrice >= 1000
+                              ? itemPrice.toLocaleString("vi-VN", {
+                                  style: "currency",
+                                  currency: "VND",
+                                })
+                              : `${itemPrice} đ`}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -506,7 +518,7 @@ const Navbar = () => {
                 <div ref={profileRef}>
                   <Avatar
                     alt="User"
-                    src={user.avata || ""}
+                    src={user.avata}
                     style={{ cursor: "pointer" }}
                     onClick={handleShowProfile}
                   />
@@ -703,7 +715,7 @@ const Navbar = () => {
               <strong>Ảnh đại diện cửa hàng:</strong>
               <div className="flex justify-center mt-2">
                 <img
-                  src={user.avata || prod1}
+                  src={user.avata || ""}
                   alt={`Avatar of ${user.name}`}
                   className="w-[300px] h-[300px] object-fit shadow-md"
                 />

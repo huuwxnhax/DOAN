@@ -303,11 +303,16 @@ const ProductDetail = () => {
           <div className="detail-price">
             <div className="product-price">
               <span className="text-secondary price-promotional">
-                {calculateTotalPrice().toLocaleString("vi-VN")}đ
+                {calculateTotalPrice() >= 1000
+                  ? calculateTotalPrice().toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    })
+                  : `${calculateTotalPrice()} đ`}
               </span>
-              <span className="text-primary price-original">
+              {/* <span className="text-primary price-original">
                 {getPrice(product.classifies).toLocaleString("vi-VN")}đ
-              </span>
+              </span> */}
             </div>
             <div>
               <span>Đã bán: </span>

@@ -285,7 +285,12 @@ const MultipleOrderList = () => {
                 {order.formattedDate} {order.formattedTime}
               </td>
               <td className="p-4 border-b">
-                {order.balence.toLocaleString("vi-VN")}đ
+                {order.balence >= 1000
+                  ? order.balence.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    })
+                  : `${order.balence} đ`}
               </td>
               <td className={`p-4 border-b ${order.statusColor}`}>
                 {order.status}
@@ -363,7 +368,12 @@ const MultipleOrderList = () => {
                     </div>
                     <div>
                       <strong className="text-sm">Tổng:</strong>{" "}
-                      {selectedOrder.balence.toLocaleString("vi-VN")}đ
+                      {selectedOrder.balence >= 1000
+                        ? selectedOrder.balence.toLocaleString("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          })
+                        : `${selectedOrder.balence} đ`}
                     </div>
                   </div>
 
@@ -390,7 +400,12 @@ const MultipleOrderList = () => {
                         <div>
                           <div>
                             <strong className="text-sm">Giá Tiền:</strong>{" "}
-                            {product.price.toLocaleString("vi-VN")}đ
+                            {product.price >= 1000
+                              ? product.price.toLocaleString("vi-VN", {
+                                  style: "currency",
+                                  currency: "VND",
+                                })
+                              : `${product.price} đ`}
                           </div>
                           <div>
                             <strong className="text-sm">Số Lượng:</strong>{" "}

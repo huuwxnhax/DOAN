@@ -111,7 +111,12 @@ const PurchaseModal = ({
             </p>
             <div className="text-gray-600 mt-1">
               <span className="text-red-500 font-bold">
-                {product?.classify.price.toLocaleString("vi-VN")}đ
+                {product?.classify.price >= 1000
+                  ? product?.classify.price.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    })
+                  : `${product?.classify.price} đ`}
               </span>
               <div className="text-sm text-gray-500">
                 Kích cỡ: {product?.classify.value}
@@ -127,7 +132,13 @@ const PurchaseModal = ({
         <div className="flex justify-between mb-3">
           <span className="font-medium">Số lượng: {product.numberProduct}</span>
           <span className="font-medium">
-            Tổng giá: {product.price.toLocaleString("vi-VN")}đ
+            Tổng giá:{" "}
+            {product.price >= 1000
+              ? product.price.toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                })
+              : `${product.price} đ`}
           </span>
         </div>
 
@@ -182,7 +193,12 @@ const PurchaseModal = ({
         <div className="flex justify-between mb-3">
           <span className="font-medium">Thành Tiền:</span>
           <span className="text-red-500 font-bold">
-            {product.price.toLocaleString("vi-VN")}đ
+            {product.price >= 1000
+              ? product.price.toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                })
+              : `${product.price} đ`}
           </span>
         </div>
 

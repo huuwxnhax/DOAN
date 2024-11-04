@@ -321,7 +321,12 @@ const Orders = () => {
                         Mã đơn: {order.tradeId}
                       </p>
                       <p className="font-bold">
-                        {order.balence.toLocaleString("vi-VN")}đ
+                        {order.balence >= 1000
+                          ? order.balence.toLocaleString("vi-VN", {
+                              style: "currency",
+                              currency: "VND",
+                            })
+                          : `${order.balence} đ`}
                       </p>
                     </div>
                     {/* hiện khi reponsive là lg */}
@@ -429,10 +434,14 @@ const Orders = () => {
                   </p>
                   <p className="text-sm sm:text-base">
                     <strong>Giá:</strong>{" "}
-                    {selectedOrder.products[
-                      currentProductIndex
-                    ].price.toLocaleString("vi-VN")}
-                    đ
+                    {selectedOrder.products[currentProductIndex].price >= 1000
+                      ? selectedOrder.products[
+                          currentProductIndex
+                        ].price.toLocaleString("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        })
+                      : `${selectedOrder.products[currentProductIndex].price} đ`}
                   </p>
                   <p className="text-sm sm:text-base">
                     <strong>Số lượng:</strong>{" "}
@@ -456,7 +465,12 @@ const Orders = () => {
                 <div className="space-y-4">
                   <p className="text-sm sm:text-base">
                     <strong>Tổng tiền:</strong>{" "}
-                    {selectedOrder.balence.toLocaleString("vi-VN")}đ
+                    {selectedOrder.balence >= 1000
+                      ? selectedOrder.balence.toLocaleString("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        })
+                      : `${selectedOrder.balence} đ`}
                   </p>
                   <p className="text-sm sm:text-base">
                     <strong>Ngày đặt hàng:</strong> {selectedOrder.dateTrade}

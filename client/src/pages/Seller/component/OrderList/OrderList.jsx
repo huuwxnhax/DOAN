@@ -279,7 +279,12 @@ const OrderList = () => {
                 {order.formattedDate} {order.formattedTime}
               </td>
               <td className="p-4 border-b">
-                {order.balence.toLocaleString("vi-VN")}
+                {order.balence >= 1000
+                  ? order.balence.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    })
+                  : `${order.balence} đ`}
               </td>
               <td className={`p-4 border-b ${order.statusColor}`}>
                 {order.status}
@@ -355,7 +360,12 @@ const OrderList = () => {
                   </div>
                   <div>
                     <strong className="text-sm">Giá Tiền:</strong>{" "}
-                    {selectedOrder.price.toLocaleString("vi-VN")} VND
+                    {selectedOrder.price >= 1000
+                      ? selectedOrder.price.toLocaleString("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        })
+                      : `${selectedOrder.price} đ`}
                   </div>
                   <div>
                     <strong className="text-sm">Loại Sản Phẩm:</strong>{" "}
@@ -371,7 +381,12 @@ const OrderList = () => {
                   </div>
                   <div>
                     <strong className="text-sm">Tổng:</strong>{" "}
-                    {selectedOrder.balence.toLocaleString("vi-VN")} VND
+                    {selectedOrder.balence >= 1000
+                      ? selectedOrder.balence.toLocaleString("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        })
+                      : `${selectedOrder.balence} đ`}
                   </div>
                 </div>
               </div>
