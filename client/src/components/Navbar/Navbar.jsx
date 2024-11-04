@@ -531,8 +531,6 @@ const Navbar = () => {
                       <a href="/profile">Thông Tin Cá Nhân</a>
                       <a href="/orders">Đơn Hàng Của Bạn</a>
                       <a href="/cart">Giỏ Hàng</a>
-                      <a href="/notifications">Thông Báo</a>
-                      <a href="/settings">Cài Đặt</a>
                       <a onClick={handleLogout}>Đăng Xuất</a>
                     </div>
                   )}
@@ -643,15 +641,15 @@ const Navbar = () => {
               <Link className="subnavbar-link" to="/products">
                 Sản phẩm
               </Link>
-              <Link className="subnavbar-link" to="/categories">
+              {/* <Link className="subnavbar-link" to="/categories">
                 Danh Mục
-              </Link>
+              </Link> */}
             </div>
 
             <div className="sub-navbar-section">
-              <Link className="subnavbar-link" to="/help">
+              {/* <Link className="subnavbar-link" to="/help">
                 Hỗ trợ
-              </Link>
+              </Link> */}
               <Link className="subnavbar-link" to="/contact">
                 Liên Hệ
               </Link>

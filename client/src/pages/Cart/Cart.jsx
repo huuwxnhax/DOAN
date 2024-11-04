@@ -499,9 +499,23 @@ const Cart = () => {
                             Số lượng: {item.numberProduct}
                           </p>
                           <p className="text-sm text-gray-700">
-                            Giá: {itemPrice}đ
+                            Giá:{" "}
+                            {itemPrice >= 1000
+                              ? itemPrice.toLocaleString("vi-VN", {
+                                  style: "currency",
+                                  currency: "VND",
+                                })
+                              : `${itemPrice} đ`}
                           </p>
-                          <p className="font-bold">Tổng: {totalPrice}đ</p>
+                          <p className="font-bold">
+                            Tổng:{" "}
+                            {totalPrice >= 1000
+                              ? totalPrice.toLocaleString("vi-VN", {
+                                  style: "currency",
+                                  currency: "VND",
+                                })
+                              : `${totalPrice} đ`}
+                          </p>
                         </div>
                       </div>
                     );
