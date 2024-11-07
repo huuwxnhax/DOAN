@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect } from "react";
-import { acceptTradeAPI, getTradeBySellerAPI } from "../../../../api/tradeAPI";
+import {
+  acceptTradeAPI,
+  cancelTradeAPI,
+  getTradeBySellerAPI,
+} from "../../../../api/tradeAPI";
 import { useSelector } from "react-redux";
 import { getProductById } from "../../../../api/productAPI";
 import Loading from "../../../../components/Loading/Loading";
@@ -70,8 +74,14 @@ const OrderList = () => {
                     price: classify ? classify.price : "N/A",
                     numberProduct: order.products[0].numberProduct,
                     phoneContact: user.number,
-                    status: order.sellerAccept ? "Approval" : "Pending",
-                    statusColor: order.sellerAccept
+                    status: order.isCancel
+                      ? "Cancel"
+                      : order.sellerAccept
+                      ? "Approval"
+                      : "Pending",
+                    statusColor: order.isCancel
+                      ? "text-red-500"
+                      : order.sellerAccept
                       ? "text-green-500"
                       : "text-yellow-500",
                     paymentMethod:
@@ -155,7 +165,36 @@ const OrderList = () => {
     }
   };
 
-  const handleRejectedOrder = () => {};
+  const handleRejectedOrder = async (tradeId) => {
+    const formData = {
+      tradeId: tradeId,
+      buyer: selectedOrder.buyerId,
+      seller: selectedOrder.sellerId,
+      balence: selectedOrder.balence,
+    };
+    console.log(formData);
+    try {
+      const response = await cancelTradeAPI(formData, user.access_token);
+      console.log("Cancel trade", response);
+      if (response.status === 201) {
+        const updatedOrders = orders.map((order) => {
+          if (order.tradeId === selectedOrder.tradeId) {
+            return {
+              ...order,
+              status: "Canceled",
+              statusColor: "text-red-500",
+            };
+          }
+          return order;
+        });
+        setOrders(updatedOrders);
+        setShowModal(false);
+      }
+      // window.location.reload();
+    } catch (error) {
+      console.error("Error cancel trade:", error);
+    }
+  };
 
   return (
     <div className="p-6">
@@ -406,12 +445,14 @@ const OrderList = () => {
                     Approval
                   </button>
                 )}
-                <button
-                  onClick={handleRejectedOrder}
-                  className="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-700"
-                >
-                  Cancel
-                </button>
+                {selectedOrder.status !== "Canceled" && (
+                  <button
+                    onClick={() => handleRejectedOrder(selectedOrder.tradeId)}
+                    className="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-700"
+                  >
+                    Cancel
+                  </button>
+                )}
               </div>
             </div>
           </div>

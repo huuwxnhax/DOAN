@@ -16,7 +16,7 @@ const ProductSearch = () => {
   const hasCategoryProducts = productByCate.length > 0;
   const hasProductsSeller = productsSeller.length > 0;
 
-  const totalPages = location.state?.totalPages || 1;
+  const totalPages = location.state?.totalPages || 2;
 
   const [currentPage, setCurrentPage] = useState(1);
 

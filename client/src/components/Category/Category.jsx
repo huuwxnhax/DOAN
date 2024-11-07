@@ -164,9 +164,17 @@ const Category = () => {
   };
 
   useEffect(() => {
-    const response = getTotalProduct();
-    console.log("Total products", response);
-    setTotalPages(response.data);
+    const fetchTotalProduct = async () => {
+      try {
+        const response = await getTotalProduct();
+        console.log("Total products", response);
+        setTotalPages(Math.ceil(response.data / 20));
+      } catch (error) {
+        console.error("Failed to fetch total products", error);
+      }
+    };
+
+    fetchTotalProduct();
   }, [currentPage]);
 
   return (

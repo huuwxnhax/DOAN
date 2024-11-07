@@ -36,3 +36,7 @@ export const getTradeBySellerAPI = (id, token) =>
   API.get(`/trade/seller/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
+export const getTradeInYearAPI = (userId) => {
+  return API.post("/trade/getTradeInYear", { userId });
+};
