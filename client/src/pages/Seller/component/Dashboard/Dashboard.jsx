@@ -118,7 +118,8 @@ const Dashboard = () => {
       try {
         const response = await getTradeInYearAPI(user._id);
         if (response.status === 201) {
-          setMonthlyTradeData(response.data);
+          const sortedData = response.data.sort((a, b) => a.month - b.month);
+          setMonthlyTradeData(sortedData);
           console.log("Trade data for the year:", response.data);
         }
       } catch (error) {
