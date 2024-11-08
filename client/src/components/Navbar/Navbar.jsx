@@ -336,7 +336,7 @@ const Navbar = () => {
       <nav className="navbar-container">
         <div className="navbar-content">
           <div className="navbar-logo">
-            <h2>Ecommerce</h2>
+            <h2 style={{ color: "#f0f0f0", fontSize: "1.6rem" }}>Ecomerce</h2>
           </div>
           <div className="navbar-search">
             {/* <div className="search-icon">

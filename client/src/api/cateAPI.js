@@ -1,5 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:4000" });
+const baseURL = import.meta.env.VITE_BASE_URL;
+const API = axios.create({ baseURL });
 
 export const getAllCate = () => API.get("/categories/allCate");
