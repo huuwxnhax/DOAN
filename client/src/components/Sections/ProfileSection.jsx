@@ -15,7 +15,7 @@ import Loading from "../Loading/Loading";
 
 const ProfileSection = ({ props }) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const openRef = useRef(null);
   const [name, setName] = useState(user?.name || "");

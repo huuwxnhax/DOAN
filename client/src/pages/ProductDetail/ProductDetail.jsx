@@ -13,28 +13,27 @@ import { Rating, Typography } from "@mui/material";
 import FooterSection from "../../components/Sections/FooterSection";
 import DetailList from "../../components/DetailList/DetailList";
 import PurchaseModal from "../../components/PurchaseModal/PurchaseModal";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { selectAllCategories } from "../../features/cateSlice";
 import { addToCart } from "../../api/cartAPI";
 import Notification from "../../components/Notification/Notification";
 import { getProductById } from "../../api/productAPI";
 import { getAllCate } from "../../api/cateAPI";
 import OrderSuccessModal from "../../components/Modal/OrderSuccessModal";
-import CommentSection from "../../components/Sections/CommentSection";
 import { useMemo } from "react";
+import Loading from "../../components/Loading/Loading";
 
 const ProductDetail = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
-  const location = useLocation();
-  const product = location.state.product;
+  const [product, setProduct] = useState({});
   const [attributesData, setAttributesData] = useState([]);
   const [descriptionData, setDescriptionData] = useState([]);
   const [category, setCategory] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(product.images[0]);
+  const [currentImage, setCurrentImage] = useState({});
   const [startIndex, setStartIndex] = useState(0);
   const [rating, setRating] = useState(4);
   const [quantity, setQuantity] = useState(1);
@@ -45,6 +44,9 @@ const ProductDetail = () => {
   const [showNotification, setShowNotification] = useState(false);
 
   const [isModalSuccessOrderOpen, setModalSuccessOrderOpen] = useState(false);
+  const [images, setImages] = useState([]);
+  const visibleThumbnail = images;
+  const [loading, setLoading] = useState(false);
 
   const [itemPurchase, setItemPurchase] = useState({
     buyer: "",
@@ -57,8 +59,6 @@ const ProductDetail = () => {
     price: 0,
   });
 
-  const user = useSelector((state) => state.auth.user);
-
   const itemAddToCart = {
     buyer: user._id,
     productId: "",
@@ -68,34 +68,38 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    console.log(product);
     const fetchProduct = async () => {
+      setLoading(true);
       try {
         const response = await getProductById(id);
         if (response.status === 200) {
+          console.log(response.data[0]);
           setAttributesData(response.data[0].attributes);
           setDescriptionData(response.data[0].decriptions);
+          setProduct(response.data[0]);
+          setImages(response.data[0].images);
+
+          // Đặt currentImage là ảnh đầu tiên nếu có ảnh
+          if (response.data[0].images && response.data[0].images.length > 0) {
+            setCurrentImage(response.data[0].images[0]);
+          }
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchProduct();
   }, [id]);
 
   useEffect(() => {
-    console.log(descriptionData);
+    console.log("Description Data: ", descriptionData);
   }, [descriptionData]);
 
   useEffect(() => {
     console.log("Selected Classify: ", selectedOptions);
   }, [selectedOptions]);
-
-  const [images, setImages] = useState(product.images);
-  const visibleThumbnail = images;
-  useEffect(() => {
-    console.log("Images thumbnail: ", visibleThumbnail);
-  });
 
   // find category name by category id
   useEffect(() => {
@@ -234,6 +238,7 @@ const ProductDetail = () => {
 
   return (
     <div className="product-detail-page">
+      {loading && <Loading />}
       {showNotification && (
         <Notification
           message="Thêm sản phẩm vào giỏ hàng thành công!"
@@ -400,30 +405,12 @@ const ProductDetail = () => {
         <div className="detail-product">
           <h2>Mô tả sản phẩm</h2>
           <DetailList details={attributesData} />
-          {/* <div className="rating-section">
-            <h3>Đánh Giá Sản Phẩm</h3>
-            <Rating
-              name="simple-controlled"
-              value={rating}
-              onChange={(event, newRating) => {
-                setRating(newRating);
-              }}
-            />
-          </div> */}
         </div>
         <div className="detail-product">
           <h2>Thông tin sản phẩm</h2>
           <DetailList details={descriptionData} />
         </div>
-        {/* <div className="detail-banner">
-          <img src={prodBanner1} alt="Banner" />
-          <img src={prodBanner2} alt="Banner" />
-        </div> */}
       </div>
-      {/* Comment Section */}
-      {/* <div className="product-comment">
-        <CommentSection productId={product._id} />
-      </div> */}
       <div className="product-footer">
         <FooterSection />
       </div>

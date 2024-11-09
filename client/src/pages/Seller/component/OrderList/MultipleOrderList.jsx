@@ -7,11 +7,11 @@ import {
   cancelTradeAPI,
   getTradeBySellerAPI,
 } from "../../../../api/tradeAPI";
-import { useSelector } from "react-redux";
 import { getProductById } from "../../../../api/productAPI";
 import Loading from "../../../../components/Loading/Loading";
 const MultipleOrderList = () => {
-  const user = useSelector((state) => state.auth.user);
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [selectedDateRange, setSelectedDateRange] = useState({
     from: "",
