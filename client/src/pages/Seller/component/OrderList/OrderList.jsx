@@ -75,7 +75,7 @@ const OrderList = () => {
                     numberProduct: order.products[0].numberProduct,
                     phoneContact: user.number,
                     status: order.isCancel
-                      ? "Cancel"
+                      ? "Canceled"
                       : order.sellerAccept
                       ? "Approval"
                       : "Pending",

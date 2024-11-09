@@ -127,11 +127,13 @@ const ProfileSection = ({ props }) => {
 
     if (user.name === "" || user.phone === "" || user.address === "") {
       alert("Vui lòng nhập đầy đủ thông tin");
+      setLoading(false);
       return;
     }
 
     if (isEditAddress && addressDetail === "") {
       alert("Vui lòng nhập địa chỉ chi tiết");
+      setLoading(false);
       return;
     }
 

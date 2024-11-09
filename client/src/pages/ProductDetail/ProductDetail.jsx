@@ -23,6 +23,7 @@ import { getProductById } from "../../api/productAPI";
 import { getAllCate } from "../../api/cateAPI";
 import OrderSuccessModal from "../../components/Modal/OrderSuccessModal";
 import CommentSection from "../../components/Sections/CommentSection";
+import { useMemo } from "react";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -91,7 +92,10 @@ const ProductDetail = () => {
   }, [selectedOptions]);
 
   const [images, setImages] = useState(product.images);
-  const visibleThumbnail = images.slice(startIndex, startIndex + 3);
+  const visibleThumbnail = images;
+  useEffect(() => {
+    console.log("Images thumbnail: ", visibleThumbnail);
+  });
 
   // find category name by category id
   useEffect(() => {
@@ -141,16 +145,11 @@ const ProductDetail = () => {
     return prices.length > 0 ? Math.min(...prices) : 0; // Return the minimum price, or 0 if no valid prices
   };
 
-  // Calculate total price based on selected option
-  const calculateTotalPrice = () => {
-    if (selectedOptions && selectedOptions.price > 0) {
-      return selectedOptions.price * quantity;
-    }
-    // Return the lowest price if no classification is selected
+  const totalPrice = useMemo(() => {
+    if (selectedOptions?.price > 0) return selectedOptions.price * quantity;
     const allClassifies = Object.values(groupClassifies).flat();
-    console.log(allClassifies);
     return getPrice(allClassifies) * quantity;
-  };
+  }, [selectedOptions, quantity, groupClassifies]);
 
   // scroll to top when component mounted
   useEffect(() => {
@@ -222,7 +221,7 @@ const ProductDetail = () => {
       classify: selectedOptions,
       seller: product.seller,
       numberProduct: quantity,
-      price: calculateTotalPrice(),
+      price: totalPrice,
     };
     setItemPurchase(item);
     setIsModalOpen(true);
@@ -267,7 +266,6 @@ const ProductDetail = () => {
               ))}
             </div>
             <button
-              // className="arrow-btn"
               onClick={handleNext}
               disabled={startIndex >= images.length - 3}
             >
@@ -303,12 +301,10 @@ const ProductDetail = () => {
           <div className="detail-price">
             <div className="product-price">
               <span className="text-secondary price-promotional">
-                {calculateTotalPrice() >= 1000
-                  ? calculateTotalPrice().toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    })
-                  : `${calculateTotalPrice()} đ`}
+                {totalPrice.toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                })}
               </span>
               {/* <span className="text-primary price-original">
                 {getPrice(product.classifies).toLocaleString("vi-VN")}đ
