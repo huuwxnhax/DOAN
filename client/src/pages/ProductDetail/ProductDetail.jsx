@@ -359,7 +359,7 @@ const ProductDetail = () => {
           </div>
 
           <div className="detail-classifies">
-            {Object.keys(groupClassifies).map((key) => (
+            {Object.keys(groupClassifies)?.map((key) => (
               <button
                 key={key}
                 className={`key-btn ${selectedKey === key ? "selected" : ""}`}

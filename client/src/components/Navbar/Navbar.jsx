@@ -21,6 +21,7 @@ import Loading from "../Loading/Loading";
 import useDebounce from "../Hook/useDebounce";
 import Notification from "../Notification/Notification";
 import { registerSellerAPI } from "../../api/userAPI";
+import { getWalletByUserIdAPI } from "../../api/tradeAPI";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const [canRegister, setCanRegister] = useState(true); // Kiểm tra điều kiện đầy đủ thông tin
   const [showNotification, setShowNotification] = useState(false);
+  const [wallet, setWallet] = useState(null);
 
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -98,10 +100,8 @@ const Navbar = () => {
     const valueToSearch = e.target ? e.target.value : searchTerm;
     if (valueToSearch) {
       try {
-        console.log("Searching for: ", valueToSearch);
         const response = await getProductsBySearching(valueToSearch);
         const searchResults = response.data;
-        console.log("Search results: ", searchResults);
 
         let updatedHistory = [...new Set([valueToSearch, ...searchHistory])];
         setSearchHistory(updatedHistory);
@@ -120,11 +120,9 @@ const Navbar = () => {
   };
 
   const handleClickHistory = (term) => {
-    console.log("Clicked on history term: ", term); // Log clicked term
     setSearchTerm(term); // Update the search term
     setShowHistory(false);
     setIsTyping(false); // Reset typing state
-    console.log("Updated searchTerm to: ", term); // Log updated search term
     handleSearch({ type: "click", target: { value: term } });
   };
 
@@ -191,7 +189,6 @@ const Navbar = () => {
           })
         );
         setProductData(productDataMap); // Lưu dữ liệu sản phẩm vào state
-        console.log("Product data:", productDataMap);
       } catch (error) {
         console.error("Error fetching product data:", error);
       }
@@ -298,7 +295,6 @@ const Navbar = () => {
   }, []);
 
   const handleShowProfile = () => {
-    console.log("show profile");
     setShowProfile((prev) => !prev);
   };
 
@@ -329,6 +325,14 @@ const Navbar = () => {
       }
     }
   };
+
+  useEffect(() => {
+    const fetchWalletByUserId = async () => {
+      const response = await getWalletByUserIdAPI(user._id);
+      setWallet(response.data);
+    };
+    fetchWalletByUserId();
+  }, [user._id]);
 
   return (
     <div className="navbar">
@@ -394,8 +398,8 @@ const Navbar = () => {
                     ))
                 ) : (
                   searchHistory
-                    .slice(0, 6) // Hiển thị 6 từ khóa mới nhất khi chưa gõ text
-                    .map((term, index) => (
+                    ?.slice(0, 6) // Hiển thị 6 từ khóa mới nhất khi chưa gõ text
+                    ?.map((term, index) => (
                       <p
                         className="history-item"
                         key={index}
@@ -425,7 +429,7 @@ const Navbar = () => {
                           Chưa có item nào trong giỏ hàng
                         </div>
                       ) : (
-                        cartItems.map((item) => {
+                        cartItems?.map((item) => {
                           const product = productData[item.productId];
                           const classify =
                             selectedClassifies[
@@ -492,7 +496,7 @@ const Navbar = () => {
                 >
                   <div className="cart-title">Sản Phẩm Mới Thêm</div>
                   <div className="cart-items-container">
-                    {cartItems.map((item) => {
+                    {cartItems?.map((item) => {
                       const product = productData[item.productId];
                       const classify =
                         selectedClassifies[
@@ -512,9 +516,6 @@ const Navbar = () => {
                               className="cart-item-img"
                             />
                             <div className="cart-item-info">
-                              <span className="cart-item-label">
-                                Combo khuyến mãi
-                              </span>
                               <span className="cart-item-name">
                                 {product?.productName || "Loading..."}
                               </span>
@@ -580,6 +581,17 @@ const Navbar = () => {
                         showProfile ? "show" : ""
                       }`}
                     >
+                      <a href="/">
+                        Số dư ví:{" "}
+                        <strong className="wallet">
+                          {wallet.balance >= 1000
+                            ? wallet.balance.toLocaleString("vi-VN", {
+                                style: "currency",
+                                currency: "VND",
+                              })
+                            : `${wallet.balance} đ`}
+                        </strong>
+                      </a>
                       <a href="/profile">Thông Tin Cá Nhân</a>
                       <a href="/orders">Đơn Hàng Của Bạn</a>
                       <a href="/cart">Giỏ Hàng</a>
@@ -665,8 +677,8 @@ const Navbar = () => {
                   ))
               ) : (
                 searchHistory
-                  .slice(0, 6) // Hiển thị 6 từ khóa mới nhất khi chưa gõ text
-                  .map((term, index) => (
+                  ?.slice(0, 6) // Hiển thị 6 từ khóa mới nhất khi chưa gõ text
+                  ?.map((term, index) => (
                     <p
                       className="history-item"
                       key={index}
