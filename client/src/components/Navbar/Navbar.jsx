@@ -97,31 +97,6 @@ const Navbar = () => {
     }
   }, [debouncedSearchTerm, isTyping, isFocused]);
 
-  // const handleSearch = async (e) => {
-  //   if (!e || (e.type === "keydown" && e.keyCode !== 13)) return;
-  //   // console.log("Handling search for: ", searchTerm); // Log search term
-  //   const valueToSearch = e.target ? e.target.value : searchTerm;
-  //   if (valueToSearch) {
-  //     try {
-  //       const response = await getProductsBySearching(valueToSearch);
-  //       const searchResults = response.data;
-
-  //       let updatedHistory = [...new Set([valueToSearch, ...searchHistory])];
-  //       setSearchHistory(updatedHistory);
-  //       localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
-
-  //       setSearchTerm("");
-  //       setShowHistory(false);
-
-  //       navigate("/search-results", {
-  //         state: { searchResults, valueToSearch },
-  //       });
-  //     } catch (error) {
-  //       console.log("Error searching: ", error);
-  //     }
-  //   }
-  // };
-
   const handleSearch = async (searchValue) => {
     const valueToSearch = searchValue.trim();
     if (!valueToSearch) return; // Không tìm kiếm nếu giá trị rỗng
@@ -146,13 +121,6 @@ const Navbar = () => {
       console.log("Error searching: ", error);
     }
   };
-
-  // const handleClickHistory = (term) => {
-  //   setSearchTerm(term); // Update the search term
-  //   setShowHistory(false);
-  //   setIsTyping(false); // Reset typing state
-  //   handleSearch({ type: "click", target: { value: term } });
-  // };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -316,18 +284,6 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [showMenu]);
 
-  // useEffect(() => {
-  //   const handleClickOutside = (e) => {
-  //     if (cartRef.current && !cartRef.current.contains(e.target)) {
-  //       setShowCart(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (cartRef.current && !cartRef.current.contains(event.target)) {
@@ -362,10 +318,10 @@ const Navbar = () => {
   const handleRegisterSeller = async () => {
     if (canRegister) {
       const formData = {
-        id: user._id,
+        id: user?._id,
       };
       try {
-        const response = await registerSellerAPI(formData, user.access_token);
+        const response = await registerSellerAPI(formData, user?.access_token);
         console.log("Register seller response: ", response);
         setShowModal(false);
         setShowNotification(true);
@@ -377,7 +333,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchWalletByUserId = async () => {
-      const response = await getWalletByUserIdAPI(user._id);
+      const response = await getWalletByUserIdAPI(user?._id);
       setWallet(response.data);
     };
     fetchWalletByUserId();
