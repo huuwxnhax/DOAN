@@ -17,7 +17,7 @@ const InformLogin = ({ isOpen, onClose }) => {
         <h2 className="text-xl font-bold mb-4">Thông báo</h2>
         <p className="mb-4">Vui lòng đăng nhập để thực hiện chức năng này</p>
         <button
-          // onClick={() => navigate("/signin")}
+          onClick={() => navigate("/signin")}
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200"
         >
           Đăng nhập
