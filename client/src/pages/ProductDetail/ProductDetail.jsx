@@ -202,6 +202,7 @@ const ProductDetail = () => {
   const handleValueChange = (value) => {
     setSelectedValue(value);
     setSelectedOptions(value);
+    setQuantity(1);
   };
 
   const handleMouseEnter = (image) => {
