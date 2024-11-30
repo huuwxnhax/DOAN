@@ -104,6 +104,10 @@ const ProductDetail = () => {
         setLoading(false);
       }
     };
+    setQuantity(1);
+    setSelectedKey("");
+    setSelectedValue("");
+    setSelectedOptions({});
     fetchProduct();
   }, [id]);
 
