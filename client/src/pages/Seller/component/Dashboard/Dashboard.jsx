@@ -565,7 +565,9 @@ const Dashboard = () => {
                 >
                   {`Hạng ${index + 1}`}
                 </h3>
-                <p className="text-lg mt-2">{product.productName}</p>
+                <p className="text-lg mt-2 line-clamp-2">
+                  {product.productName}
+                </p>
                 <p className="text-xl font-medium mt-2">
                   <CountUp end={product.totalProducts} duration={2} /> sản phẩm
                 </p>
