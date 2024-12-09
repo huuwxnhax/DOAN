@@ -172,8 +172,8 @@ const Navbar = () => {
 
   const handleShowCart = async () => {
     const response = await getCartItemByBuyerId(user._id);
-    const processedItems = response.data.products?.flatMap((product) =>
-      product.items.map((item) => ({
+    const processedItems = response.data?.products?.flatMap((product) =>
+      product?.items?.map((item) => ({
         ...item,
         seller: product.seller,
         numberProduct: item.numberProduct || 1,
@@ -211,7 +211,7 @@ const Navbar = () => {
       }
     };
 
-    if (cartItems.length > 0) {
+    if (cartItems?.length > 0) {
       fetchProductData();
     }
   }, [cartItems]);
@@ -383,7 +383,7 @@ const Navbar = () => {
                   </p>
                 ) : isTyping ? (
                   searchHistory
-                    .filter((term) => {
+                    ?.filter((term) => {
                       // Chỉ lọc khi người dùng đang gõ text
                       if (
                         typeof term === "string" &&

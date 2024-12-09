@@ -103,7 +103,6 @@ const Cart = () => {
             const selectedClassify = allClassifies.find(
               (classify) => classify._id === item.classifyId
             );
-
             if (selectedClassify) {
               classifyMap[`${item.productId}-${item.classifyId}`] =
                 selectedClassify;
@@ -111,6 +110,7 @@ const Cart = () => {
           }
         }
         setSelectedClassifies(classifyMap);
+        console.log("Selected classifies:", selectedClassifies);
       } catch (error) {
         console.log(error);
       }
@@ -121,8 +121,10 @@ const Cart = () => {
   }, [cartItems]);
 
   // Xử lý thay đổi số lượng sản phẩm trong giỏ hàng
-  const handleQuantityChange = async (productId, delta) => {
-    const item = cartItems.find((item) => item.productId === productId);
+  const handleQuantityChange = async (productId, classifyId, delta) => {
+    const item = cartItems.find(
+      (item) => item.productId === productId && item.classifyId === classifyId
+    );
     if (!item) return;
 
     const newQuantity = item.numberProduct + delta;
@@ -150,7 +152,10 @@ const Cart = () => {
       if (response.status === 201) {
         setCartItems((prevItems) =>
           prevItems.map((item) => {
-            if (item.productId === productId) {
+            if (
+              item.productId === productId &&
+              item.classifyId === classifyId
+            ) {
               return {
                 ...item,
                 numberProduct: newQuantity,
@@ -199,6 +204,7 @@ const Cart = () => {
         (item) => item.productId === productId && item.classifyId === classifyId
       )?.numberProduct,
     };
+    console.log("Cart DTO:", cartDTO);
     try {
       const response = await deleteCartItem(cartDTO);
       if (response.status === 201) {
@@ -384,15 +390,31 @@ const Cart = () => {
                 </div>
                 <div className="product-quantity">
                   <button
-                    onClick={() => handleQuantityChange(item.productId, -1)}
-                    className="subtraction"
+                    disabled={item.numberProduct <= 1}
+                    onClick={() =>
+                      handleQuantityChange(item.productId, item.classifyId, -1)
+                    }
+                    className={`subtraction ${
+                      item.numberProduct <= 1 ? "disabled" : ""
+                    }`}
                   >
                     -
                   </button>
                   <input type="text" value={item.numberProduct} readOnly />
                   <button
-                    onClick={() => handleQuantityChange(item.productId, +1)}
-                    className="addition"
+                    disabled={
+                      selectedClassifies[`${item.productId}-${item.classifyId}`]
+                        ?.stock == 0
+                    }
+                    onClick={() =>
+                      handleQuantityChange(item.productId, item.classifyId, +1)
+                    }
+                    className={`addition ${
+                      selectedClassifies[`${item.productId}-${item.classifyId}`]
+                        ?.stock == 0
+                        ? "disabled"
+                        : ""
+                    }`}
                   >
                     +
                   </button>
