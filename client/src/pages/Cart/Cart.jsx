@@ -17,6 +17,7 @@ import Notification from "../../components/Notification/Notification";
 import { Modal } from "@mui/material";
 import { addTradeAPI, tradePaymentAPI } from "../../api/tradeAPI";
 import Loading from "../../components/Loading/Loading";
+import CachedIcon from "@mui/icons-material/Cached";
 
 const Cart = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -310,6 +311,10 @@ const Cart = () => {
     setOpenPurchaseModal(true);
   };
 
+  const handleReload = () => {
+    window.location.reload();
+  };
+
   return (
     <div className="shopping-cart">
       {loading && <Loading />}
@@ -321,7 +326,9 @@ const Cart = () => {
       )}
       <Navbar />
       <div className="cart-content">
-        <h2>Giỏ hàng của bạn</h2>
+        <h2 className="text-2xl text-center pb-4 font-medium">
+          Giỏ hàng của bạn
+        </h2>
         <div className="cart-items">
           {cartItems.map((item) => {
             const product = productData[item.productId];
@@ -426,13 +433,21 @@ const Cart = () => {
         </div>
         <div className="cart-actions">
           <button className="continue-shopping">Tiếp Tục Shopping</button>
-          <button
-            onClick={handleOpenPurchaseModal}
-            className="make-purchase disabled:bg-gray-300"
-            disabled={selectedItems.length === 0}
-          >
-            Thanh Toán
-          </button>
+          <div className="flex gap-3">
+            <button
+              className={`px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 active:bg-blue-500 active:text-white`}
+              onClick={handleReload}
+            >
+              <CachedIcon />
+            </button>
+            <button
+              onClick={handleOpenPurchaseModal}
+              className="make-purchase disabled:bg-gray-300"
+              disabled={selectedItems.length === 0}
+            >
+              Thanh Toán
+            </button>
+          </div>
         </div>
       </div>
 
