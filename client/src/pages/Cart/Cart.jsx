@@ -338,7 +338,7 @@ const Cart = () => {
           Giỏ hàng của bạn
         </h2>
         <div className="cart-items">
-          {cartItems.map((item) => {
+          {cartItems?.map((item) => {
             const product = productData[item.productId];
             const classify =
               selectedClassifies[`${item.productId}-${item.classifyId}`];
